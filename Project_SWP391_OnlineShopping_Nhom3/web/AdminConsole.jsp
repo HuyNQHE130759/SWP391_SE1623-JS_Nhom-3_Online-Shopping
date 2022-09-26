@@ -1,5 +1,5 @@
-<%@page import="model.CheckOut"%>
-<%@page import="model.Product"%>
+<%@page import="entity.CheckOut"%>
+<%@page import="entity.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dal;
+package dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,12 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import model.Cart;
-import model.Category;
-import model.CheckOut;
-import model.Product;
-import model.Review;
-import model.User;
+import entity.Cart;
+import entity.Category;
+import entity.CheckOut;
+import entity.Product;
+import entity.Review;
+import entity.User;
 
 /**
  *

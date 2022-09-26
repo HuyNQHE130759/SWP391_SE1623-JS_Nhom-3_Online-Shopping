@@ -4,7 +4,7 @@
     Author     : BVLT
 --%>
 
-<%@page import="model.Category"%>
+<%@page import="entity.Category"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

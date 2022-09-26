@@ -49,6 +49,7 @@
                                 Password: <input type="password" name="password"><br/>
                                 <p style="color: red">${messRegister}</p><br>
                                 <input type="submit" class="btn btn-default" name="save" value="Register"> 
+                                <a href="Login"> Already have an account?? Login here</a>
                             </form>
                         </div><!--/sign up form-->
                     </div>

@@ -1,4 +1,4 @@
-<%@page import="model.User"%>
+<%@page import="entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
