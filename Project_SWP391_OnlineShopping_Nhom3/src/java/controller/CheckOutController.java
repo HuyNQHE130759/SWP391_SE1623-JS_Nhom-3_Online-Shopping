@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class CheckOutController extends HttpServlet {
 

@@ -15,7 +15,7 @@ import entity.User;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class AccountInfo extends HttpServlet {
 

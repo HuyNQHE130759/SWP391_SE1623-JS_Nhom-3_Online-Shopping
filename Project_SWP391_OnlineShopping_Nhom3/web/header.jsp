@@ -1,9 +1,3 @@
-<%-- 
-    Document   : header
-    Created on : Nov 6, 2020, 11:35:08 PM
-    Author     : BVLT
---%>
-
 <%@page import="entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

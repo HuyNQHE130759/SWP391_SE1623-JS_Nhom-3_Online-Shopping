@@ -7,7 +7,7 @@ package entity;
 
 /**
  *
- * @author Nam
+ * @author HuyNQ
  */
 public class Product {
     private String pid;

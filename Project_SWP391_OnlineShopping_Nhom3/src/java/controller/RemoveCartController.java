@@ -16,7 +16,7 @@ import entity.User;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class RemoveCartController extends HttpServlet {
 

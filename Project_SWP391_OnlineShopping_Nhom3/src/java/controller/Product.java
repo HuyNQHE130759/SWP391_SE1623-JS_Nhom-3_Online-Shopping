@@ -17,7 +17,7 @@ import entity.Review;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class Product extends HttpServlet {
 

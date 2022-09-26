@@ -2,7 +2,7 @@
 <%@page import="dao.DAO"%>
 <%@page import="entity.Product"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dao.Cart"%>
+<%@page import="entity.Cart"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

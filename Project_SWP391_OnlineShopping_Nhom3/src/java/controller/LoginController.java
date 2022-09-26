@@ -17,7 +17,7 @@ import entity.User;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class LoginController extends HttpServlet {
 

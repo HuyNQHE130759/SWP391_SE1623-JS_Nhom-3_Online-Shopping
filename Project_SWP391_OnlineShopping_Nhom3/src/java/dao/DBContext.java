@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
  *
- * @author sonnt
+ * @author HuyNQ
  */
 public class DBContext {
     protected Connection connection;
@@ -19,8 +19,8 @@ public class DBContext {
     {
         try {
             String username = "sa";
-            String password = "12345";
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWDHutech1";
+            String password = "sa";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWDHutech";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
             System.out.println("ok");

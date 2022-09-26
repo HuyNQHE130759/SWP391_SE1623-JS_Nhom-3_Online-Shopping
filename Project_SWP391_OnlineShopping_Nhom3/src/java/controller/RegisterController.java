@@ -16,7 +16,7 @@ import service.SendMail;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class RegisterController extends HttpServlet {
 

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : footer
-    Created on : Nov 6, 2020, 11:59:05 PM
-    Author     : BVLT
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

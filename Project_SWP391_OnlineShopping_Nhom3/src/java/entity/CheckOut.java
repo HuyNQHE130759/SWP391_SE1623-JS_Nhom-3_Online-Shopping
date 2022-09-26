@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class CheckOut {
     private int BId;

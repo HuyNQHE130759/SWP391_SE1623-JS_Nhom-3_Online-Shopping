@@ -7,7 +7,7 @@ package entity;
 
 /**
  *
- * @author Nam
+ * @author HuyNQ
  */
 public class Category {
     private String cateId;

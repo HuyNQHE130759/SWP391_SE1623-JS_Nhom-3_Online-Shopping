@@ -9,7 +9,7 @@ import java.sql.Date;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class Review {
     private int cid;

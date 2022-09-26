@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author DUCHIEUPC.COM
+ * @author HuyNQ
  */
 public class ActiveAccountController extends HttpServlet {
 

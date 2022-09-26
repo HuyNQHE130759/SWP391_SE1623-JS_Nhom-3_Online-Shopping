@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class Bye extends HttpServlet {
 

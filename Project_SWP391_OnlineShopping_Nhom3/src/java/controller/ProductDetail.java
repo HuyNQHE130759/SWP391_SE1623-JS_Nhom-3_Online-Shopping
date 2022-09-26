@@ -18,7 +18,7 @@ import entity.User;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class ProductDetail extends HttpServlet {
 
