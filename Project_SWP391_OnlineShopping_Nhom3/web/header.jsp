@@ -4,7 +4,7 @@
     Author     : BVLT
 --%>
 
-<%@page import="entity.User"%>
+<%@page import="model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

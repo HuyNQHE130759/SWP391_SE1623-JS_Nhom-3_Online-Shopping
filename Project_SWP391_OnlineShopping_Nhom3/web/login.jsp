@@ -41,7 +41,6 @@
                                 <input type="password" placeholder="Password" name="password" />
                                 <button type="submit" class="btn btn-default">Login</button>
                             </form>
-                                <a href="Register">Not Registered? Create An Account Here</a>
                                 <a style="text-decoration: none;" href="ResetPassword">Forgot Password</a>
                         </div><!--/login form-->
                     </div>

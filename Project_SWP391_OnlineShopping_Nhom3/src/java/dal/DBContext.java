@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao;
+package dal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,8 +19,8 @@ public class DBContext {
     {
         try {
             String username = "sa";
-            String password = "12345";
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWDHutech1";
+            String password = "sa";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=SWDHutech";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
             System.out.println("ok");

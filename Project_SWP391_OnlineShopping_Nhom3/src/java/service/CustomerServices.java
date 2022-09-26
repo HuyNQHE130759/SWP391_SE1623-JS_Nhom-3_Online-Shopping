@@ -5,7 +5,7 @@
  */
 package service;
 
-import dao.DAO;
+import dal.DAO;
 import java.util.Random;
 
 /**

@@ -1,8 +1,8 @@
-<%@page import="entity.User"%>
-<%@page import="dao.DAO"%>
-<%@page import="entity.Product"%>
+<%@page import="model.User"%>
+<%@page import="dal.DAO"%>
+<%@page import="model.Product"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dao.Cart"%>
+<%@page import="model.Cart"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

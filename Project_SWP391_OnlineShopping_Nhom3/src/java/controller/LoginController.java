@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dao.DAO;
+import dal.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import entity.User;
+import model.User;
 
 /**
  *

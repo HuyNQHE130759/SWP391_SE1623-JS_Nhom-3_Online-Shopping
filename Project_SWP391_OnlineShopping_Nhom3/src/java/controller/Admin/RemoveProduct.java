@@ -6,7 +6,7 @@
 package controller.Admin;
 
 import controller.BasedRequiredAuthenticationController1;
-import dao.DAO;
+import dal.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

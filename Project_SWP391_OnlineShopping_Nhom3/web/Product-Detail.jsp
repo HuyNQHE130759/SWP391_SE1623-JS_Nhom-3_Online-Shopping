@@ -1,6 +1,6 @@
-<%@page import="entity.Review"%>
-<%@page import="entity.User"%>
-<%@page import="entity.Product"%>
+<%@page import="model.Review"%>
+<%@page import="model.User"%>
+<%@page import="model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
