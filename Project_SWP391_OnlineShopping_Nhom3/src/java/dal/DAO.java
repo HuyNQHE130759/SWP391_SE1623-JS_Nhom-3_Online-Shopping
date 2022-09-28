@@ -36,9 +36,8 @@ public class DAO extends DBContext {
     public void connect() {
         try {
             con = (new DBContext().connection);
-            System.out.println("Success!");
             state = con.createStatement(rs.TYPE_SCROLL_SENSITIVE, rs.CONCUR_UPDATABLE);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error connection: " + e.getMessage());
         }
     }
@@ -123,7 +122,7 @@ public class DAO extends DBContext {
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error user: " + e.getMessage());
         }
 

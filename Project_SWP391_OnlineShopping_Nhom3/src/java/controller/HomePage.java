@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import dal.DAO;
@@ -14,10 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author BVLT
- */
 public class HomePage extends HttpServlet {
 
     /**
@@ -59,8 +50,7 @@ public class HomePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = new DAO();
-        ArrayList<Product> pl = new ArrayList<>();
-        pl = dao.getAllProduct();
+        ArrayList<Product> pl = dao.getAllProduct();
         request.setAttribute("ProductList", pl);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
