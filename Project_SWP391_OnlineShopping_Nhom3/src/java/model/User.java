@@ -7,30 +7,48 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author Nam
- */
+
 public class User {
+
     private int cid;
     private String fullName;
     private String address;
     private String phone;
     private String username;
     private String password;
+    private String email;
     private boolean status;
+    private boolean gender;
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
 
     public User() {
     }
 
-    public User(int cid, String fullName, String address, String phone, String username, String password, boolean status) {
+    public User(int cid, String fullName, String address, String phone, String username, String password, String email, boolean status, boolean gender) {
         this.cid = cid;
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.status = status;
+        this.gender = gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getCid() {
@@ -88,10 +106,5 @@ public class User {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-    
-    
-    
-}
 
-   
+}

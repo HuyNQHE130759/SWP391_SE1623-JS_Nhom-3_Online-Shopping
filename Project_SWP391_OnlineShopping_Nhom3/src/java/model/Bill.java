@@ -7,10 +7,7 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author Nam
- */
+
 public class Bill {
     private int bid;
     private Date dateCreate;

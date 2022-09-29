@@ -16,6 +16,17 @@
         <link href="css/responsive.css" rel="stylesheet">
 
     </head>
+    <style>
+        input[type=text] {
+
+            border: 0px solid #ccc;
+
+        }
+
+        input[type=text]:focus {
+            border: 3px solid #555;
+        }
+    </style>
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
@@ -25,32 +36,48 @@
                 <div class="row">    		
                     <div class="col-sm-12">    			   			
                         <h2 class="title text-center">Welcome <strong><%=us.getFullName()%></strong></h2>    			    				    				
-                            
-                        <table border="1" width=50%>
-                           
-                            <tr>
-                                <td>FullName</td>
-                                <td><%=us.getFullName() %></td>
-                            </tr>
-                            <tr>
-                                <td>address</td>
-                                <td><%=us.getAddress() %></td>
-                            </tr>
-                            <tr>
-                                <td>phone</td>
-                                <td><%=us.getPhone() %></td>
-                            </tr>
-                            <tr>
-                                <td>username</td>
-                                <td><%=us.getUsername() %></td>
-                            </tr>
-                            <tr>
-                                <td>password</td>
-                                <td><%=us.getPassword() %><br><a href="${pageContext.request.contextPath}/ChangePass"><input type="button" value="ChangePassword"></a></td>
-                            
-                            </tr>
-                            
-                        </table>
+                        <div>
+                            <form action="${pageContext.request.contextPath}/editUserInfo" method="POST">
+                                <table border="1" width=50%>
+                                    <div class="row">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="inputEmail4" class="form-label">User name</label>
+                                                <input type="username" class="form-control" id="usename" name="username" value="<%=us.getUsername()%>">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="inputPassword4" class="form-label">Full name</label>
+                                                <input type="fullname" class="form-control" id="fullname" name="fullname" value="<%=us.getFullName()%>">
+                                            </div>
+                                            <div class="col-md-12" >
+                                                <label for="inputAddress" class="form-label">Address</label>
+                                                <input type="text" class="form-control" id="inputAddress" name="address" value="<%=us.getAddress()%>"> 
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="inputAddress2" class="form-label">Phone</label>
+                                                <input type="text" class="form-control" id="inputAddress2" name="phone" value="<%=us.getPhone()%>">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="inputAddress2" class="form-label">Email</label>
+                                                <input type="text" class="form-control" id="email" name="email" value="<%=us.getEmail()%>" >
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label for="inputAddress2" class="form-label">Gender</label>
+                                                <select class="form-select " aria-label="Default select example" name="gender">
+                                                    <option value="true" selected=${us.isGender() ? "true" : "false"}>Male</option>
+                                                    <option value="false" selected=${us.isGender() ? "true" : "false"}>Female</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </table>
+                                <div class="col-md-12">
+                                    <input type="submit" class="btn btn-default btn-primary"  value="Change Profile">
+                                    <a href="${pageContext.request.contextPath}/ChangePass" class="btn btn-default btn-warning" style="margin-top: 18px;">Change Password</a>
+                                </div>    
+                            </form>
+                        </div>
                     </div>
                 </div>			 		
             </div>    	

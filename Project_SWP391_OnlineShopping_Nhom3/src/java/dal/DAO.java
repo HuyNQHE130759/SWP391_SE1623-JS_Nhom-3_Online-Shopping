@@ -19,20 +19,17 @@ import model.Product;
 import model.Review;
 import model.User;
 
-/**
- *
- * @author BVLT
- */
-public class DAO extends DBContext {
 
+public class DAO extends DBContext {
+    
     private Connection con;
     private Statement state;
     private ResultSet rs;
-
+    
     public DAO() {
         connect();
     }
-
+    
     public void connect() {
         try {
             con = (new DBContext().connection);
@@ -42,7 +39,7 @@ public class DAO extends DBContext {
             System.out.println("Error connection: " + e.getMessage());
         }
     }
-
+    
     public ArrayList checkLogin(String username, String pass) {
         User u = new User();
         ArrayList<User> ul = new ArrayList<>();
@@ -54,20 +51,22 @@ public class DAO extends DBContext {
                 u.setFullName(rs.getString("fullName"));
                 u.setAddress(rs.getString("address"));
                 u.setPhone(rs.getString("phone"));
+                u.setEmail(rs.getString("email"));
+                u.setGender(rs.getBoolean("gender"));
                 u.setUsername(rs.getString("username"));
                 u.setPassword(rs.getString("password"));
                 u.setStatus(rs.getBoolean("status"));
-
+                
                 ul.add(new User(u.getCid(), u.getFullName(), u.getAddress(),
-                        u.getPhone(), u.getUsername(), u.getPassword(), u.isStatus()));
+                        u.getPhone(), u.getUsername(), u.getPassword(), u.getEmail(), u.isStatus(), u.isGender()));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return ul;
     }
-
+    
     public int findIdByEmail(String email) {
         try {
             String sql = "   select [cid] from [User] where [email] = ?";
@@ -82,7 +81,7 @@ public class DAO extends DBContext {
         }
         return -1;
     }
-
+    
     public ArrayList getCategory() {
         Category c = new Category();
         ArrayList<Category> cl = new ArrayList<>();
@@ -94,16 +93,16 @@ public class DAO extends DBContext {
                 c.setCateName(rs.getString(2));
                 c.setImage(rs.getString(3));
                 c.setStatus(rs.getBoolean(4));
-
+                
                 cl.add(new Category(c.getCateId(), c.getCateName(), c.getImage(), c.isStatus()));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return cl;
     }
-
+    
     public ArrayList getAllProduct() {
         Product p = new Product();
         ArrayList<Product> pl = new ArrayList<>();
@@ -119,17 +118,17 @@ public class DAO extends DBContext {
                 p.setDescription(rs.getString(6));
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
-
+                
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return pl;
     }
-
+    
     public ArrayList getProductbyCate(String cid) {
         Product p = new Product();
         ArrayList<Product> pl = new ArrayList<>();
@@ -145,17 +144,17 @@ public class DAO extends DBContext {
                 p.setDescription(rs.getString(6));
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
-
+                
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return pl;
     }
-
+    
     public ArrayList getSingleProduct(String pid) {
         Product p = new Product();
         ArrayList<Product> pl = new ArrayList<>();
@@ -171,17 +170,17 @@ public class DAO extends DBContext {
                 p.setDescription(rs.getString(6));
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
-
+                
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return pl;
     }
-
+    
     public void insertCustomer(String cname, String caddress, String cphone, String cusname, String cpassword, boolean cstatus, String email, String gender) {
 
         //System.out.println(p_pid);
@@ -190,9 +189,9 @@ public class DAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error Customer " + e.getMessage());
         }
-
+        
     }
-
+    
     public void addCommentOfficial(int cid, String pid, String user_comment, int user_rating, Date user_timecomment) {
         try {
             String sql = "insert into [dbo].[Review] values('" + cid + "','" + pid + "','" + user_comment + "','" + user_rating + "','" + user_timecomment + "')";
@@ -201,7 +200,7 @@ public class DAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public ArrayList<Review> getListReview(String pid) {
         ArrayList<Review> rl = new ArrayList();
         try {
@@ -219,7 +218,7 @@ public class DAO extends DBContext {
         }
         return rl;
     }
-
+    
     public User getSingleUser(int cid) {
         User u = new User();
         ArrayList<User> ul = new ArrayList<>();
@@ -234,15 +233,30 @@ public class DAO extends DBContext {
                 u.setUsername(rs.getString(5));
                 u.setPassword(rs.getString(6));
                 u.setStatus(rs.getBoolean(7));
-
+                
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return u;
     }
-
+    
+    public void updateUserInfo(User user) {
+        try {
+            rs = state.executeQuery("UPDATE [dbo].[User]\n"
+                    + "   SET [fullName] = '"+user.getFullName()+"'\n"
+                    + "      ,[address] = '"+user.getAddress()+"'\n"
+                    + "      ,[phone] = '"+user.getPhone()+"'\n"
+                    + "      ,[email] = '"+user.getEmail()+"'\n"
+                    + "      ,[gender] = "+(user.isGender() ? 1 : 0)+"\n"
+                    + " WHERE cid = "+user.getCid());
+            ;
+        } catch (Exception e) {
+            System.out.println("Error Customer " + e.getMessage());
+        }
+    }
+    
     public void insertContact(String cname, String cemail, String Subject, String Message) {
 
         //System.out.println(p_pid);
@@ -260,9 +274,9 @@ public class DAO extends DBContext {
         } catch (Exception e) {
             System.out.println("Error Customer " + e.getMessage());
         }
-
+        
     }
-
+    
     public ArrayList getCartbyUser(int cid) {
         Cart c = new Cart();
         ArrayList<Cart> cl = new ArrayList<>();
@@ -274,17 +288,17 @@ public class DAO extends DBContext {
                 c.setCuID(rs.getInt(2));
                 c.setpID(rs.getString(3));
                 c.setpQuantity(rs.getInt(4));
-
+                
                 cl.add(new Cart(c.getcID(), c.getCuID(), c.getpID(), c.getpQuantity()));
-
+                
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return cl;
     }
-
+    
     public void inserttoCart(String pid, int cid, int quantity) {
         int cartID = 0;
         try {
@@ -292,7 +306,7 @@ public class DAO extends DBContext {
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
                 cartID = rs.getInt(1);
-
+                
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
@@ -318,17 +332,17 @@ public class DAO extends DBContext {
             System.out.println("Error Customer " + e.getMessage());
         }
     }
-
+    
     public void removeCart(String pid, int cid) {
-
+        
         try {
             rs = state.executeQuery("DELETE FROM [dbo].[Cart] WHERE ProductID = '" + pid + "' and CustomerID = '" + cid + "'");
         } catch (Exception e) {
             System.out.println("Error Product " + e.getMessage());
         }
-
+        
     }
-
+    
     public void insertCheckout(int cid, Date createDate, double totalPrice) {
 
         //System.out.println(p_pid);
@@ -350,7 +364,7 @@ public class DAO extends DBContext {
             System.out.println("Error Product " + e.getMessage());
         }
     }
-
+    
     public ArrayList getProduct() {
         Product p = new Product();
         ArrayList<Product> pl = new ArrayList<>();
@@ -366,26 +380,26 @@ public class DAO extends DBContext {
                 p.setDescription(rs.getString(6));
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
-
+                
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(), p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return pl;
     }
-
+    
     public void removeProduct(String pid) {
-
+        
         try {
             rs = state.executeQuery("DELETE FROM [Product] WHERE pid = '" + pid + "'");
         } catch (Exception e) {
             System.out.println("Error Product " + e.getMessage());
         }
-
+        
     }
-
+    
     public void updateProduct(String pid, String pname, int pquantity, int pprice, String image, String description, boolean status, String cid) {
         try {
             rs = state.executeQuery("UPDATE [dbo].[Product]\n"
@@ -402,17 +416,17 @@ public class DAO extends DBContext {
             System.out.println("Error ProductUp " + e.getMessage());
         }
     }
-
+    
     public void insertProduct(String pid, String pname, String img, int quantity, int money, String description, boolean status, String cateID) {
-
+        
         try {
             rs = state.executeQuery("INSERT INTO [Product]([pid],[pname],[quantity],[price],[image],[description],[status],[cateId]) VALUES ('" + pid + "','" + pname + "','" + quantity + "' ,'" + money + "','" + img + "','" + description + "','" + status + "','" + cateID + "')");
         } catch (Exception e) {
             System.out.println("Error Category " + e.getMessage());
         }
-
+        
     }
-
+    
     public Product getProductById(String pid) {
         Product p = new Product();
         try {
@@ -427,15 +441,15 @@ public class DAO extends DBContext {
                 p.setDescription(rs.getString(6));
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
-
+                
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return p;
     }
-
+    
     public ArrayList getCheckout() {
         CheckOut c = new CheckOut();
         ArrayList<CheckOut> cl = new ArrayList<>();
@@ -447,16 +461,16 @@ public class DAO extends DBContext {
                 c.setCId(rs.getInt(2));
                 c.setCrateDate(rs.getDate(3));
                 c.setTotalPrice(rs.getInt(4));
-
+                
                 cl.add(new CheckOut(c.getBId(), c.getCId(), c.getCrateDate(), (int) c.getTotalPrice()));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
         }
-
+        
         return cl;
     }
-
+    
     public void changePassword(int cid, String cpassword) {
         try {
             rs = state.executeQuery("UPDATE [dbo].[User]\n"
@@ -467,7 +481,7 @@ public class DAO extends DBContext {
             System.out.println("Error ProductUp " + e.getMessage());
         }
     }
-
+    
     public void activeAccount(String email) {
         try {
             rs = state.executeQuery("update [User] set [status] = 1  where [email] = '" + email + "'");
@@ -475,7 +489,7 @@ public class DAO extends DBContext {
             System.out.println("Error ProductUp " + e.getMessage());
         }
     }
-
+    
     public boolean checkEmailExist(String email) {
         int uid = -1;
         try {
@@ -489,7 +503,7 @@ public class DAO extends DBContext {
         }
         return uid != -1;
     }
-
+    
     public static void main(String[] args) {
         System.out.println(new DAO().checkLogin("Huy", "123"));
     }

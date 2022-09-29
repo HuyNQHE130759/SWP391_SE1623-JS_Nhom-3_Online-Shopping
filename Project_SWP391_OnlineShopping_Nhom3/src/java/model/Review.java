@@ -7,10 +7,7 @@ package model;
 
 import java.sql.Date;
 
-/**
- *
- * @author BVLT
- */
+
 public class Review {
     private int cid;
     private String pid;

@@ -7,10 +7,7 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author BVLT
- */
+
 public class CheckOut {
     private int BId;
     private int CId;

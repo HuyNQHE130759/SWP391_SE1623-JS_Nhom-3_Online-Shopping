@@ -5,10 +5,7 @@
  */
 package model;
 
-/**
- *
- * @author Nam
- */
+
 public class Category {
     private String cateId;
     private String cateName;

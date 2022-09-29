@@ -5,10 +5,7 @@
  */
 package model;
 
-/**
- *
- * @author Nam
- */
+
 public class Product {
     private String pid;
     private String pname;
