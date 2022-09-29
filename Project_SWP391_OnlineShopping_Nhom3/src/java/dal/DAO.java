@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import model.Cart;
 import model.Category;
 import model.CheckOut;
@@ -36,9 +37,8 @@ public class DAO extends DBContext {
     public void connect() {
         try {
             con = (new DBContext().connection);
-            System.out.println("Success!");
             state = con.createStatement(rs.TYPE_SCROLL_SENSITIVE, rs.CONCUR_UPDATABLE);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error connection: " + e.getMessage());
         }
     }
@@ -123,7 +123,7 @@ public class DAO extends DBContext {
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error user: " + e.getMessage());
         }
 
@@ -489,6 +489,47 @@ public class DAO extends DBContext {
         }
         return uid != -1;
     }
+
+    public ArrayList<User> getListUser(String role, String status, String sort) {
+        ArrayList<User> list = new ArrayList<>();
+        try {
+            String query = "select * "
+                    + "from [User] u "
+                    + "left join [Role] r on u.roleid = r.roleid ";
+            
+            if(role.isEmpty() && !status.isEmpty()) {
+                query += "where status = " + "'" + status + "' ";
+            }
+            if(!role.isEmpty() && status.isEmpty()) {
+                query += "where rolename = " + "'" + role + "' ";
+            }
+            if(!role.isEmpty() && !status.isEmpty()) {
+                query += "where rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
+            }
+            
+            query += "order by " + "'" + sort + "' ";
+            
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rslt = ps.executeQuery();
+            while(rslt.next()) {
+                User u = new User();
+                u.setCid(rslt.getInt("cid"));
+                u.setFullName(rslt.getString("fullName"));
+                u.setUsername(rslt.getString("username"));
+                u.setMale(rslt.getBoolean("gender"));
+                u.setAddress(rslt.getString("address"));
+                u.setEmail(rslt.getString("email"));
+                u.setPhone(rslt.getString("phone"));
+                u.setRole(rslt.getString("rolename"));
+                u.setStatus(rslt.getBoolean("status"));
+                list.add(u);
+               
+            }
+            return list;
+        } catch (SQLException e) {
+        }
+        return null;
+    }; 
 
     public static void main(String[] args) {
         System.out.println(new DAO().checkLogin("Huy", "123"));
