@@ -12,6 +12,7 @@ import java.util.Date;
  * @author Nam
  */
 public class User {
+
     private int cid;
     private String fullName;
     private String address;
@@ -19,6 +20,9 @@ public class User {
     private String username;
     private String password;
     private boolean status;
+    private boolean male;
+    private String email;
+    private String role;
 
     public User() {
     }
@@ -88,10 +92,36 @@ public class User {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-    
-    
-    
-}
 
-   
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isMale() {
+        return male;
+    }
+
+    public void setMale(boolean male) {
+        this.male = male;
+    }
+
+    public String getGender() {
+        return isMale() ? "Male" : "Female";
+    }
+    
+    public String getStringStatus() {
+        return isStatus() ? "Enable" : "Disable";
+    }
+}
