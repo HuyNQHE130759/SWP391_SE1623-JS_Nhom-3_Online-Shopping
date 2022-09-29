@@ -14,10 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import service.CustomerServices;
 import service.SendMail;
 
-/**
- *
- * @author HuyNQ
- */
 public class ResetPasswordController extends HttpServlet {
 
     /**

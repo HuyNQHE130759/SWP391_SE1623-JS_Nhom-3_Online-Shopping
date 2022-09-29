@@ -5,10 +5,6 @@
  */
 package entity;
 
-/**
- *
- * @author HuyNQ
- */
 public class Product {
     private String pid;
     private String pname;

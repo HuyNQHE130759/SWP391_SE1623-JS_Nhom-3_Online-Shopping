@@ -20,10 +20,6 @@ import entity.Product;
 import entity.Review;
 import entity.User;
 
-/**
- *
- * @author HuyNQ
- */
 public class DAO extends DBContext {
 
     private Connection con;

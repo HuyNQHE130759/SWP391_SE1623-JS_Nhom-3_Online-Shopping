@@ -7,10 +7,6 @@ package entity;
 
 import java.util.Date;
 
-/**
- *
- * @author HuyNQ
- */
 public class User {
 
     private int cid;

@@ -14,10 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.SendMail;
 
-/**
- *
- * @author HuyNQ
- */
 public class RegisterController extends HttpServlet {
 
     /**

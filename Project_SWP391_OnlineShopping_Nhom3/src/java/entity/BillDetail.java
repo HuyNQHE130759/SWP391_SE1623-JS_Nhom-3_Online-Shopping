@@ -5,10 +5,6 @@
  */
 package entity;
 
-/**
- *
- * @author HuyNQ
- */
 public class BillDetail {
     private int bid;
     private String pid;

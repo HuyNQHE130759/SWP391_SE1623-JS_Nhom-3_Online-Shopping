@@ -16,10 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import entity.Review;
 import entity.User;
 
-/**
- *
- * @author HuyNQ
- */
 public class ProductDetail extends HttpServlet {
 
     /**

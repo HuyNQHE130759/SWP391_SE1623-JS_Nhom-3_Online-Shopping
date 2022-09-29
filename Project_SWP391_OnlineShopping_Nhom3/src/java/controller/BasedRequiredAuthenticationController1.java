@@ -15,12 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import entity.User;
 
-
-
-/**
- *
- * @author HuyNQ
- */
 public abstract class BasedRequiredAuthenticationController1 extends HttpServlet {
     
     private boolean checkLogin(HttpServletRequest request) {

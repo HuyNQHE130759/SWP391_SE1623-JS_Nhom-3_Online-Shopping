@@ -15,10 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import entity.Review;
 
-/**
- *
- * @author HuyNQ
- */
 public class Product extends HttpServlet {
 
     /**
