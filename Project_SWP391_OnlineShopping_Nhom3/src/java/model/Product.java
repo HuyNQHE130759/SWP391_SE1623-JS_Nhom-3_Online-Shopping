@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author Nam
+ * @author HuyNQ
  */
 public class Product {
     private String pid;

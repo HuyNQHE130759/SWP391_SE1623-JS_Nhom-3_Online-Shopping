@@ -1,11 +1,5 @@
-<%-- 
-    Document   : category
-    Created on : Nov 7, 2020, 12:08:54 AM
-    Author     : BVLT
---%>
-
-<%@page import="dal.DAO"%>
-<%@page import="model.Category"%>
+<%@page import="dao.DAO"%>
+<%@page import="entity.Category"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

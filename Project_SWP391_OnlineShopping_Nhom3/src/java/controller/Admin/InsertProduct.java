@@ -18,7 +18,7 @@ import model.Category;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class InsertProduct extends BasedRequiredAuthenticationController1 {
 

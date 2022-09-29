@@ -19,7 +19,7 @@ import model.CheckOut;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class AdminConsole extends BasedRequiredAuthenticationController1 {
 

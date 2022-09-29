@@ -19,7 +19,7 @@ import model.Product;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class UpdateProduct extends BasedRequiredAuthenticationController1 {
 

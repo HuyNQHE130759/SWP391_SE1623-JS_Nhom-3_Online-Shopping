@@ -22,7 +22,7 @@ import model.User;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class DAO extends DBContext {
 

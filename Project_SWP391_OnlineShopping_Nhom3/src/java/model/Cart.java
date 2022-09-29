@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class Cart {
     private int cID;

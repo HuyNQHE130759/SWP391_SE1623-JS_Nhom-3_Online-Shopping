@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  *
- * @author DUCHIEUPC.COM
+ * @author HuyNQ
  */
 public class CustomerServices {
 

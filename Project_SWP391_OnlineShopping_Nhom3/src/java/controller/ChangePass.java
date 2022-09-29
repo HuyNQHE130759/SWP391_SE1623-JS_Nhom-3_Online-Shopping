@@ -17,7 +17,7 @@ import model.User;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class ChangePass extends HttpServlet {
 

@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class ReviewController extends HttpServlet {
 

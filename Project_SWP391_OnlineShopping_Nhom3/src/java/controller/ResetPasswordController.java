@@ -16,7 +16,7 @@ import service.SendMail;
 
 /**
  *
- * @author DUCHIEUPC.COM
+ * @author HuyNQ
  */
 public class ResetPasswordController extends HttpServlet {
 

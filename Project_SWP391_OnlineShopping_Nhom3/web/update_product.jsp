@@ -1,11 +1,5 @@
-<%-- 
-    Document   : update_customer.jsp
-    Created on : Nov 19, 2020, 2:09:46 AM
-    Author     : BVLT
---%>
-
-<%@page import="model.Category"%>
-<%@page import="model.Product"%>
+<%@page import="entity.Category"%>
+<%@page import="entity.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

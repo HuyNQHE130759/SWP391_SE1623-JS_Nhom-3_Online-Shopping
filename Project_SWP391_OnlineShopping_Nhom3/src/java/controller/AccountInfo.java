@@ -15,7 +15,7 @@ import model.User;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class AccountInfo extends HttpServlet {
 

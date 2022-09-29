@@ -1,10 +1,4 @@
-<%-- 
-    Document   : product
-    Created on : Nov 9, 2020, 9:31:56 PM
-    Author     : BVLT
---%>
-
-<%@page import="model.Product"%>
+<%@page import="entity.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

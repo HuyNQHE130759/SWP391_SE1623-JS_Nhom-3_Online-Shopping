@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author BVLT
+ * @author HuyNQ
  */
 public class ContactController extends HttpServlet {
 

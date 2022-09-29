@@ -19,7 +19,7 @@ import model.User;
 
 /**
  *
- * @author sonnt
+ * @author HuyNQ
  */
 public abstract class BasedRequiredAuthenticationController1 extends HttpServlet {
     
