@@ -41,13 +41,13 @@
 
                         <div class="col-sm-5">
                             <div class="single-widget">
-                                <h2>CONG TY TNHH THUONG MAI 1 THANH VIEN HUYGROUP</h2>
+                                <h2>CÔNG TY TNHH THƯƠNG MẠI MÁY TÍNH LAPTOP GEARVN</h2>
 
-                                <h2><a href="#">EMAIL: CSKH@FLYINGHUY.COM</a></h2>
-                                <h2>HE THONG TONG DAI: (Lam viec tu 8h30 - 20h30)</h2>
-                                <li>Goi mua hang : 1800 6975</li>
-                                <li>Ho tro khach hang : 1800 6173</li>
-                                <li>Tuyen dung : 1800 6147</li>
+                                <h2><a href="#">EMAIL: CSKH@GEARVN.COM</a></h2>
+                                <h2>HỆ THỐNG TỔNG ĐÀI: (Làm việc từ 8h30 - 17h30)</h2>
+                                <li>Gọi mua hàng : 1800 6975</li>
+                                <li>Hotline Hỗ trợ khách hàng : 1800 6173</li>
+                                <li>Số máy tuyển dụng : 1800 6147</li>
 
 
                             </div>
@@ -55,13 +55,13 @@
 
                         <div class="col-sm-6">
                             <div class="single-widget">
-                                <h2>HE THONG CUA HANG: (Lam viec tu 8h30 - 20h30)</h2>
-                                <h>QUẦY BÁN VÉ HCM
-                                    - Dia chi: 78-80-82 Hoang Hoa Tham, Phuong 12, Quan Tan Binh.</h>
-                                <h>QUẦY BÁN VÉ HN
-                                    - Dia chi : 37 Ngo 121 Thai Ha, Phuong Trung Liet, Quan Dong Da.</h>
-                                <h2>- HỘ TRỢ KHÁCH HÀNG: 1800 6175</h2>
-                                <h>Bay ngay hôm nay, rinh quà liền tay, bay ngay thỏa thích, covid tận nhà.</h>
+                                <h2>HỆ THỐNG CỬA HÀNG: (Làm việc từ 8h30 - 20h30)</h2>
+                                <h>CƠ SỞ HỒ CHÍ MINH
+                                    - Địa chỉ: 78-80-82 Hoàng Hoa Thám, Phường 12, Quận Tân Bình.</h> <p/>
+                                <h>CƠ SỞ HÀ NỘI
+                                    - Địa chỉ : Số 37 Ngõ 121 Thái Hà, Phường Trung Liệt, Quận Đống Đa.</h>
+                                <h2>HỖ TRỢ KHÁCH HÀNG: 1800 6175</h2>
+                                <h>Mua máy tính xịn ngay, rinh quà liền tay!!!</h>
                             </div>
                         </div>
 
@@ -72,7 +72,7 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <p class="pull-left">Copyright © 2021 FPT Education. All rights reserved.</p>
+                        <p class="pull-left">Copyright © 2022 FPT Education. All rights reserved.</p>
                         <p class="pull-right">Designed by <span><a target="_blank" href="huynqhe130759@fpt.edu.vn">Nguyen Quang Huy</a></span></p>
                     </div>
                 </div>
