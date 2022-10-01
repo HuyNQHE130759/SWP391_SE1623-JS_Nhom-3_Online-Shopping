@@ -7,11 +7,8 @@ package entity;
 
 import java.util.Date;
 
-/**
- *
- * @author HuyNQ
- */
 public class User {
+
     private int cid;
     private String fullName;
     private String address;
@@ -20,13 +17,12 @@ public class User {
     private String username;
     private String password;
     private boolean status;
-    private boolean gender;
     private boolean male;
     private String role;
 
-
     public User() {
     }
+
     public User(int cid, String fullName, String address, String phone, String email, String username, String password, boolean status, boolean gender, String role) {
         this.cid = cid;
         this.fullName = fullName;
@@ -36,28 +32,10 @@ public class User {
         this.username = username;
         this.password = password;
         this.status = status;
-        this.gender = gender;
+        this.male = male;
         this.role = role;
     }
 
-
-    public boolean isGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
-
-    
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
 
     public int getCid() {
         return cid;
@@ -114,10 +92,36 @@ public class User {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-    
-    
-    
-}
 
-   
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isMale() {
+        return male;
+    }
+
+    public void setMale(boolean male) {
+        this.male = male;
+    }
+
+    public String getGender() {
+        return isMale() ? "Male" : "Female";
+    }
+    
+    public String getStringStatus() {
+        return isStatus() ? "Enable" : "Disable";
+    }
+}

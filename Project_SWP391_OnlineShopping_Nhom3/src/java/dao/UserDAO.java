@@ -42,7 +42,7 @@ public class UserDAO extends DBContext {
             stm.setString(6, u.getUsername());
             stm.setString(7, u.getPassword());
             stm.setBoolean(8, u.isStatus());
-            stm.setBoolean(9, u.isGender());
+            stm.setBoolean(9, u.isMale());
             stm = connection.prepareStatement(sql);
             stm.executeUpdate();
         } catch (SQLException ex) {
@@ -74,7 +74,7 @@ public class UserDAO extends DBContext {
             stm.setString(4, u.getPhone());
             stm.setString(5, u.getEmail());
             stm.setBoolean(6, u.isStatus());
-            stm.setBoolean(7, u.isGender());
+            stm.setBoolean(7, u.isMale());
             stm.setInt(8, u.getCid());
             stm.executeUpdate();
         } catch (SQLException ex) {
@@ -129,7 +129,7 @@ public class UserDAO extends DBContext {
                 r.setRname(roleName);
                 u.setEmail(email);
                 u.setAddress(address);
-                u.setGender(gender);
+                u.setMale(gender);
                 u.setPhone(phone);
                 u.setStatus(status);
                 u.setPassword(password);
@@ -180,7 +180,7 @@ public class UserDAO extends DBContext {
                 r.setRname(roleName);
                 u.setEmail(email);
                 u.setAddress(address);
-                u.setGender(gender);
+                u.setMale(gender);
                 u.setPhone(phone);
                 u.setStatus(status);
                 u.setPassword(password);
@@ -266,7 +266,7 @@ public class UserDAO extends DBContext {
                 r.setRname(roleName);
                 u.setEmail(email);
                 u.setAddress(address);
-                u.setGender(gender);
+                u.setMale(gender);
                 u.setPhone(phone);
                 u.setStatus(cStatus);
                 u.setPassword(password);
