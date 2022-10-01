@@ -16,22 +16,54 @@ public class User {
     private String fullName;
     private String address;
     private String phone;
+    private String email;
     private String username;
     private String password;
     private boolean status;
+    private boolean gender;
+    private Role role;
 
     public User() {
     }
 
-    public User(int cid, String fullName, String address, String phone, String username, String password, boolean status) {
+    public User(int cid, String fullName, String address, String phone, String email, String username, String password, boolean status, boolean gender, Role role) {
         this.cid = cid;
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
+        this.email = email;
         this.username = username;
         this.password = password;
         this.status = status;
+        this.gender = gender;
+        this.role = role;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
 
     public int getCid() {
         return cid;

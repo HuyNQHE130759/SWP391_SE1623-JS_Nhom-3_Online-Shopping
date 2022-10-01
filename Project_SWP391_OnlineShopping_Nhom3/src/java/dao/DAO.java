@@ -57,9 +57,8 @@ public class DAO extends DBContext {
                 u.setUsername(rs.getString("username"));
                 u.setPassword(rs.getString("password"));
                 u.setStatus(rs.getBoolean("status"));
-
-                ul.add(new User(u.getCid(), u.getFullName(), u.getAddress(),
-                        u.getPhone(), u.getUsername(), u.getPassword(), u.isStatus()));
+                u.setEmail(rs.getString("email"));
+                ul.add(u);
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
