@@ -21,12 +21,13 @@ public class User {
     private String password;
     private boolean status;
     private boolean gender;
-    private Role role;
+    private boolean male;
+    private String role;
+
 
     public User() {
     }
-
-    public User(int cid, String fullName, String address, String phone, String email, String username, String password, boolean status, boolean gender, Role role) {
+    public User(int cid, String fullName, String address, String phone, String email, String username, String password, boolean status, boolean gender, String role) {
         this.cid = cid;
         this.fullName = fullName;
         this.address = address;
@@ -39,13 +40,6 @@ public class User {
         this.role = role;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 
     public boolean isGender() {
         return gender;

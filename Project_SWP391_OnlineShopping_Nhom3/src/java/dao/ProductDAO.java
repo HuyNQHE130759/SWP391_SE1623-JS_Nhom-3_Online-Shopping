@@ -7,7 +7,6 @@ package dao;
 import entity.Category;
 import entity.Product;
 import entity.Provider;
-import entity.Role;
 import entity.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

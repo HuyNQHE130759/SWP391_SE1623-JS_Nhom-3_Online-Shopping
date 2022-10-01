@@ -78,7 +78,7 @@ public class UserDetailController extends HttpServlet {
         role.setRoleId(Integer.parseInt(raw_role));
         int uId = raw_uId != null && raw_uId.length() > 0 && !raw_uId.equals("-1") ? Integer.parseInt(raw_uId) : -1;
         boolean gender = raw_gender.equals("Male")?true:false;
-        User u = new User(uId, raw_fullname, raw_address, raw_phone, raw_email, raw_role, raw_password, status, gender, role);
+        User u = new User();
         if (uId != -1) {
             userDAO.update(u);
         }else{

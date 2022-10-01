@@ -6,7 +6,6 @@ package dao;
 
 import entity.Role;
 import entity.User;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +34,7 @@ public class UserDAO extends DBContext {
                 + "           ,[gender]) VALUES (?,?,?,?,?,?,?,?,?);";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, u.getRole().getRoleId());
+            stm.setInt(1, u.getCid());
             stm.setString(2, u.getFullName());
             stm.setString(3, u.getAddress());
             stm.setString(4, u.getPhone());
@@ -69,7 +68,7 @@ public class UserDAO extends DBContext {
                 + " WHERE [cid] = ?";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, u.getRole().getRoleId());
+            stm.setInt(1, u.getCid());
             stm.setString(2, u.getFullName());
             stm.setString(3, u.getAddress());
             stm.setString(4, u.getPhone());
@@ -128,7 +127,6 @@ public class UserDAO extends DBContext {
                 Role r = new Role();
                 r.setRoleId(roleId);
                 r.setRname(roleName);
-                u.setRole(r);
                 u.setEmail(email);
                 u.setAddress(address);
                 u.setGender(gender);
@@ -180,7 +178,6 @@ public class UserDAO extends DBContext {
                 Role r = new Role();
                 r.setRoleId(roleId);
                 r.setRname(roleName);
-                u.setRole(r);
                 u.setEmail(email);
                 u.setAddress(address);
                 u.setGender(gender);
@@ -267,7 +264,6 @@ public class UserDAO extends DBContext {
                 Role r = new Role();
                 r.setRoleId(role);
                 r.setRname(roleName);
-                u.setRole(r);
                 u.setEmail(email);
                 u.setAddress(address);
                 u.setGender(gender);

@@ -52,8 +52,6 @@ public class Product {
         this.provider = provider;
     }
 
-
-
     public int getPid() {
         return pid;
     }
