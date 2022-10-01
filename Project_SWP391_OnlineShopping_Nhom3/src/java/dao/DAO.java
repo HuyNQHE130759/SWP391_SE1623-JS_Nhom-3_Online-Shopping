@@ -16,6 +16,7 @@ import entity.Cart;
 import entity.Category;
 import entity.CheckOut;
 import entity.Product;
+import entity.Provider;
 import entity.Review;
 import entity.User;
 
@@ -89,7 +90,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Category";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                c.setCateId(rs.getString(1));
+                c.setCateId(rs.getInt(1));
                 c.setCateName(rs.getString(2));
                 c.setImage(rs.getString(3));
                 c.setStatus(rs.getBoolean(4));
@@ -102,6 +103,25 @@ public class DAO extends DBContext {
 
         return cl;
     }
+    public ArrayList getProvider() {
+        ArrayList<Provider> list = new ArrayList<>();
+        try {
+            String strSelect = "select * from Provider";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                Provider p = new Provider();
+                p.setProvider_id(rs.getInt(1));
+                p.setProvider_name(rs.getString(2));
+                p.setProvider_email(rs.getString(3));
+                p.setProvider_address(rs.getString(4));
+                list.add(p);
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+
+        return list;
+    }
 
     public ArrayList getAllProduct() {
         Product p = new Product();
@@ -110,7 +130,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product]";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -136,7 +156,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where cateId= '" + cid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -162,7 +182,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where pid= '" + pid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -357,7 +377,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getInt(4));
@@ -418,7 +438,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product WHERE pid = '" + pid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getInt(4));

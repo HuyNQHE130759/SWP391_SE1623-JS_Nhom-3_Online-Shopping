@@ -10,7 +10,7 @@ package entity;
  * @author HuyNQ
  */
 public class Category {
-    private String cateId;
+    private int cateId;
     private String cateName;
     private String image;
     private boolean status;
@@ -18,18 +18,18 @@ public class Category {
     public Category() {
     }
 
-    public Category(String cateId, String cateName, String image, boolean status) {
+    public Category(int cateId, String cateName, String image, boolean status) {
         this.cateId = cateId;
         this.cateName = cateName;
         this.image = image;
         this.status = status;
     }
 
-    public String getCateId() {
+    public int getCateId() {
         return cateId;
     }
 
-    public void setCateId(String cateId) {
+    public void setCateId(int cateId) {
         this.cateId = cateId;
     }
 
