@@ -16,18 +16,16 @@ public class DBContext {
     {
         try {
             String username = "sa";
+<<<<<<< HEAD
             String password = "123";
+=======
+            String password = "123456";
+>>>>>>> origin/linhph_official
             String url = "jdbc:sqlserver://localhost:1433;databaseName=SWDHutech";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
-            System.out.println("ok");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    public static void main(String[] args) {
-        DBContext bContext = new DBContext();
     }
 }

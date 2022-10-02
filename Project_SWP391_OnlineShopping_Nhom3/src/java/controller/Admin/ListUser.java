@@ -1,24 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package controller;
+package controller.Admin;
 
 import dal.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import model.User;
 
-/**
- *
- * @author BVLT
- */
-public class HomePage extends HttpServlet {
+@WebServlet(name = "ListUser", urlPatterns = {"/ListUser"})
+public class ListUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,23 +23,6 @@ public class HomePage extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet HomePage</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet HomePage at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -59,9 +36,15 @@ public class HomePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = new DAO();
-        ArrayList<Product> pl = dao.getAllProduct();
-        request.setAttribute("productList", pl);
-        request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+        ArrayList<User> listUser;
+        if (request.getParameter("selectRole") == null && request.getParameter("selectStatus") == null && request.getParameter("selectSort") == null) {
+            listUser = dao.getListUser("", "", "cid");
+        } else {
+            listUser = dao.getListUser(request.getParameter("selectRole"), request.getParameter("selectStatus"), request.getParameter("selectSort"));
+        }
+
+        request.setAttribute("listUser", listUser);
+        request.getRequestDispatcher("ListUser.jsp").forward(request, response);
     }
 
     /**
@@ -75,7 +58,7 @@ public class HomePage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
     /**
