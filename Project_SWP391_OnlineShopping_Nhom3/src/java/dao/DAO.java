@@ -5,6 +5,7 @@
  */
 package dao;
 
+import entity.Bill;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -87,7 +88,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Category";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                c.setCateId(rs.getInt(1));
+                c.setCateId(rs.getString(1));                
                 c.setCateName(rs.getString(2));
                 c.setImage(rs.getString(3));
                 c.setStatus(rs.getBoolean(4));
@@ -127,7 +128,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product]";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                p.setPid(rs.getInt(1));
+                p.setPid(rs.getString(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -153,7 +154,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where cateId= '" + cid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                p.setPid(rs.getInt(1));
+                p.setPid(rs.getString(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -179,7 +180,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where pid= '" + pid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                p.setPid(rs.getInt(1));
+                p.setPid(rs.getString(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -389,7 +390,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                p.setPid(rs.getInt(1));
+                p.setPid(rs.getString(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getInt(4));
@@ -450,7 +451,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product WHERE pid = '" + pid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                p.setPid(rs.getInt(1));
+                p.setPid(rs.getString(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getInt(4));
@@ -561,6 +562,51 @@ public class DAO extends DBContext {
         }
         return null;
     }; 
+    
+    public ArrayList getBillList() {
+        Bill bill = new Bill();
+        ArrayList<Bill> bi = new ArrayList<>();
+        try {
+            String strSelect = "select * from Bill";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                bill.setBid(rs.getInt(1));
+                bill.setDateCreate(rs.getString(2));
+                bill.setTotal(rs.getDouble(3));
+                bill.setRecName(rs.getString(4));
+                bill.setRecAddress(rs.getString(5));
+                bill.setRecPhone(rs.getString(6));
+                bill.setStatus(rs.getInt(7));
+                bill.setCid(rs.getInt(8));
+                bi.add(new Bill(bill.getBid(), bill.getDateCreate(), bill.getTotal(), bill.getRecName(), bill.getRecAddress(), bill.getRecPhone(), bill.getStatus(), bill.getCid()));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+
+        return bi;
+    }
+    
+     public Bill getBillById(int bid) {
+        Bill bill = new Bill();
+        try {
+            String strSelect = "select * from Bill WHERE bid = '" + bid + "'";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                bill.setBid(rs.getInt(1));
+                bill.setDateCreate(rs.getString(2));
+                bill.setTotal(rs.getDouble(3));
+                bill.setRecName(rs.getString(4));
+                bill.setRecAddress(rs.getString(5));
+                bill.setRecPhone(rs.getString(6));
+                bill.setStatus(rs.getInt(7));
+                bill.setCid(rs.getInt(8));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return bill;
+    }
 
     public static void main(String[] args) {
         System.out.println(new DAO().checkLogin("Huy", "123"));
