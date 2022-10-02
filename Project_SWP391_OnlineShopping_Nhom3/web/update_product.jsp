@@ -10,7 +10,7 @@
     </head>
     <body>
         <%ArrayList<Category> cal = (ArrayList<Category>) request.getAttribute("categoryList");%>
-        <h1>Hello World!</h1>
+        
 
         <form action="${pageContext.request.contextPath}/UpdateProduct" method="POST">
             Product Name: <input type="text" name="name" value="<%= ((Product) request.getAttribute("product")).getPname()%>"><br/>
@@ -26,7 +26,7 @@
                 <%}%>
             </select>
             <br/>
-            <input type="hidden" name="ppid" value="<%=request.getParameter("pid")%>">
+            <input type="hidden" name="pid" value="<%=request.getParameter("pid")%>">
             <input type="submit" name="save" value="save"> 
         </form>
     </body>

@@ -5,10 +5,12 @@
 
 package controller.Admin;
 
-import dao.RoleDAO;
-import dao.UserDAO;
+import dao.DAO;
+import dao.ProductDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author apc
  */
-public class UserController extends HttpServlet {
+public class AdminProductList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -26,6 +28,7 @@ public class UserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -38,20 +41,20 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        UserDAO userDAO = new UserDAO();
-        RoleDAO roleDAO = new RoleDAO();
+        ProductDAO productDAO = new ProductDAO();
+        DAO dao = new DAO();
         int pagesize = Integer.parseInt(getServletContext().getInitParameter("PAGE_SIZE"));
         String raw_page = request.getParameter("page");
         if(raw_page == null)
             raw_page = "1";
         int pageindex = Integer.parseInt(raw_page);
-        int count = userDAO.count();
+        int count = productDAO.count();
         int totalpage = (count%pagesize ==0)?count/pagesize:count/pagesize + 1;
         request.setAttribute("pageindex", pageindex);
         request.setAttribute("totalpage", totalpage);
-        request.setAttribute("roles", roleDAO.getAllRoles());
-        request.setAttribute("users", userDAO.getAllUser(pageindex,pagesize));
-        request.getRequestDispatcher("userlist.jsp").forward(request, response);
+        request.setAttribute("categories", dao.getCategory());
+        request.setAttribute("providers", dao.getProvider());
+        request.getRequestDispatcher("AdminProductList.jsp").forward(request, response);
     } 
 
     /** 
@@ -65,7 +68,8 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String sort = request.getParameter("sort");
-        String raw_role = request.getParameter("role");
+        String raw_category = request.getParameter("category");
+        String raw_provider = request.getParameter("provider");
         String raw_status = request.getParameter("status");
         String raw_search = request.getParameter("search");
         int pagesize = Integer.parseInt(getServletContext().getInitParameter("PAGE_SIZE"));
@@ -73,22 +77,24 @@ public class UserController extends HttpServlet {
         if(raw_page ==null)
             raw_page = "1";
         int pageindex = Integer.parseInt(raw_page);
-        Integer role = (raw_role !=null && raw_role.length()>0 && !raw_role.equals("-1"))?new Integer(raw_role):null;
-        Boolean status = !raw_status.equals("-1")?(raw_status.equals("0")?false:true):null;
-        System.out.println(status);
+        Integer category = (raw_category !=null && raw_category.length()>0)?new Integer(raw_category):null;
+        Integer provider = (raw_provider !=null && raw_provider.length()>0)?new Integer(raw_provider):null;
+        Boolean status = (raw_status !=null && raw_status.length()>0)?(raw_status.equals("0")?false:true):null;
         String search = (raw_search !=null && raw_search.length()>0)?raw_search:null;
-        UserDAO userDAO = new UserDAO();
-        RoleDAO roleDAO = new RoleDAO();
-        int count = userDAO.count();
+        ProductDAO productDAO = new ProductDAO();
+        DAO dao = new DAO();
+        int count = productDAO.count();
         int totalpage = (count%pagesize ==0)?count/pagesize:count/pagesize + 1;
         request.setAttribute("sort", sort);
-        request.setAttribute("role", raw_role);
+        request.setAttribute("category", raw_category);
+        request.setAttribute("provider", raw_provider);
         request.setAttribute("status", raw_status);
         request.setAttribute("search", raw_search);
         request.setAttribute("pageindex", pageindex);
         request.setAttribute("totalpage", totalpage);
-        request.setAttribute("roles", roleDAO.getAllRoles());
-        request.setAttribute("users", userDAO.filterUser(sort, role, status, search, pageindex, pagesize));
+        request.setAttribute("categories", dao.getCategory());
+        request.setAttribute("providers", dao.getProvider());
+        request.setAttribute("products", productDAO.getAllProduct(sort, category, provider, status, search, pageindex, pagesize));
         request.getRequestDispatcher("userlist.jsp").forward(request, response);
     }
 

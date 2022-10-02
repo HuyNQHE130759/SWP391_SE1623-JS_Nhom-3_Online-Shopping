@@ -90,7 +90,7 @@
     </servlet>
     <servlet>
         <servlet-name>AdminProductList</servlet-name>
-        <servlet-class>controller.AdminProductList</servlet-class>
+        <servlet-class>controller.Admin.AdminProductList</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
