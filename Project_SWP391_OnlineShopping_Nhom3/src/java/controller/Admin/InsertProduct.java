@@ -88,7 +88,7 @@ public class InsertProduct extends BasedRequiredAuthenticationController1 {
         }else
             status = false;
         dao.insertProduct(pid, name, img, num, price, description, status, cid);
-        response.sendRedirect(request.getContextPath() + "/AdminConsole");
+        response.sendRedirect(request.getContextPath() + "/AdminProductList");
     }
 
     /**
