@@ -34,6 +34,7 @@ public class DAO extends DBContext {
     public void connect() {
         try {
             con = (new DBContext().connection);
+            System.out.println("Success!");
             state = con.createStatement(rs.TYPE_SCROLL_SENSITIVE, rs.CONCUR_UPDATABLE);
         } catch (SQLException e) {
             System.out.println("Error connection: " + e.getMessage());
@@ -257,7 +258,22 @@ public class DAO extends DBContext {
 
         return u;
     }
-
+    
+    public void updateUserInfo(User user) {
+        try {
+            rs = state.executeQuery("UPDATE [dbo].[User]\n"
+                    + "   SET [fullName] = '"+user.getFullName()+"'\n"
+                    + "      ,[address] = '"+user.getAddress()+"'\n"
+                    + "      ,[phone] = '"+user.getPhone()+"'\n"
+                    + "      ,[email] = '"+user.getEmail()+"'\n"
+                    + "      ,[gender] = "+(user.isGender() ? 1 : 0)+"\n"
+                    + " WHERE cid = "+user.getCid());
+            ;
+        } catch (Exception e) {
+            System.out.println("Error Customer " + e.getMessage());
+        }
+    }
+    
     public void insertContact(String cname, String cemail, String Subject, String Message) {
 
         //System.out.println(p_pid);

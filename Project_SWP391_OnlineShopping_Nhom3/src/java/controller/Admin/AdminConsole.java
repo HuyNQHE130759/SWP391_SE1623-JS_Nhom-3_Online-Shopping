@@ -3,25 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.Admin;
 
+import controller.BasedRequiredAuthenticationController1;
+import controller.Product;
 import dal.DAO;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import model.CheckOut;
 
 
-
-public class ReviewController extends HttpServlet {
+public class AdminConsole extends BasedRequiredAuthenticationController1 {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +37,10 @@ public class ReviewController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ReviewController</title>");            
+            out.println("<title>Servlet AdminConsole</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ReviewController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminConsole at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,10 +55,17 @@ public class ReviewController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    DAO dao = new DAO();
+    ArrayList<Product> pl = new ArrayList<>();
+    ArrayList<CheckOut> cl = new ArrayList<>();
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        pl = dao.getProduct();
+        cl = dao.getCheckout();
+        request.setAttribute("productList", pl);
+        request.setAttribute("CheckOutList", cl);
+        request.getRequestDispatcher("AdminConsole.jsp").forward(request, response);
     }
 
     /**
@@ -73,27 +77,9 @@ public class ReviewController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String user_name = request.getParameter("username");
-        int cid = Integer.parseInt(user_name);
-        String pid = request.getParameter("pid");
-        String us_commnent = request.getParameter("comment");
-        int rating = Integer.valueOf(request.getParameter("rating"));
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDateTime now = LocalDateTime.now();
-        String curDateString = now.format(dtf);
-        
-        java.util.Date uDate = null;
-        try {
-            uDate = new SimpleDateFormat("yyyy/MM/dd").parse(curDateString);
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-        java.sql.Date curDate= new java.sql.Date(uDate.getTime()) ;  
-        DAO dao = new DAO();
-        dao.addCommentOfficial(cid, pid, us_commnent, rating, curDate);
-        response.sendRedirect(request.getContextPath() + "/ProductDetail?pid="+pid);
+        processRequest(request, response);
     }
 
     /**

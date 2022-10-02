@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package model;
+
 
 public class Category {
-    private int cateId;
+    private String cateId;
     private String cateName;
     private String image;
     private boolean status;
@@ -14,18 +15,18 @@ public class Category {
     public Category() {
     }
 
-    public Category(int cateId, String cateName, String image, boolean status) {
+    public Category(String cateId, String cateName, String image, boolean status) {
         this.cateId = cateId;
         this.cateName = cateName;
         this.image = image;
         this.status = status;
     }
 
-    public int getCateId() {
+    public String getCateId() {
         return cateId;
     }
 
-    public void setCateId(int cateId) {
+    public void setCateId(String cateId) {
         this.cateId = cateId;
     }
 

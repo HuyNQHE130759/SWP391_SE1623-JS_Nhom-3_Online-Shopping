@@ -5,12 +5,15 @@
  */
 package controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import service.CustomerServices;
 import service.SendMail;
 
@@ -28,7 +31,7 @@ public class ResetPasswordController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -69,7 +72,7 @@ public class ResetPasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                String recipient = request.getParameter("email");
+        String recipient = request.getParameter("email");
         String subject = "Your Password has been reset";
         CustomerServices customerServices = new CustomerServices();
         String newPassword = customerServices.resetCustomerPassword(recipient);
@@ -89,7 +92,7 @@ public class ResetPasswordController extends HttpServlet {
             } catch (Exception ex) {
                 ex.printStackTrace();
                 message = "There were an error: " + ex.getMessage();
-            } finally {
+            }  finally {
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("ResetPassword.jsp").forward(request, response);
             }

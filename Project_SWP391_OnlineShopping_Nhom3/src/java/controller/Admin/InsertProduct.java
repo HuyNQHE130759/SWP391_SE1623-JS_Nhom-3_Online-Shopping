@@ -6,7 +6,7 @@
 package controller.Admin;
 
 import controller.BasedRequiredAuthenticationController1;
-import dao.DAO;
+import dal.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,7 +14,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import entity.Category;
+import model.Category;
+
 
 public class InsertProduct extends BasedRequiredAuthenticationController1 {
 
@@ -88,7 +89,7 @@ public class InsertProduct extends BasedRequiredAuthenticationController1 {
         }else
             status = false;
         dao.insertProduct(pid, name, img, num, price, description, status, cid);
-        response.sendRedirect(request.getContextPath() + "/AdminProductList");
+        response.sendRedirect(request.getContextPath() + "/AdminConsole");
     }
 
     /**

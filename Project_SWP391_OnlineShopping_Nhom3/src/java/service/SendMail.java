@@ -4,6 +4,8 @@ import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+
+
 public class SendMail {
 
     public static void send(String to, String sub,
@@ -18,7 +20,6 @@ public class SendMail {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(user, pass);
             }
