@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Linh Shop</title>
+        <title>TTG Shop</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
@@ -27,19 +27,24 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12 text-right">
-                                <div class="logo_container">
-                                    <a href="#">OCS<span>shop</span></a>
+
+                                <div class="logo pull-left">
+                                    <a href="${pageContext.request.contextPath}/HomePage"><img src="https://webmedia.com.vn/images/2021/07/logo-gearvn.png"  alt="" /></a>
                                 </div>
+
                                 <nav class="navbar">
                                     <ul class="navbar_menu">
                                         <li><a href="#">home</a></li>
                                         <li><a href="#">shop</a></li>
-                                        <li><a href="#">about us</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
                                         <li><a href="#">list user</a></li>
                                     </ul>
                                     <ul class="navbar_user">
                                         <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                        <li><a href="${pageContext.request.contextPath}/Login"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                        <li><a href="${pageContext.request.contextPath}/Login"><i class="fa fa-lock"></i></a></li>
+                                            
+                                        <li><a href="${pageContext.request.contextPath}/AccountInfo"><i class="fa fa-user"></i></a></li>
+                                            
                                         <li class="checkout">
                                             <a href="#">
                                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
