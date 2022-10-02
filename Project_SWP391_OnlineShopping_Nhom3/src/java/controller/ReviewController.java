@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dal.DAO;
+import dao.DAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

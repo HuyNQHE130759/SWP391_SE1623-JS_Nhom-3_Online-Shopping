@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.DAO;
+import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.regex.Matcher;
@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.User;
+import entity.User;
 
 
 @WebServlet(name = "editUserInfo", urlPatterns = {"/editUserInfo"})
