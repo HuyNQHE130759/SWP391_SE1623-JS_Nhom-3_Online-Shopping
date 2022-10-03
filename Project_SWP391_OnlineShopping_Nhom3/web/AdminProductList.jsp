@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>List User</title>
+        <title>List Product</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
@@ -59,7 +59,7 @@
             </header>
 
             <div class="container">
-                <form method="get" action="ListUser">
+                <form method="get" action="AdminProductList">
                     <div class="row" style="margin: 16px 0;">
                         <div style="display: flex; flex-direction: row; align-items: center">
                             <div style="margin-right: 8px">Sort</div>
@@ -80,13 +80,13 @@
                                 <select class="form-select" name="category">
                                     <option value="" selected>---Category---</option>
                                 <c:forEach items="${requestScope.categories}" var="c">
-                                    <option value="${c.cateId}" selected>${c.cateName}</option>
+                                    <option value="${c.cateId}" <c:if test="${requestScope.category eq 'a.pid'}">selected="selected"</c:if>>${c.cateName}</option>
                                 </c:forEach>
                             </select>
                             <select class="form-select" name="provider">
                                 <option value="" selected>---Provider---</option>
                                 <c:forEach items="${requestScope.providers}" var="pr">
-                                    <option value="${pr.provider_id}" selected>${pr.provider_name}</option>
+                                    <option value="${pr.provider_id}" <c:if test="${requestScope.provider eq 'a.pid'}">selected="selected"</c:if>>${pr.provider_name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -122,8 +122,8 @@
                                     <td>${p.price}</td>
                                     <td><img class="two" src="${p.image}" height="150px" width="200px"></td>
                                     <td>${p.description}</td> 
-                                    <td>${p.status}</td>
                                     <td>${p.category.cateName}</td>
+                                    <td>${p.status}</td>
                                     <td>
                                         <c:if test="${p.status eq true}">Enable</c:if>
                                         <c:if test="${p.status eq false}">Disable</c:if>

@@ -90,7 +90,11 @@ public class DAO extends DBContext {
             String strSelect = "select * from Category";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
+<<<<<<< Updated upstream
                 c.setCateId(rs.getInt(1));
+=======
+                c.setCateId(rs.getInt(1));                
+>>>>>>> Stashed changes
                 c.setCateName(rs.getString(2));
                 c.setImage(rs.getString(3));
                 c.setStatus(rs.getBoolean(4));

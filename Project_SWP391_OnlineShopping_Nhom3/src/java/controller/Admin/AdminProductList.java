@@ -8,9 +8,7 @@ package controller.Admin;
 import dao.DAO;
 import dao.ProductDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -52,6 +50,7 @@ public class AdminProductList extends HttpServlet {
         int totalpage = (count%pagesize ==0)?count/pagesize:count/pagesize + 1;
         request.setAttribute("pageindex", pageindex);
         request.setAttribute("totalpage", totalpage);
+        request.setAttribute("products", productDAO.getAllProduct(pageindex, pagesize));
         request.setAttribute("categories", dao.getCategory());
         request.setAttribute("providers", dao.getProvider());
         request.getRequestDispatcher("AdminProductList.jsp").forward(request, response);
