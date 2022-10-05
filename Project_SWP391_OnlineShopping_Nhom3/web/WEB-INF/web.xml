@@ -92,6 +92,30 @@
         <servlet-name>AdminProductList</servlet-name>
         <servlet-class>controller.Admin.AdminProductList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BillDetailController</servlet-name>
+        <servlet-class>controller.Admin.BillDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderList</servlet-name>
+        <servlet-class>controller.Admin.OrderList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderHistory</servlet-name>
+        <servlet-class>controller.OrderHistory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderHistoryFilterDateAsc</servlet-name>
+        <servlet-class>controller.OrderHistoryFilterDateAsc</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderHistoryFilterTotalAsc</servlet-name>
+        <servlet-class>controller.OrderHistoryFilterTotalAsc</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderInformation</servlet-name>
+        <servlet-class>controller.OrderInformation</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -179,6 +203,30 @@
     <servlet-mapping>
         <servlet-name>AdminProductList</servlet-name>
         <url-pattern>/AdminProductList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillDetailController</servlet-name>
+        <url-pattern>/BillDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderList</servlet-name>
+        <url-pattern>/OrderList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistory</servlet-name>
+        <url-pattern>/OrderHistory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryFilterDateAsc</servlet-name>
+        <url-pattern>/OrderHistoryFilterDateAsc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryFilterTotalAsc</servlet-name>
+        <url-pattern>/OrderHistoryFilterTotalAsc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderInformation</servlet-name>
+        <url-pattern>/OrderInformation</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

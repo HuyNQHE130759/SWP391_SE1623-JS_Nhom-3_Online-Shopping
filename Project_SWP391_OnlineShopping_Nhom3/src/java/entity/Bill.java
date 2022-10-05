@@ -5,12 +5,14 @@
  */
 package entity;
 
-import java.util.Date;
 
-
+/**
+ *
+ * @author ngoclong
+ */
 public class Bill {
     private int bid;
-    private Date dateCreate;
+    private String dateCreate;
     private double total;
     private String recName;
     private String recAddress;
@@ -21,7 +23,7 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(int bid, Date dateCreate, double total, String recName, String recAddress, String recPhone, int status, int cid) {
+    public Bill(int bid, String dateCreate, double total, String recName, String recAddress, String recPhone, int status, int cid) {
         this.bid = bid;
         this.dateCreate = dateCreate;
         this.total = total;
@@ -40,11 +42,11 @@ public class Bill {
         this.bid = bid;
     }
 
-    public Date getDateCreate() {
+    public String getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(Date dateCreate) {
+    public void setDateCreate(String dateCreate) {
         this.dateCreate = dateCreate;
     }
 
@@ -95,5 +97,11 @@ public class Bill {
     public void setCid(int cid) {
         this.cid = cid;
     }
+
+    @Override
+    public String toString() {
+        return "Bill{" + "bid=" + bid + ", dateCreate=" + dateCreate + ", total=" + total + ", recName=" + recName + ", recAddress=" + recAddress + ", recPhone=" + recPhone + ", status=" + status + ", cid=" + cid + '}';
+    }
+       
     
 }

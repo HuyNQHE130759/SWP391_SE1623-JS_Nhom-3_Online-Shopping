@@ -17,7 +17,7 @@
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
     </head>
     <body>
-        <div class="super_container">
+        <div class="super_container">         
             <!-- Header -->
 
             <header class="header trans_300">
@@ -36,6 +36,7 @@
                                     <ul class="navbar_menu">
                                         <li><a href="#">home</a></li>
                                         <li><a href="#">shop</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/OrderList" >Order List</a></li>
                                         <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
                                         <li><a href="#">list user</a></li>
                                     </ul>

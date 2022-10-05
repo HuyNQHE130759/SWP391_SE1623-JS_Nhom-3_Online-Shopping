@@ -90,6 +90,11 @@
                             <div class="mainmenu pull-left">
                                 <ul class="nav navbar-nav collapse navbar-collapse">
                                     <li><a href="${pageContext.request.contextPath}/HomePage" class="active">Home</a></li>
+                                    <% if (us != null) {%>
+                                    <li><a href="${pageContext.request.contextPath}/OrderList" >Order List</a></li>
+                                    
+                                    <li><a href="${pageContext.request.contextPath}/OrderHistory?cid=<%=us.getCid()%>&page=1" >Order History</a></li>
+                                    <% } %>
                                     <li class="dropdown"><a href="#">View Products<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="${pageContext.request.contextPath}/Product">List Our Products</a></li>
