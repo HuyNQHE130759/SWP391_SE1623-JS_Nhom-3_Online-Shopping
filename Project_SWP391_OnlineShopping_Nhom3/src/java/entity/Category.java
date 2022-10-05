@@ -5,10 +5,7 @@
  */
 package entity;
 
-/**
- *
- * @author HuyNQ
- */
+
 public class Category {
     private int cateId;
     private String cateName;

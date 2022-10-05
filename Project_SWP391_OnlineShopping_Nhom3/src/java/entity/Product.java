@@ -1,14 +1,11 @@
-    /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package entity;
 
-/**
- *
- * @author HuyNQ
- */
+
 public class Product {
     private int pid;
     private String pname;
@@ -20,10 +17,6 @@ public class Product {
     private String cateId;
     private Category category;
     private Provider provider;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     
     public Product() {
     }
@@ -42,20 +35,6 @@ public class Product {
     public Category getCategory() {
         return category;
     }
-<<<<<<< Updated upstream
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Provider getProvider() {
-        return provider;
-    }
-
-    public void setProvider(Provider provider) {
-        this.provider = provider;
-    }
-=======
 
     public void setCategory(Category category) {
         this.category = category;
@@ -69,8 +48,7 @@ public class Product {
         this.provider = provider;
     }
 
-    
->>>>>>> Stashed changes
+
 
     public int getPid() {
         return pid;

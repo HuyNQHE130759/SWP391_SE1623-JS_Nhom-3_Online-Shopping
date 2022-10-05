@@ -14,10 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import entity.User;
 
-/**
- *
- * @author HuyNQ
- */
+
 public class RemoveCartController extends HttpServlet {
 
     /**

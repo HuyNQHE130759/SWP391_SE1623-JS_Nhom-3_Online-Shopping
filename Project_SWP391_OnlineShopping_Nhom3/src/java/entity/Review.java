@@ -7,10 +7,7 @@ package entity;
 
 import java.sql.Date;
 
-/**
- *
- * @author HuyNQ
- */
+
 public class Review {
     private int cid;
     private String pid;

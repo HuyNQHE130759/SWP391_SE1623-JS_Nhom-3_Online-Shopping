@@ -8,10 +8,7 @@ package service;
 import dao.DAO;
 import java.util.Random;
 
-/**
- *
- * @author HuyNQ
- */
+
 public class CustomerServices {
 
     public String resetCustomerPassword(String email) {

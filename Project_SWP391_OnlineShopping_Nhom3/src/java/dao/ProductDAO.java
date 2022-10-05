@@ -118,7 +118,7 @@ public class ProductDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Product p = new Product();
-                p.setPid(rs.getInt("pid"));
+//                p.setPid(rs.getInt("pid"));
                 p.setPname(rs.getString("pname"));
                 p.setQuantity(rs.getInt("quantity"));
                 p.setPrice(rs.getDouble("price"));
@@ -126,13 +126,13 @@ public class ProductDAO extends DBContext {
                 p.setDescription(rs.getString("description"));
                 p.setStatus(rs.getBoolean("status"));
                 Category c = new Category();
-                c.setCateId(rs.getInt("cateId"));
+//                c.setCateId(rs.getInt("cateId"));
                 c.setCateName(rs.getString("cateName"));
-                p.setCategory(c);
+//                p.setCategory(c);
                 Provider pr = new Provider();
                 pr.setProvider_id(rs.getInt("provider_id"));
                 pr.setProvider_name(rs.getString("provider_name"));
-                p.setProvider(pr);
+//                p.setProvider(pr);
                 list.add(p);
             }
             rs.close();

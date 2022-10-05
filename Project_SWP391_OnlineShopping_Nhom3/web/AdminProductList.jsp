@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>List Product</title>
+        <title>List User</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
@@ -15,6 +15,8 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link rel="stylesheet" type="text/css" href="styles/main_styles.css">
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
+        <link href="css/pagger.css" rel="stylesheet" type="text/css"/>
+        <script src="js/pagger.js" type="text/javascript"></script>
     </head>
     <body>
 
@@ -80,13 +82,13 @@
                                 <select class="form-select" name="category">
                                     <option value="" selected>---Category---</option>
                                 <c:forEach items="${requestScope.categories}" var="c">
-                                    <option value="${c.cateId}" <c:if test="${requestScope.category eq 'a.pid'}">selected="selected"</c:if>>${c.cateName}</option>
+                                    <option value="${c.cateId}" <c:if test="${requestScope.category eq c.cateId}">selected="selected"</c:if>>${c.cateName}</option>
                                 </c:forEach>
                             </select>
                             <select class="form-select" name="provider">
                                 <option value="" selected>---Provider---</option>
                                 <c:forEach items="${requestScope.providers}" var="pr">
-                                    <option value="${pr.provider_id}" <c:if test="${requestScope.provider eq 'a.pid'}">selected="selected"</c:if>>${pr.provider_name}</option>
+                                    <option value="${pr.provider_id}" <c:if test="${requestScope.provider eq pr.provider_id}">selected="selected"</c:if>>${pr.provider_name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -123,14 +125,13 @@
                                     <td><img class="two" src="${p.image}" height="150px" width="200px"></td>
                                     <td>${p.description}</td> 
                                     <td>${p.category.cateName}</td>
-                                    <td>${p.status}</td>
                                     <td>
                                         <c:if test="${p.status eq true}">Enable</c:if>
                                         <c:if test="${p.status eq false}">Disable</c:if>
                                         </td> 
                                         <td style="display: flex; flex-direction: row;">
-                                            <a href="${pageContext.request.contextPath}/RemoveProduct?pid=${p.pid}"> <input type="button" value="Delete"> </a>
                                             <a href="${pageContext.request.contextPath}/UpdateProduct?pid=${p.pid}"> <input type="button" value="Update"> </a>
+                                            <a href="${pageContext.request.contextPath}/RemoveProduct?pid=${p.pid}"> <input type="button" value="Delete"> </a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -141,7 +142,7 @@
                 <script>
                     render('bot_pagger',${requestScope.pageindex}, ${requestScope.totalpage}, 1);
                 </script>
-                <button style="float: right" type="button" class="btn btn-primary">Add new</button>
+                <a href="${pageContext.request.contextPath}/InsertProduct"> <input type="button" value="Add new"> </a>
             </div>
 
 

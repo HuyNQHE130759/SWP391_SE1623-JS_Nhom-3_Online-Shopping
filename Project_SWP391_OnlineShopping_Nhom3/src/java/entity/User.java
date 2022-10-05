@@ -8,34 +8,49 @@ package entity;
 import java.util.Date;
 
 public class User {
-
     private int cid;
     private String fullName;
     private String address;
     private String phone;
-    private String email;
     private String username;
     private String password;
     private boolean status;
     private boolean male;
+    private String email;
     private String role;
+    private boolean gender;
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
 
     public User() {
     }
 
-    public User(int cid, String fullName, String address, String phone, String email, String username, String password, boolean status, boolean gender, String role) {
+    public User(int cid, String fullName, String address, String phone, String username, String password, boolean status) {
         this.cid = cid;
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
-        this.email = email;
         this.username = username;
         this.password = password;
         this.status = status;
-        this.male = male;
-        this.role = role;
     }
-
+    public User(int cid, String fullName, String address, String phone, String username, String password, String email, boolean status, boolean gender) {
+        this.cid = cid;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.status = status;
+        this.gender = gender;
+    }
 
     public int getCid() {
         return cid;
@@ -125,3 +140,5 @@ public class User {
         return isStatus() ? "Enable" : "Disable";
     }
 }
+
+   

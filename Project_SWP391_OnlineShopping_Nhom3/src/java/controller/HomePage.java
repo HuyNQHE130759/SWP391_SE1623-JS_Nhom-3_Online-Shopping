@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author HuyNQ
+ * @author BVLT
  */
 public class HomePage extends HttpServlet {
 
@@ -59,10 +59,9 @@ public class HomePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = new DAO();
-        ArrayList<Product> pl = new ArrayList<>();
-        pl = dao.getAllProduct();
-        request.setAttribute("ProductList", pl);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        ArrayList<Product> pl = dao.getAllProduct();
+        request.setAttribute("productList", pl);
+        request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
 
     /**
