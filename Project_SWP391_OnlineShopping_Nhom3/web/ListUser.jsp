@@ -36,7 +36,7 @@
                                         <li><a href="#">home</a></li>
                                         <li><a href="#">shop</a></li>
                                         <li><a href="#">about us</a></li>
-                                        <li><a href="#">list user</a></li>
+                                        <li><a href="ListUser">list user</a></li>
                                     </ul>
                                     <ul class="navbar_user">
                                         <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>

@@ -491,22 +491,27 @@ public class DAO extends DBContext {
     }
 
     public ArrayList<User> getListUser(String role, String status, String sort) {
+        
         ArrayList<User> list = new ArrayList<>();
         try {
+            // query to get all User from DB
             String query = "select * "
                     + "from [User] u "
                     + "left join [Role] r on u.roleid = r.roleid ";
-            
+            // check cac truong hop 
+            // role va status blank
             if(role.isEmpty() && !status.isEmpty()) {
                 query += "where status = " + "'" + status + "' ";
             }
+            // role co gia tri va status = blank
             if(!role.isEmpty() && status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' ";
             }
+            // ca role va status deu co gia tri
             if(!role.isEmpty() && !status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
             }
-            
+            //order by
             query += "order by " + "'" + sort + "' ";
             
             PreparedStatement ps = con.prepareStatement(query);
