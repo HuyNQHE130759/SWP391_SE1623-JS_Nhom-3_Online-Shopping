@@ -19,7 +19,7 @@
     <body>
         <!-- Header -->
 
-        <header class="header trans_300">
+        <header class="trans_300">
             <!-- Main Navigation -->
 
             <div class="main_nav_container">

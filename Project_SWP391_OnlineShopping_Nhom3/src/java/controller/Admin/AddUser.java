@@ -4,6 +4,8 @@
  */
 package controller.Admin;
 
+import dao.DAO;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 /**
  *
@@ -59,7 +62,55 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            DAO dao = new DAO();
+            String msg = "";
+            boolean flag = true;
+            String username = request.getParameter("userName");
+            String password = request.getParameter("password");
+            String repeatPassword = request.getParameter("repeatPassword");
+            String fullName = request.getParameter("fullName");
+            String address = request.getParameter("address");
+            boolean isMale = request.getParameter("gender").equals("1");
+            String email = request.getParameter("email");
+            String phone = request.getParameter("phone");
+            String rolename = request.getParameter("role");
+            if (dao.userNameIsExist(username)) {
+                msg = "This username has already existed!!!";
+                flag = false;
+            }
+            if (!password.equals(repeatPassword)) {
+                msg = "Repeat password is not correct";
+                flag = false;
+            }
+            if (dao.emailIsExist(email)) {
+                msg = "This email has already existed!!!";
+                flag = false;
+            }
+            
+            if (flag) {
+                User u = new User();
+                u.setUsername(username);
+                u.setPassword(password);
+                u.setRole(rolename);
+                u.setFullName(fullName);
+                u.setAddress(address);
+                u.setPhone(phone);
+                u.setMale(isMale);
+                u.setEmail(email);
+                dao.addUser(u);
+                //msg = "Add user successfully!!!"; 
+                response.sendRedirect("ListUser");
+            }
+            else {
+                request.setAttribute("msg", msg);
+                response.sendRedirect("AddUser");
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
     }
 
     /**

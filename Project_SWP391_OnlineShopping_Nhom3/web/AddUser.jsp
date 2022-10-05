@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,80 +20,58 @@
         <div class="super_container">
             <!-- Header -->
 
-            <header class="trans_300">
-                <!-- Main Navigation -->
-
-                <div class="main_nav_container">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12 text-right">
-                                <div class="logo_container">
-                                    <a href="#">OCS<span>shop</span></a>
-                                </div>
-                                <nav class="navbar">
-                                    <ul class="navbar_menu">
-                                        <li><a href="#">home</a></li>
-                                        <li><a href="#">shop</a></li>
-                                        <li><a href="#">about us</a></li>
-                                        <li><a href="ListUser">list user</a></li>
-                                    </ul>
-                                    <ul class="navbar_user">
-                                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                        <li><a href="${pageContext.request.contextPath}/Login"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                                        <li class="checkout">
-                                            <a href="#">
-                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="hamburger_container">
-                                        <i class="fa fa-bars" aria-hidden="true"></i>
-                                    </div>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <jsp:include page="HeaderCustom.jsp"></jsp:include>
 
             <div class="container" style="margin-top: 16px;">
                 <form method="post" action="AddUser" style="margin: auto; width: 50%">
                     <div class="form-group">
                         <label for="userName">Username</label>
-                        <input type="text" class="form-control" id="userName" placeholder="Enter username">
+                        <input type="text" class="form-control" name="userName" placeholder="Enter username" required="true">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="repeatPassword">Repeat Password</label>
+                        <input type="password" class="form-control" name="repeatPassword" placeholder="Repeat Password" required="true">
                     </div>
                     <div class="form-group">
                         <label for="fullName">Full name</label>
-                        <input type="text" class="form-control" id="fullName" placeholder="Enter full name">
+                        <input type="text" class="form-control" name="fullName" placeholder="Enter full name">
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender</label>
-                        <select class="form-control" id="gender">
+                        <select class="form-control" name="gender">
                             <option value="1">Male</option>
                             <option value="0">Female</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        <input type="email" class="form-control" name="email" placeholder="Enter email" required="true">
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="tel" class="form-control" id="phone" placeholder="Enter phone">
+                        <input type="tel" class="form-control" name="phone" placeholder="Enter phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" name="address" placeholder="Enter address">
                     </div>
                     <div class="form-group">
                         <label for="role">Role</label>
-                        <select class="form-control" id="role">
+                        <select class="form-control" name="role">
                             <option value="User">User</option>
                             <option value="Admin">Admin</option>
                             <option value="Provider">Provider</option>
                             <option value="Manager">Manager</option>
                         </select>
                     </div>
+                    <c:if test="${flag == false}">
+                        <small id="error" class="form-text" style="color: red">${msg}</small>
+                    </c:if>
+                    
                     <button type="submit" class="btn btn-primary" style="margin: 0 auto">Save</button>
                 </form>
 
@@ -100,32 +79,7 @@
 
 
             <!-- Footer -->
-            <footer class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
-                                <ul class="footer_nav">
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">FAQs</a></li>
-                                    <li><a href="contact.html">Contact us</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            <jsp:include page="FooterCustom.jsp"></jsp:include>
 
         </div>
 
