@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import model.Cart;
 import model.Category;
 import model.CheckOut;
@@ -491,7 +490,7 @@ public class DAO extends DBContext {
     }
 
     public ArrayList<User> getListUser(String role, String status, String sort) {
-        
+
         ArrayList<User> list = new ArrayList<>();
         try {
             // query to get all User from DB
@@ -500,23 +499,23 @@ public class DAO extends DBContext {
                     + "left join [Role] r on u.roleid = r.roleid ";
             // check cac truong hop 
             // role va status blank
-            if(role.isEmpty() && !status.isEmpty()) {
+            if (role.isEmpty() && !status.isEmpty()) {
                 query += "where status = " + "'" + status + "' ";
             }
             // role co gia tri va status = blank
-            if(!role.isEmpty() && status.isEmpty()) {
+            if (!role.isEmpty() && status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' ";
             }
             // ca role va status deu co gia tri
-            if(!role.isEmpty() && !status.isEmpty()) {
+            if (!role.isEmpty() && !status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
             }
             //order by
             query += "order by " + "'" + sort + "' ";
-            
+
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rslt = ps.executeQuery();
-            while(rslt.next()) {
+            while (rslt.next()) {
                 User u = new User();
                 u.setCid(rslt.getInt("cid"));
                 u.setFullName(rslt.getString("fullName"));
@@ -528,15 +527,50 @@ public class DAO extends DBContext {
                 u.setRole(rslt.getString("rolename"));
                 u.setStatus(rslt.getBoolean("status"));
                 list.add(u);
-               
+
             }
             return list;
         } catch (SQLException e) {
         }
         return null;
-    }; 
+    }
 
-    public static void main(String[] args) {
-        System.out.println(new DAO().checkLogin("Huy", "123"));
+    ; 
+    
+    public void addUser(User u) {
+        try {
+            String query = "Insert into [User] values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, getLastUserId() + 1);
+            ps.setInt(2, u.get)
+        } catch (Exception e) {
+        }
+    }
+
+    public int getLastUserId() {
+        try {
+            String query = "select top 1 cid from [User] order by cid desc";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rslt = ps.executeQuery();
+            if(rslt.next()) {
+                return rslt.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+    
+    public String getRoleName(int roleId) {
+        try {
+            String query = "select rolename from [Role] where roleid = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, roleId);
+            ResultSet rslt = ps.executeQuery();
+            if(rslt.next()) {
+                return rslt.getString(1);
+            }
+        } catch (SQLException e) {
+        }
+        return "";
     }
 }
