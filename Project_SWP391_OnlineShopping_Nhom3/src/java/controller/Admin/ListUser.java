@@ -1,6 +1,6 @@
 package controller.Admin;
 
-import dal.DAO;
+import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import model.User;
+import entity.User;
 
 @WebServlet(name = "ListUser", urlPatterns = {"/ListUser"})
 public class ListUser extends HttpServlet {

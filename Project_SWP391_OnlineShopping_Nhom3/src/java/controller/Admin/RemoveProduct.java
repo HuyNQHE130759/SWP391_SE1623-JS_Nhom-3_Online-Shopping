@@ -6,7 +6,7 @@
 package controller.Admin;
 
 import controller.BasedRequiredAuthenticationController1;
-import dal.DAO;
+import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,10 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author BVLT
- */
+
 public class RemoveProduct extends BasedRequiredAuthenticationController1 {
 
     /**

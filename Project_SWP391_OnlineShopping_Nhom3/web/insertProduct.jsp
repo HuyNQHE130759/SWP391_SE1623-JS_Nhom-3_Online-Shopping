@@ -1,10 +1,4 @@
-<%-- 
-    Document   : insertProduct.jsp
-    Created on : Nov 19, 2020, 2:07:32 AM
-    Author     : BVLT
---%>
-
-<%@page import="model.Category"%>
+<%@page import="entity.Category"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package entity;
 
 import java.sql.Date;
 
-/**
- *
- * @author BVLT
- */
+
 public class Review {
     private int cid;
     private String pid;

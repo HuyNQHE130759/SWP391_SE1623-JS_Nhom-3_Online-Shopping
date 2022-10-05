@@ -6,7 +6,7 @@
 package controller.Admin;
 
 import controller.BasedRequiredAuthenticationController1;
-import dal.DAO;
+import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,13 +14,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Category;
-import model.Product;
+import entity.Category;
+import entity.Product;
 
-/**
- *
- * @author BVLT
- */
+
 public class UpdateProduct extends BasedRequiredAuthenticationController1 {
 
     /**

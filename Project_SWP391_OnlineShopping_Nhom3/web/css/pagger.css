@@ -1,0 +1,21 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 14, 2022, 8:37:06 AM
+    Author     : Ngo Tung Son
+*/
+.pagger span
+{
+    padding: 2px;
+    font-weight: bold;
+}
+.pagger a 
+{
+    border-style: solid;
+    border-color: blue;
+    border-width: 1px;
+    padding: 2px;
+    margin-left: 2px;
+}

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : slider
-    Created on : Nov 7, 2020, 12:10:28 AM
-    Author     : BVLT
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

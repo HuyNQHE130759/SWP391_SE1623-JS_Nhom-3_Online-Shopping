@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package entity;
 
-/**
- *
- * @author BVLT
- */
+
 public class Cart {
     private int cID;
     private int cuID;

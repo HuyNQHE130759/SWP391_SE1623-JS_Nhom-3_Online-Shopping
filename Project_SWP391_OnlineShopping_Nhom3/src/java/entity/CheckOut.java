@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package entity;
 
 import java.util.Date;
 
-/**
- *
- * @author BVLT
- */
+
 public class CheckOut {
     private int BId;
     private int CId;

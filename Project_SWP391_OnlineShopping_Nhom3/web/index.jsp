@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : Nov 9, 2020, 9:48:16 PM
-    Author     : BVLT
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

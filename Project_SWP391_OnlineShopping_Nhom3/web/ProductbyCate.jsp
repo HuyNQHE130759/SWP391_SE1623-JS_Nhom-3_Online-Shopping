@@ -1,4 +1,4 @@
-<%@page import="model.Product"%>
+<%@page import="entity.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,21 +15,21 @@
         <link href="css/animate.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link href="css/responsive.css" rel="stylesheet">
-        
+
     </head>
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
 
-        <section id="advertisement">
-            <div class="container">
-                <img src="images/shop/advertisement.PNG" alt="" />
-            </div>
-        </section>
+            <section id="advertisement">
+                <div class="container">
+                    <img src="images/shop/advertisement.PNG" alt="" />
+                </div>
+            </section>
 
-        <section>
-            <div class="container">
-                <div class="row">
+            <section>
+                <div class="container">
+                    <div class="row">
                     <%@include file="category.jsp" %>
                     <% ArrayList<Product> pl = (ArrayList<Product>) request.getAttribute("ProductList"); %>
                     <div class="col-sm-9 padding-right">
@@ -42,13 +42,13 @@
                                         <div class="productinfo text-center">
                                             <img src="<%=pl.get(i).getImage()%>" alt="" />
                                             <h2>$<%=pl.get(i).getPrice()%></h2>
-                                            <p><%=pl.get(i).getPname()%></p>
+                                            <p><a href="${pageContext.request.contextPath}/ProductDetail?pid=<%=pl.get(i).getPid()%>"><%=pl.get(i).getPname()%></a></p>
                                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </div>
                                         <div class="product-overlay">
                                             <div class="overlay-content">
-                                                <h2><%=pl.get(i).getPrice()%></h2>
-                                                <p><%=pl.get(i).getPname()%></p>
+                                                <h2>$<%=pl.get(i).getPrice()%></h2>
+                                                <p><a href="${pageContext.request.contextPath}/ProductDetail?pid=<%=pl.get(i).getPid()%>"><%=pl.get(i).getPname()%></a></p>
                                                 <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                             </div>
                                         </div>
@@ -56,7 +56,7 @@
                                     <div class="choose">
                                         <ul class="nav nav-pills nav-justified">
                                             <li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                            
+
                                         </ul>
                                     </div>
                                 </div>

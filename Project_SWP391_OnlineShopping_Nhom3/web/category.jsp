@@ -1,11 +1,5 @@
-<%-- 
-    Document   : category
-    Created on : Nov 7, 2020, 12:08:54 AM
-    Author     : BVLT
---%>
-
-<%@page import="dal.DAO"%>
-<%@page import="model.Category"%>
+<%@page import="dao.DAO"%>
+<%@page import="entity.Category"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,13 +14,18 @@
         <link href="css/animate.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link href="css/responsive.css" rel="stylesheet">
+        <style>
+            h4:hover {
+                background-color: #d4d4d4;
+            }
+        </style>
     </head> 
     <body>
         <div class="col-sm-3">
             <div class="left-sidebar">
                 <h2>Category</h2>
                 <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                    
+
                     <% ArrayList<Category> cl = (ArrayList<Category>) request.getAttribute("categoryList");
                         DAO dao = new DAO();
                         cl = dao.getCategory();
