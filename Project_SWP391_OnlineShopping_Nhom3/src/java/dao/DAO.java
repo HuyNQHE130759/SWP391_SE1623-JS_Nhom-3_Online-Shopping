@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import entity.Cart;
 import entity.Category;
 import entity.CheckOut;
@@ -620,7 +619,7 @@ public class DAO extends DBContext {
             String query = "Insert into [User] values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, getLastUserId() + 1);
-            ps.setInt(2, u.get)
+            ps.setInt(2, getRoleId(u.getRole()));
         } catch (Exception e) {
         }
     }
@@ -638,17 +637,17 @@ public class DAO extends DBContext {
         return 0;
     }
     
-    public String getRoleName(int roleId) {
+    public int getRoleId(String rolename) {
         try {
-            String query = "select rolename from [Role] where roleid = ?";
+            String query = "select roleid from [Role] where rolename = ?";
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, roleId);
+            ps.setString(1, rolename);
             ResultSet rslt = ps.executeQuery();
             if(rslt.next()) {
-                return rslt.getString(1);
+                return rslt.getInt(1);
             }
         } catch (SQLException e) {
         }
-        return "";
+        return 1;
     }
 }

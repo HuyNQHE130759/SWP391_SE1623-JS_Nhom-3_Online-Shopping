@@ -87,10 +87,10 @@
                     <div class="form-group">
                         <label for="role">Role</label>
                         <select class="form-control" id="role">
-                            <option value="1">User</option>
-                            <option value="2">Admin</option>
-                            <option value="3">Provider</option>
-                            <option value="4">Manager</option>
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Provider">Provider</option>
+                            <option value="Manager">Manager</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary" style="margin: 0 auto">Save</button>
