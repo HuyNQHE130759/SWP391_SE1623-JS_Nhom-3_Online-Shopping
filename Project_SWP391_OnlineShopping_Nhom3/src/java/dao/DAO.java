@@ -30,6 +30,12 @@ public class DAO extends DBContext {
     public DAO() {
         connect();
     }
+    
+    public static void main(String[] args) {
+        DAO dao = new DAO();
+        dao.connect();
+        System.out.println("My ASS");
+    }
 
     public void connect() {
         try {
