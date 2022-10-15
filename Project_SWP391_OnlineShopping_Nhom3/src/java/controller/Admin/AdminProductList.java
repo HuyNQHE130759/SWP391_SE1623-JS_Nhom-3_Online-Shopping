@@ -53,7 +53,7 @@ public class AdminProductList extends HttpServlet {
         request.setAttribute("products", productDAO.getAllProduct(pageindex, pagesize));
         request.setAttribute("categories", dao.getCategory());
         request.setAttribute("providers", dao.getProvider());
-        request.getRequestDispatcher("AdminProductList.jsp").forward(request, response);
+        request.getRequestDispatcher("../AdminProductList.jsp").forward(request, response);
     } 
 
     /** 
@@ -94,7 +94,7 @@ public class AdminProductList extends HttpServlet {
         request.setAttribute("categories", dao.getCategory());
         request.setAttribute("providers", dao.getProvider());
         request.setAttribute("products", productDAO.getAllProduct(sort, category, provider, status, search, pageindex, pagesize));
-        request.getRequestDispatcher("AdminProductList.jsp").forward(request, response);
+        request.getRequestDispatcher("../AdminProductList.jsp").forward(request, response);
     }
 
     /** 

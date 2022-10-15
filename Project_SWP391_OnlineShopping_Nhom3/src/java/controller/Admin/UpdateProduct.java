@@ -98,7 +98,7 @@ public class UpdateProduct extends BasedRequiredAuthenticationController1 {
 
         DAO dao = new DAO();
         dao.updateProduct(pid, pname, pquantity, pprice, pimage, pdescription, status, CateID);
-        response.sendRedirect(request.getContextPath() + "/AdminProductList");
+        response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
     }
 
     /**

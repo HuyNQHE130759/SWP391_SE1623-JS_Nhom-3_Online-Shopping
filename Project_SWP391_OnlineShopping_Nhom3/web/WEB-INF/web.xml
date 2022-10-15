@@ -96,6 +96,10 @@
         <servlet-name>OrderList</servlet-name>
         <servlet-class>controller.Admin.OrderList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminProductDetail</servlet-name>
+        <servlet-class>controller.Admin.AdminProductDetail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -182,11 +186,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminProductList</servlet-name>
-        <url-pattern>/AdminProductList</url-pattern>
+        <url-pattern>/AdminProduct/list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>OrderList</servlet-name>
         <url-pattern>/OrderList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminProductDetail</servlet-name>
+        <url-pattern>/AdminProduct/detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

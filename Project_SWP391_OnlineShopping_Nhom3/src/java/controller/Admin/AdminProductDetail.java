@@ -1,28 +1,26 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller.Admin;
 
-import controller.BasedRequiredAuthenticationController1;
 import dao.DAO;
+import entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import entity.Category;
 
-
-public class InsertProduct extends BasedRequiredAuthenticationController1 {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+/**
+ *
+ * @author apc
+ */
+public class AdminProductDetail extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -30,33 +28,34 @@ public class InsertProduct extends BasedRequiredAuthenticationController1 {
      */
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     DAO dao = new DAO();
+    DAO dao = new DAO();
     @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        String pid = request.getParameter("pid");
         request.setAttribute("categoryList", dao.getCategory());
-        request.getRequestDispatcher("insertProduct.jsp").forward(request, response);
-    }
+        request.setAttribute("product", dao.getProductById(pid));
+        request.setAttribute("pid", pid);
+        request.getRequestDispatcher("../AdminProductDetail.jsp").forward(request,response);
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
         String pid = request.getParameter("id");
         String name = request.getParameter("name");
         int num = Integer.parseInt(request.getParameter("quantity"));
@@ -74,9 +73,8 @@ public class InsertProduct extends BasedRequiredAuthenticationController1 {
         response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
@@ -84,5 +82,4 @@ public class InsertProduct extends BasedRequiredAuthenticationController1 {
         return "Short description";
     }// </editor-fold>
 
-    
 }
