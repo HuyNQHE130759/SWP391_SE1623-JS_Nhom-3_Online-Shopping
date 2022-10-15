@@ -61,7 +61,7 @@
             </header>
 
             <div class="container">
-                <form method="get" action="AdminProductList">
+                <form method="POST" action="AdminProductList">
                     <div class="row" style="margin: 16px 0;">
                         <div style="display: flex; flex-direction: row; align-items: center">
                             <div style="margin-right: 8px">Sort</div>
@@ -75,9 +75,9 @@
                             <div style="display: flex; flex-direction: row; align-items: center; margin-left: 20%;">
                                 <div style="margin-right: 8px">Filter</div>
                                 <select class="form-select" name="selectStatus">
-                                    <option value="" selected >---Status---</option>
-                                    <option value="1">Enable</option>
-                                    <option value="0">Disable</option>
+                                    <option value="" <c:if test="${requestScope.status eq ''}">selected="selected"</c:if> >---Status---</option>
+                                    <option value="1"<c:if test="${requestScope.status eq 1}">selected="selected"</c:if>>Enable</option>
+                                    <option value="0"<c:if test="${requestScope.status eq 0}">selected="selected"</c:if>>Disable</option>
                                 </select>
                                 <select class="form-select" name="category">
                                     <option value="" selected>---Category---</option>

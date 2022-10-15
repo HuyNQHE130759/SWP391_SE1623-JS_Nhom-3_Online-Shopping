@@ -8,9 +8,7 @@ package controller.Admin;
 import dao.DAO;
 import dao.ProductDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -96,7 +94,7 @@ public class AdminProductList extends HttpServlet {
         request.setAttribute("categories", dao.getCategory());
         request.setAttribute("providers", dao.getProvider());
         request.setAttribute("products", productDAO.getAllProduct(sort, category, provider, status, search, pageindex, pagesize));
-        request.getRequestDispatcher("userlist.jsp").forward(request, response);
+        request.getRequestDispatcher("AdminProductList.jsp").forward(request, response);
     }
 
     /** 
