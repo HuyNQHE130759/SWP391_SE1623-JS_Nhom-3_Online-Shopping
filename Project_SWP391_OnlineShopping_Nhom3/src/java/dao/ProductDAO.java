@@ -156,5 +156,48 @@ public class ProductDAO extends DBContext {
         }
         return -1;
     }
+    
+    public void insert(String pname, String img, float price, String description, boolean status, int cateID){
+         try {
+            String sql = "INSERT INTO [Product]([pname],[quantity],[price],[image],[description],[status],[cateId]) \n"
+                    + "VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, pname);
+            stm.setInt(2, 0);
+            stm.setFloat(3, price);
+            stm.setString(4, img);
+            stm.setString(5, description);
+            stm.setBoolean(6, status);
+            stm.setInt(7, cateID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public void update(int pid, String pname, String img, float price, String description, boolean status, int cateID){
+         try {
+            String sql = "UPDATE [dbo].[Product]\n"
+                    + "   SET \n"
+                    + "      [pname] = ?\n"
+                    + "      ,[price] = ?\n"
+                    + "      ,[image] = ?\n"
+                    + "      ,[description] = ?\n"
+                    + "      ,[status] = ?\n"
+                    + "      ,[cateId] = ?\n"
+                    + " WHERE [pid] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(7, pid);
+            stm.setString(1, pname);
+            stm.setFloat(2, price);
+            stm.setString(3, img);
+            stm.setString(4, description);
+            stm.setBoolean(5, status);
+            stm.setInt(6, cateID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
 }
 

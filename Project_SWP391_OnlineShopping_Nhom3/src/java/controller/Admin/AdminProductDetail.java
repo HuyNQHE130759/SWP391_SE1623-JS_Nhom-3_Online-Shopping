@@ -6,6 +6,7 @@
 package controller.Admin;
 
 import dao.DAO;
+import dao.ProductDAO;
 import entity.Product;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -36,6 +37,7 @@ public class AdminProductDetail extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     DAO dao = new DAO();
+    ProductDAO productDAO = new ProductDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
@@ -56,20 +58,22 @@ public class AdminProductDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String pid = request.getParameter("id");
-        String name = request.getParameter("name");
-        int num = Integer.parseInt(request.getParameter("quantity"));
-        int price = Integer.parseInt(request.getParameter("money"));
-        String img = request.getParameter("Image");
-        String description = request.getParameter("description");
-        String cid = request.getParameter("cateID");
-        String Sstatus = request.getParameter("status");
-        boolean status;
-        if(Sstatus != null){
-            status = true;
-        }else
-            status = false;
-        dao.insertProduct(pid, name, img, num, price, description, status, cid);
+        String raw_pid = request.getParameter("pid");
+        String raw_pname = request.getParameter("pname");
+        String raw_price = request.getParameter("price");
+        String raw_img = request.getParameter("image");
+        String raw_description = request.getParameter("description");
+        String raw_cid = request.getParameter("category");
+        String raw_status = request.getParameter("status");
+        boolean status = Boolean.parseBoolean(raw_status);
+        float price = Float.parseFloat(raw_price);
+        int cid = Integer.parseInt(raw_cid);
+        Integer pid = (raw_pid !=null && raw_pid.length()>0)?new Integer(raw_pid):null;
+        if (pid != null) {
+            productDAO.insert(raw_pname, raw_img, price, raw_description, status, cid);
+        }else{
+            productDAO.update(pid, raw_pname, raw_img, price, raw_description, status, cid);
+        }
         response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
     }
 
