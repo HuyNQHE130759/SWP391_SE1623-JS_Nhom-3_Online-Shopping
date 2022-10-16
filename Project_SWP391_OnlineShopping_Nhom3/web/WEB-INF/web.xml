@@ -115,6 +115,20 @@
     <servlet>
         <servlet-name>CategoryDetail</servlet-name>
         <servlet-class>controller.Admin.CategoryDetail</servlet-class>
+        <servlet-name>FeedbackList</servlet-name>
+        <servlet-class>controller.Admin.FeedbackList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FeedbackDetail</servlet-name>
+        <servlet-class>controller.Admin.FeedbackDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddFeedback</servlet-name>
+        <servlet-class>controller.Admin.AddFeedback</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteFeedback</servlet-name>
+        <servlet-class>controller.Admin.DeleteFeedback</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -227,6 +241,26 @@
     <servlet-mapping>
         <servlet-name>CategoryDetail</servlet-name>
         <url-pattern>/Category/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderList</servlet-name>
+        <url-pattern>/OrderList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FeedbackList</servlet-name>
+        <url-pattern>/FeedbackList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FeedbackDetail</servlet-name>
+        <url-pattern>/FeedbackDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddFeedback</servlet-name>
+        <url-pattern>/AddFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteFeedback</servlet-name>
+        <url-pattern>/DeleteFeedback</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

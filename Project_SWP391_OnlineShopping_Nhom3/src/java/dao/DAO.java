@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import entity.Cart;
 import entity.Category;
 import entity.CheckOut;
@@ -31,7 +30,7 @@ public class DAO extends DBContext {
     public DAO() {
         connect();
     }
-
+    
     public void connect() {
         try {
             con = (new DBContext().connection);
@@ -88,7 +87,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Category";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                c.setCateId(rs.getInt(1));                
+                c.setCateId(rs.getInt(1));
                 c.setCateName(rs.getString(2));
                 c.setImage(rs.getString(3));
                 c.setStatus(rs.getBoolean(4));
@@ -101,6 +100,7 @@ public class DAO extends DBContext {
 
         return cl;
     }
+
     public ArrayList getProvider() {
         ArrayList<Provider> list = new ArrayList<>();
         try {
@@ -259,22 +259,22 @@ public class DAO extends DBContext {
 
         return u;
     }
-    
+
     public void updateUserInfo(User user) {
         try {
             rs = state.executeQuery("UPDATE [dbo].[User]\n"
-                    + "   SET [fullName] = '"+user.getFullName()+"'\n"
-                    + "      ,[address] = '"+user.getAddress()+"'\n"
-                    + "      ,[phone] = '"+user.getPhone()+"'\n"
-                    + "      ,[email] = '"+user.getEmail()+"'\n"
-                    + "      ,[gender] = "+(user.isGender() ? 1 : 0)+"\n"
-                    + " WHERE cid = "+user.getCid());
+                    + "   SET [fullName] = '" + user.getFullName() + "'\n"
+                    + "      ,[address] = '" + user.getAddress() + "'\n"
+                    + "      ,[phone] = '" + user.getPhone() + "'\n"
+                    + "      ,[email] = '" + user.getEmail() + "'\n"
+                    + "      ,[gender] = " + (user.isGender() ? 1 : 0) + "\n"
+                    + " WHERE cid = " + user.getCid());
             ;
         } catch (Exception e) {
             System.out.println("Error Customer " + e.getMessage());
         }
     }
-    
+
     public void insertContact(String cname, String cemail, String Subject, String Message) {
 
         //System.out.println(p_pid);
@@ -523,27 +523,32 @@ public class DAO extends DBContext {
     }
 
     public ArrayList<User> getListUser(String role, String status, String sort) {
+
         ArrayList<User> list = new ArrayList<>();
         try {
+            // query to get all User from DB
             String query = "select * "
                     + "from [User] u "
                     + "left join [Role] r on u.roleid = r.roleid ";
-            
-            if(role.isEmpty() && !status.isEmpty()) {
+            // check cac truong hop 
+            // role va status blank
+            if (role.isEmpty() && !status.isEmpty()) {
                 query += "where status = " + "'" + status + "' ";
             }
-            if(!role.isEmpty() && status.isEmpty()) {
+            // role co gia tri va status = blank
+            if (!role.isEmpty() && status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' ";
             }
-            if(!role.isEmpty() && !status.isEmpty()) {
+            // ca role va status deu co gia tri
+            if (!role.isEmpty() && !status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
             }
-            
+            //order by
             query += "order by " + "'" + sort + "' ";
-            
+
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rslt = ps.executeQuery();
-            while(rslt.next()) {
+            while (rslt.next()) {
                 User u = new User();
                 u.setCid(rslt.getInt("cid"));
                 u.setFullName(rslt.getString("fullName"));
@@ -555,13 +560,15 @@ public class DAO extends DBContext {
                 u.setRole(rslt.getString("rolename"));
                 u.setStatus(rslt.getBoolean("status"));
                 list.add(u);
-               
+
             }
             return list;
         } catch (SQLException e) {
         }
         return null;
-    }; 
+    }
+
+    ; 
     
     public ArrayList getBillList() {
         Bill bill = new Bill();
@@ -586,8 +593,8 @@ public class DAO extends DBContext {
 
         return bi;
     }
-    
-     public Bill getBillById(int bid) {
+
+    public Bill getBillById(int bid) {
         Bill bill = new Bill();
         try {
             String strSelect = "select * from Bill WHERE bid = '" + bid + "'";
@@ -608,7 +615,139 @@ public class DAO extends DBContext {
         return bill;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new DAO().checkLogin("Huy", "123"));
+    ; 
+    
+    public void addUser(User u) throws SQLException {
+        try {
+            String query = "Insert into [User] values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, getRoleId(u.getRole()));
+            ps.setString(2, u.getFullName());
+            ps.setString(3, u.getAddress());
+            ps.setString(4, u.getPhone());
+            ps.setString(5, u.getEmail());
+            ps.setString(6, u.getUsername());
+            ps.setString(7, u.getPassword());
+            ps.setBoolean(8, true);
+            ps.setBoolean(9, u.isMale());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    public int getLastUserId() {
+        try {
+            String query = "select top 1 cid from [User] order by cid desc";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return rslt.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+
+    public int getRoleId(String rolename) {
+        try {
+            String query = "select roleid from [Role] where rolename = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, rolename);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return rslt.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 1;
+    }
+
+    public String getRoleName(int roleid) {
+        try {
+            String query = "select rolename from [Role] where roleid = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, roleid);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return rslt.getString(1);
+            }
+        } catch (SQLException e) {
+        }
+        return "";
+    }
+
+    public boolean userNameIsExist(String username) {
+        try {
+            String query = "select count(*) as num from [User] where username = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    public boolean emailIsExist(String email) {
+        try {
+            String query = "select count(*) as num from [User] where email = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    public User getUserById(int cid) {
+        try {
+            User u = new User();
+            String query = "select * from [User] WHERE cid = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, cid);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                u.setCid(rslt.getInt("cid"));
+                u.setFullName(rslt.getString("fullName"));
+                u.setUsername(rslt.getString("username"));
+                u.setMale(rslt.getBoolean("gender"));
+                u.setAddress(rslt.getString("address"));
+                u.setEmail(rslt.getString("email"));
+                u.setPhone(rslt.getString("phone"));
+                u.setRole(getRoleName(rslt.getInt("roleid")));
+                u.setStatus(rslt.getBoolean("status"));
+            }
+            return u;
+        } catch (SQLException e) {
+
+        }
+        return null;
+    }
+
+    public void updateUser(User u) throws SQLException {
+        try {
+            String query = "UPDATE [User]\n"
+                    + "SET roleid = ?, fullName = ?, address = ?, phone = ?, email = ?, username = ?, password = ?, gender = ?\n"
+                    + "WHERE cid = ?;";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, getRoleId(u.getRole()));
+            ps.setString(2, u.getFullName());
+            ps.setString(3, u.getAddress());
+            ps.setString(4, u.getPhone());
+            ps.setString(5, u.getEmail());
+            ps.setString(6, u.getUsername());
+            ps.setString(7, u.getPassword());
+            ps.setBoolean(8, u.isMale());
+            ps.setInt(9, u.getCid());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
     }
 }

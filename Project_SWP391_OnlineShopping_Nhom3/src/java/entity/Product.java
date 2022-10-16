@@ -32,14 +32,6 @@ public class Product {
         this.cateId = cateId;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public Provider getProvider() {
         return provider;
     }
