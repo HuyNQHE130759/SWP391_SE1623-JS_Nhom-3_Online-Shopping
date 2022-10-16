@@ -4,6 +4,7 @@
  */
 package controller.Admin;
 
+import dao.FeedbackDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -29,12 +30,12 @@ public class AddFeedback extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddFeedback</title>");            
+            out.println("<title>Servlet AddFeedback</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddFeedback at " + request.getContextPath() + "</h1>");
@@ -55,12 +56,12 @@ public class AddFeedback extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("AddFeedback.jsp").forward(request, response);
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
-     *
+     * Use for add new feed back
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -69,7 +70,14 @@ public class AddFeedback extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String cid= request.getParameter("cid");
+        String pid= request.getParameter("pid");
+        String comment= request.getParameter("comment");
+        String rating= request.getParameter("rating");
+        String img= request.getParameter("img");
+        FeedbackDAO fdao = new FeedbackDAO();
+        fdao.insertFeedback(cid, pid, comment, rating, img);
+        response.sendRedirect("./FeedbackList");
     }
 
     /**
