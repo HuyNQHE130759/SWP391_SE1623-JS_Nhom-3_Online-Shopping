@@ -5,18 +5,18 @@
 package controller.Admin;
 
 import dao.DAO;
-import entity.BillDetail;
+import entity.Bill;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 /**
  *
- * @author ngoclong
+ * @author Huynq
  */
 public class OrderList extends HttpServlet {
 
@@ -32,13 +32,10 @@ public class OrderList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            DAO dao = new DAO();
-        ArrayList<BillDetail> bdetail = dao.getAllBillDetail();
-       request.setAttribute("listBill", bdetail);
+        DAO dao = new DAO();
+       ArrayList<Bill> bill = dao.getBillList();
+       request.setAttribute("listBill", bill);
        request.getRequestDispatcher("OrderList.jsp").forward(request, response);
-        } catch (Exception e) {
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

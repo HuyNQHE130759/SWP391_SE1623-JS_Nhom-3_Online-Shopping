@@ -8,7 +8,7 @@ package entity;
 
 /**
  *
- * @author ngoclong
+ * @author HuyNQ
  */
 public class Bill {
     private int bid;

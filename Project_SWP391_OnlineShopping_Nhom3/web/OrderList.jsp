@@ -1,5 +1,5 @@
 <%@page import="dao.DAO"%>
-<%@page import="entity.BillDetail"%>
+<%@page import="entity.Bill"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-       <% ArrayList<BillDetail> bi = (ArrayList<BillDetail>) request.getAttribute("listBill"); %>
+       <%ArrayList<Bill> bi = (ArrayList<Bill>) request.getAttribute("listBill");%>
 
         <section id="cart_items">
             <div class="container">
@@ -36,10 +36,9 @@
                     <table class="table table-condensed">
                         <thead>
                             <tr class="cart_menu">
-                                <td>STT</td>
                                 <td class="user">UserName</td>
                                 <td class="quantity">Quantity</td>
-                                <td class="price">Total Price</td>
+                                <td class="price">Price</td>
                                 <td class="date">Date</td>
                                 <td></td>
                             </tr>
@@ -47,22 +46,22 @@
                         <tbody>
                             <%for (int i = 0; i < bi.size(); i++) {%>
                                     <tr>
-                                        <td> <%=i+1%></td>
                                 <td class="cart_product">
-                                    <p> <%=bi.get(i).getUsername()%></p>
+                                    <p> <%=bi.get(i).getRecName()%></p>
                                 </td>
                                 <td class="cart_description">
-                                    <p><%=bi.get(i).getQuantity()%></p>
+                                    <p>3</p>
                                 </td>
                                 <td class="cart_price">
                                     <p>$<%=bi.get(i).getTotal() %></p>
                                 </td>
-                                <td >
+                                <td class="cart_quantity">
                                     <p><%= bi.get(i).getDateCreate() %></p>
                                 </td>
-                                <td class="view"><a href="${pageContext.request.contextPath}/BillDetailController?bid=<%=bi.get(i).getBid()%>">View</a></td>
+                                <td class="view"><a href="#">View</a></td>
                             </tr>
-                                <% }%>   
+                                <% }%>                  
+                            
                         </tbody>
                     </table>
                 </div>  

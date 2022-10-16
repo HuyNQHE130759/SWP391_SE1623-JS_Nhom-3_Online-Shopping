@@ -93,28 +93,24 @@
         <servlet-class>controller.Admin.AdminProductList</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BillDetailController</servlet-name>
-        <servlet-class>controller.Admin.BillDetailController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>OrderList</servlet-name>
         <servlet-class>controller.Admin.OrderList</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OrderHistory</servlet-name>
-        <servlet-class>controller.OrderHistory</servlet-class>
+        <servlet-name>FeedbackList</servlet-name>
+        <servlet-class>controller.Admin.FeedbackList</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OrderHistoryFilterDateAsc</servlet-name>
-        <servlet-class>controller.OrderHistoryFilterDateAsc</servlet-class>
+        <servlet-name>FeedbackDetail</servlet-name>
+        <servlet-class>controller.Admin.FeedbackDetail</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OrderHistoryFilterTotalAsc</servlet-name>
-        <servlet-class>controller.OrderHistoryFilterTotalAsc</servlet-class>
+        <servlet-name>AddFeedback</servlet-name>
+        <servlet-class>controller.Admin.AddFeedback</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OrderInformation</servlet-name>
-        <servlet-class>controller.OrderInformation</servlet-class>
+        <servlet-name>DeleteFeedback</servlet-name>
+        <servlet-class>controller.Admin.DeleteFeedback</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -205,28 +201,24 @@
         <url-pattern>/AdminProductList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BillDetailController</servlet-name>
-        <url-pattern>/BillDetailController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>OrderList</servlet-name>
         <url-pattern>/OrderList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>OrderHistory</servlet-name>
-        <url-pattern>/OrderHistory</url-pattern>
+        <servlet-name>FeedbackList</servlet-name>
+        <url-pattern>/FeedbackList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>OrderHistoryFilterDateAsc</servlet-name>
-        <url-pattern>/OrderHistoryFilterDateAsc</url-pattern>
+        <servlet-name>FeedbackDetail</servlet-name>
+        <url-pattern>/FeedbackDetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>OrderHistoryFilterTotalAsc</servlet-name>
-        <url-pattern>/OrderHistoryFilterTotalAsc</url-pattern>
+        <servlet-name>AddFeedback</servlet-name>
+        <url-pattern>/AddFeedback</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>OrderInformation</servlet-name>
-        <url-pattern>/OrderInformation</url-pattern>
+        <servlet-name>DeleteFeedback</servlet-name>
+        <url-pattern>/DeleteFeedback</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
