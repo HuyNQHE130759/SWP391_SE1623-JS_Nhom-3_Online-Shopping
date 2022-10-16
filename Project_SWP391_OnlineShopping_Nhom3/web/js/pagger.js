@@ -20,7 +20,7 @@ function render(id,pageindex, totalpage, gap)
         if(i<=totalpage)
             content+= "<a class=\"btn btn-dark\" href=\"list?page="+i+"\">"+i+"</a>";
     
-    if(pageindex <totalpage - gap )
+    if(pageindex <totalpage-gap)
         content+= "<a class=\"btn btn-dark\" href=\"list?page="+totalpage+"\">Last</a>";
     
     container.innerHTML = content;

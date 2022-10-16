@@ -10,7 +10,7 @@
     <body>
         <%ArrayList<Category> cal = (ArrayList<Category>) request.getAttribute("categoryList");%>
         <h1>Hello World!</h1>
-
+        <jsp:include page="header.jsp"></jsp:include>
         <form action="${pageContext.request.contextPath}/InsertProduct" method="POST">
             Product ID: <input type="text" name="id"><br/>
             Product Name: <input type="text" name="name"><br/>
@@ -27,5 +27,6 @@
             <br/>
             <input type="submit" name="save" value="save"> 
         </form>
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>
