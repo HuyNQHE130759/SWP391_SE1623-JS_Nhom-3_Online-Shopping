@@ -5,6 +5,7 @@
  */
 package dao;
 
+import entity.Bill;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
