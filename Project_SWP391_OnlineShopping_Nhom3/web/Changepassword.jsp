@@ -37,9 +37,9 @@
                     <div class="col-sm-4">    			   			
                         <h2 class="title text-center">Change your password</h2>    			    				    				
                         <form class="login-form" action="${pageContext.request.contextPath}/ChangePass"  method="POST">
-                            <label class="label-control" >Old pass: </label><input class="form-control" type="password" name="oldpass" required><br>
-                            <label class="label-control" >New Pass:</label><input  class="form-control" type="password" name="newpass" required><br>
-                                <label class="label-control" >Confirm Pass:</label><input class="form-control"  type="password" name="renewpass" required><br>
+                            <label class="label-control" >Old pass </label><input class="form-control" type="password" name="oldpass" required><br>
+                            <label class="label-control" >New Pass </label><input  class="form-control" type="password" name="newpass" required><br>
+                                <label class="label-control" >Confirm Pass </label><input class="form-control"  type="password" name="renewpass" required><br>
                                 <p style="color: red;"> ${mess}</p>
                             <input type="submit" class="btn btn-default" value="Change"><br>
                         </form>   

@@ -30,7 +30,7 @@ public class DAO extends DBContext {
     public DAO() {
         connect();
     }
-
+    
     public void connect() {
         try {
             con = (new DBContext().connection);
