@@ -132,7 +132,7 @@ public class User {
         this.male = male;
     }
 
-    public String getGender() {
+    public String getGenderr() {
         return isMale() ? "Male" : "Female";
     }
     
