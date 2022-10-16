@@ -20,6 +20,7 @@ import entity.Product;
 import entity.Provider;
 import entity.Review;
 import entity.User;
+import entity.Voucher;
 
 public class DAO extends DBContext {
 
@@ -749,5 +750,56 @@ public class DAO extends DBContext {
         } catch (SQLException e) {
             throw e;
         }
+    }
+    
+    public ArrayList<Voucher> getVoucherList() {
+        try {
+            ArrayList<Voucher> list = new ArrayList<>();
+            String query = "select * from Voucher";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rslt = ps.executeQuery();
+            while (rslt.next()) {
+                Voucher v = new Voucher();
+                v.setId(rslt.getInt("id"));
+                v.setCode(rslt.getString("code"));
+                v.setDiscount(rslt.getInt("discount"));
+                v.setDescription(rslt.getString("description"));
+                v.setTimeEnd(rslt.getDate("time_end"));
+                list.add(v);
+            }
+            return list;
+        } catch (SQLException e) {
+
+        }
+        return null;
+    }
+    
+    public void addNewVoucher(Voucher v) throws SQLException {
+        try {
+            String query = "Insert into [Voucher] values (?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, v.getCode());
+            ps.setInt(2, v.getDiscount());
+            ps.setString(3,v.getDescription());
+            ps.setDate(4, v.getTimeEnd());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+    
+    public boolean voucherCodeIsExist(String voucher) throws SQLException {
+        try {
+            String query = "Select count(*) as num from Voucher where code = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, voucher);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString("num")) > 0;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return false;
     }
 }
