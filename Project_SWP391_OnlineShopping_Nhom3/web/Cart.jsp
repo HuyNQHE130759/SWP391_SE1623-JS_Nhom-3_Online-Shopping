@@ -23,7 +23,7 @@
     </head>
 
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
+        <jsp:include page="headerlinhbe.jsp"></jsp:include>
         <% ArrayList<Cart> cl = (ArrayList<Cart>) request.getAttribute("CartList"); %>
         <% ArrayList<Product> pl = (ArrayList<Product>) request.getAttribute("ProductList"); %>
         <%User us = (User) request.getSession().getAttribute("user"); %>

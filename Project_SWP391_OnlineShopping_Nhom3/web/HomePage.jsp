@@ -35,7 +35,7 @@
                                 <nav class="navbar">
                                     <ul class="navbar_menu">
                                         <li><a href="#">home</a></li>
-                                        <li><a href="#">shop</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/Product">shop</a></li>
                                         <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
                                         <li><a href="#">list user</a></li>
                                     </ul>

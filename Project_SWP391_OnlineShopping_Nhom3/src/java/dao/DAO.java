@@ -87,7 +87,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Category";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                c.setCateId(rs.getInt(1));
+                c.setCateId(rs.getString(1));
                 c.setCateName(rs.getString(2));
                 c.setImage(rs.getString(3));
                 c.setStatus(rs.getBoolean(4));
@@ -100,6 +100,7 @@ public class DAO extends DBContext {
 
         return cl;
     }
+
     public ArrayList getProvider() {
         ArrayList<Provider> list = new ArrayList<>();
         try {
@@ -127,7 +128,34 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product]";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                p.setPid(rs.getInt(1));
+                p.setPid(rs.getString(1));
+                p.setPname(rs.getString(2));
+                p.setQuantity(rs.getInt(3));
+                p.setPrice(rs.getDouble(4));
+                p.setImage(rs.getString(5));
+                p.setDescription(rs.getString(6));
+                p.setStatus(rs.getBoolean(7));
+                p.setCateId(rs.getString(8));
+
+                pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
+                        p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+
+        return pl;
+    }
+
+    //get du lieu phan trang
+    public ArrayList getAllProductPaging(int index) {
+        Product p = new Product();
+        ArrayList<Product> pl = new ArrayList<>();
+        try {
+            String strSelect = "select * from Product order by pid offset " + (index - 1) * 6 + " rows fetch next 6 rows only";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                p.setPid(rs.getString(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -153,7 +181,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where cateId= '" + cid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                p.setPid(rs.getInt(1));
+                p.setPid(rs.getString(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -179,7 +207,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where pid= '" + pid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-//                p.setPid(rs.getInt(1));
+                p.setPid(rs.getString(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -258,22 +286,22 @@ public class DAO extends DBContext {
 
         return u;
     }
-    
+
     public void updateUserInfo(User user) {
         try {
             rs = state.executeQuery("UPDATE [dbo].[User]\n"
-                    + "   SET [fullName] = '"+user.getFullName()+"'\n"
-                    + "      ,[address] = '"+user.getAddress()+"'\n"
-                    + "      ,[phone] = '"+user.getPhone()+"'\n"
-                    + "      ,[email] = '"+user.getEmail()+"'\n"
-                    + "      ,[gender] = "+(user.isGender() ? 1 : 0)+"\n"
-                    + " WHERE cid = "+user.getCid());
+                    + "   SET [fullName] = '" + user.getFullName() + "'\n"
+                    + "      ,[address] = '" + user.getAddress() + "'\n"
+                    + "      ,[phone] = '" + user.getPhone() + "'\n"
+                    + "      ,[email] = '" + user.getEmail() + "'\n"
+                    + "      ,[gender] = " + (user.isGender() ? 1 : 0) + "\n"
+                    + " WHERE cid = " + user.getCid());
             ;
         } catch (Exception e) {
             System.out.println("Error Customer " + e.getMessage());
         }
     }
-    
+
     public void insertContact(String cname, String cemail, String Subject, String Message) {
 
         //System.out.println(p_pid);
@@ -320,6 +348,40 @@ public class DAO extends DBContext {
         int cartID = 0;
         try {
             String strSelect = "select top 1 [CartId] from Cart";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                cartID = rs.getInt(1);
+
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        if (cartID != 0) {
+            cartID++;
+        } else {
+            cartID = 1;
+        }
+        //System.out.println(p_pid);
+        try {
+            rs = state.executeQuery("INSERT INTO [dbo].[Cart]\n"
+                    + "           ([CartId]\n"
+                    + "           ,[cid]\n"
+                    + "           ,[pid]\n"
+                    + "           ,[pQuantity])\n"
+                    + "     VALUES\n"
+                    + "           ('" + cartID + "'\n"
+                    + "           ,'" + cid + "'\n"
+                    + "           ,'" + pid + "'\n"
+                    + "           ,'" + quantity + "')");
+        } catch (Exception e) {
+            System.out.println("Error Customer " + e.getMessage());
+        }
+    }
+
+       public void inserttoCartFixed(String pid, int cid, int quantity) {
+        int cartID = 0;
+        try {
+            String strSelect = "select top 1 [CartId] from Cart order by CartId desc";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
                 cartID = rs.getInt(1);
@@ -527,22 +589,22 @@ public class DAO extends DBContext {
             String query = "select * "
                     + "from [User] u "
                     + "left join [Role] r on u.roleid = r.roleid ";
-            
-            if(role.isEmpty() && !status.isEmpty()) {
+
+            if (role.isEmpty() && !status.isEmpty()) {
                 query += "where status = " + "'" + status + "' ";
             }
-            if(!role.isEmpty() && status.isEmpty()) {
+            if (!role.isEmpty() && status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' ";
             }
-            if(!role.isEmpty() && !status.isEmpty()) {
+            if (!role.isEmpty() && !status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
             }
-            
+
             query += "order by " + "'" + sort + "' ";
-            
+
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rslt = ps.executeQuery();
-            while(rslt.next()) {
+            while (rslt.next()) {
                 User u = new User();
                 u.setCid(rslt.getInt("cid"));
                 u.setFullName(rslt.getString("fullName"));
@@ -554,15 +616,18 @@ public class DAO extends DBContext {
                 u.setRole(rslt.getString("rolename"));
                 u.setStatus(rslt.getBoolean("status"));
                 list.add(u);
-               
+
             }
             return list;
         } catch (SQLException e) {
         }
         return null;
-    }; 
+    }
+
+    ; 
 
     public static void main(String[] args) {
         System.out.println(new DAO().checkLogin("Huy", "123"));
+        new DAO().inserttoCartFixed("1", 1, 1);
     }
 }

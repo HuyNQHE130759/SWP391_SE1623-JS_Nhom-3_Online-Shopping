@@ -1,6 +1,6 @@
-<%@page import="model.Review"%>
-<%@page import="model.User"%>
-<%@page import="model.Product"%>
+<%@page import="entity.Review"%>
+<%@page import="entity.User"%>
+<%@page import="entity.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@
     </head>
 
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
+        <jsp:include page="headerlinhbe.jsp"></jsp:include>
 
         <section>
             <div class="container">

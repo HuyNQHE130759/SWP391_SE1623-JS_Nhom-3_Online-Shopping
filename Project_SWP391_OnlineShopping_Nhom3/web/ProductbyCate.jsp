@@ -1,4 +1,4 @@
-<%@page import="model.Product"%>
+<%@page import="entity.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,7 +19,7 @@
     </head>
 
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
+        <jsp:include page="headerlinhbe.jsp"></jsp:include>
 
             <section id="advertisement">
                 <div class="container">
@@ -43,13 +43,23 @@
                                             <img src="<%=pl.get(i).getImage()%>" alt="" />
                                             <h2>$<%=pl.get(i).getPrice()%></h2>
                                             <p><a href="${pageContext.request.contextPath}/ProductDetail?pid=<%=pl.get(i).getPid()%>"><%=pl.get(i).getPname()%></a></p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            <form action="${pageContext.request.contextPath}/Cart?pid=<%=pl.get(i).getPid()%>&quantity=1" method="POST">
+                                                <button type="submit" class="btn btn-fefault add-to-cart">
+                                                    <i class="fa fa-shopping-cart"></i>
+                                                    Add to cart
+                                                </button>
+                                            </form>
                                         </div>
                                         <div class="product-overlay">
                                             <div class="overlay-content">
                                                 <h2>$<%=pl.get(i).getPrice()%></h2>
                                                 <p><a href="${pageContext.request.contextPath}/ProductDetail?pid=<%=pl.get(i).getPid()%>"><%=pl.get(i).getPname()%></a></p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                <form action="${pageContext.request.contextPath}/Cart?pid=<%=pl.get(i).getPid()%>&quantity=1" method="POST">
+                                                    <button type="submit" class="btn btn-fefault add-to-cart">
+                                                        <i class="fa fa-shopping-cart"></i>
+                                                        Add to cart
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

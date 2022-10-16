@@ -6,6 +6,7 @@
 package controller;
 
 import dao.DAO;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -58,7 +59,9 @@ public class ProductbyCategory extends HttpServlet {
         String cid = request.getParameter("cid");
         DAO dao = new DAO();
         ArrayList<Product> pl = new ArrayList<>();
+        User us = (User) request.getSession().getAttribute("user");
         pl = dao.getProductbyCate(cid);
+        request.setAttribute("userr", us);
         request.setAttribute("ProductList", pl);
         request.getRequestDispatcher("ProductbyCate.jsp").forward(request, response);
     }

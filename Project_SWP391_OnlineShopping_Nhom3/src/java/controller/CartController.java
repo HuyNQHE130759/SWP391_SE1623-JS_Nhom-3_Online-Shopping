@@ -79,11 +79,12 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         String pid = request.getParameter("pid");
-        int cid = Integer.parseInt(request.getParameter("cid"));
+         User us = (User) request.getSession().getAttribute("user");
+        int cid = us.getCid();
         //String cid = request.getParameter("cid");
         //System.out.println(pid+ " "+ cid);
         
-        dao.inserttoCart(pid, cid, quantity);
+        dao.inserttoCartFixed(pid, cid, quantity);
         try (PrintWriter out = response.getWriter()) {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Your Product has been added to cart!');");
