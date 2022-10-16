@@ -5,11 +5,10 @@
 
 package controller.Admin;
 
-import dao.DAO;
-import dao.ProductDAO;
-import entity.Product;
+import dao.CategoryDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author apc
  */
-public class AdminProductDetail extends HttpServlet {
+@WebServlet(name="CategoryDetail", urlPatterns={"/CategoryDetail"})
+public class CategoryDetail extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,16 +36,15 @@ public class AdminProductDetail extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DAO dao = new DAO();
-    ProductDAO productDAO = new ProductDAO();
+    CategoryDAO categoryDAO = new CategoryDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String pid = request.getParameter("pid");
-        request.setAttribute("categoryList", dao.getCategory());
-        request.setAttribute("product", dao.getProductById(pid));
-        request.setAttribute("pid", pid);
-        request.getRequestDispatcher("../AdminProductDetail.jsp").forward(request,response);
+        String raw_cid = request.getParameter("cid");
+        Integer cid = (raw_cid !=null && raw_cid.length()>0)?new Integer(raw_cid):null;
+        request.setAttribute("category", categoryDAO.getCategory(cid));
+        request.setAttribute("cid", cid);
+        request.getRequestDispatcher("../CategoryDetail.jsp").forward(request,response);
     } 
 
     /** 
@@ -58,23 +57,18 @@ public class AdminProductDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String raw_pid = request.getParameter("pid");
-        String raw_pname = request.getParameter("pname");
-        String raw_price = request.getParameter("price");
+        String raw_cid = request.getParameter("cid");
+        String raw_cname = request.getParameter("cname");
         String raw_img = request.getParameter("image");
-        String raw_description = request.getParameter("description");
-        String raw_cid = request.getParameter("category");
         String raw_status = request.getParameter("status");
         boolean status = Boolean.parseBoolean(raw_status);
-        float price = Float.parseFloat(raw_price);
-        int cid = Integer.parseInt(raw_cid);
-        Integer pid = (raw_pid != null && raw_pid.length()>0)?new Integer(raw_pid):null;
-        if (pid == null) {
-            productDAO.insert(raw_pname, raw_img, price, raw_description, status, cid);
+        Integer cid = (raw_cid !=null && raw_cid.length()>0)?new Integer(raw_cid):null;
+        if (cid == null) {
+            categoryDAO.insert(raw_cname, raw_img, status);
         }else{
-            productDAO.update(pid, raw_pname, raw_img, price, raw_description, status, cid);
+            categoryDAO.update(cid, raw_cname, raw_img,status);
         }
-        response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
+        response.sendRedirect(request.getContextPath() + "/Category/list");
     }
 
     /** 

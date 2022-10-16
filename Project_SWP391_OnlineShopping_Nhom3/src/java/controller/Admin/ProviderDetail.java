@@ -5,9 +5,7 @@
 
 package controller.Admin;
 
-import dao.DAO;
-import dao.ProductDAO;
-import entity.Product;
+import dao.ProviderDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author apc
  */
-public class AdminProductDetail extends HttpServlet {
+public class ProviderDetail extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,16 +34,15 @@ public class AdminProductDetail extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DAO dao = new DAO();
-    ProductDAO productDAO = new ProductDAO();
+    ProviderDAO providerDAO = new ProviderDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String pid = request.getParameter("pid");
-        request.setAttribute("categoryList", dao.getCategory());
-        request.setAttribute("product", dao.getProductById(pid));
+        String raw_pid = request.getParameter("pid");
+        Integer pid = (raw_pid !=null && raw_pid.length()>0)?new Integer(raw_pid):null;
+        request.setAttribute("category", providerDAO.getProvider(pid));
         request.setAttribute("pid", pid);
-        request.getRequestDispatcher("../AdminProductDetail.jsp").forward(request,response);
+        request.getRequestDispatcher("../ProviderDetail.jsp").forward(request,response);
     } 
 
     /** 
@@ -60,21 +57,17 @@ public class AdminProductDetail extends HttpServlet {
     throws ServletException, IOException {
         String raw_pid = request.getParameter("pid");
         String raw_pname = request.getParameter("pname");
-        String raw_price = request.getParameter("price");
-        String raw_img = request.getParameter("image");
-        String raw_description = request.getParameter("description");
-        String raw_cid = request.getParameter("category");
+        String raw_email = request.getParameter("email");
+        String raw_address = request.getParameter("address");
         String raw_status = request.getParameter("status");
         boolean status = Boolean.parseBoolean(raw_status);
-        float price = Float.parseFloat(raw_price);
-        int cid = Integer.parseInt(raw_cid);
-        Integer pid = (raw_pid != null && raw_pid.length()>0)?new Integer(raw_pid):null;
-        if (pid == null) {
-            productDAO.insert(raw_pname, raw_img, price, raw_description, status, cid);
+        Integer pid = (raw_pid !=null && raw_pid.length()>0)?new Integer(raw_pid):null;
+        if (pid != null) {
+            providerDAO.insert(raw_pname, raw_email, raw_address, status);
         }else{
-            productDAO.update(pid, raw_pname, raw_img, price, raw_description, status, cid);
+            providerDAO.update(pid, raw_pname, raw_email, raw_address, status);
         }
-        response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
+        response.sendRedirect(request.getContextPath() + "/Provider/list");
     }
 
     /** 

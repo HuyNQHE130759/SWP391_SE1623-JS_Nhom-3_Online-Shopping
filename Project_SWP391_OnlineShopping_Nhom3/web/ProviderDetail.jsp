@@ -23,40 +23,28 @@
             <jsp:include page="HeaderCustom.jsp"></jsp:include>
 
             <div class="container" style="margin-top: 16px;">
-                <form method="post" action="/AdminProduct/detail" style="margin: auto; width: 50%">
+                <form method="post" action="Provider/detail" style="margin: auto; width: 50%">
                     <div class="form-group">
-                        <label for="pid">Product ID:</label>
-                        <input type="text" class="form-control" name="pid" placeholder="Product ID" readonly="readonly" value="${requestScope.pid}">
+                        <label for="pid">Provider ID:</label>
+                        <input type="text" class="form-control" name="pid" placeholder="Provider ID" readonly="readonly" value="${requestScope.pid}">
                     </div>
                     <div class="form-group">
-                        <label for="pname">Product Name:</label>
-                        <input type="text" class="form-control" name="pname" placeholder="Product Name" required="true" value="${requestScope.product.pname}">
+                        <label for="pname">Provider Name:</label>
+                        <input type="text" class="form-control" name="pname" placeholder="Provider Name" required="true" value="${requestScope.provider.provider_name}">
                     </div>
                     <div class="form-group">
-                        <label for="Price">Price</label>
-                        <input type="number" class="form-control" pattern="[1-9][0-9]*" name="price" placeholder="Price" required="true" value="${requestScope.product.price}">VND
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" name="email" placeholder="Email" required="true" value="${requestScope.provider.provider_email}">
                     </div>
                     <div class="form-group">
-                        <label for="image">Image:</label>
-                        <input type="text" class="form-control" name="image" placeholder="Image" required="true" value="${requestScope.product.image}">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <textarea class="form-control" name="description" placeholder="Description">${requestScope.product.description}</textarea>
+                        <label for="address">Address:</label>
+                        <input type="text" class="form-control" name="address" placeholder="Address" required="true" value="${requestScope.provider.provider_address}">
                     </div>
                     <div class="form-group">
                         <label for="status">Status</label>
                          <select class="form-control" name="status">
-                             <option value="1" <c:if test="${requestScope.product.status eq true}">selected="selected"</c:if>>Enable</option>
-                            <option value="0" <c:if test="${requestScope.product.status ne true}">selected="selected"</c:if>>Disable</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Category</label>
-                        <select class="form-control" name="category">
-                            <c:forEach items="${requestScope.categoryList}" var="c">
-                                <option value="${c.cateId}" <c:if test="${requestScope.product.cateId eq c.cateId}">selected="selected"</c:if>>${c.cateName}</option>
-                            </c:forEach>
+                             <option value="1" <c:if test="${requestScope.provider.status eq true}">selected="selected"</c:if>>Enable</option>
+                            <option value="0" <c:if test="${requestScope.provider.status ne true}">selected="selected"</c:if>>Disable</option>
                         </select>
                     </div>
                     <c:if test="${flag == false}">
@@ -64,7 +52,7 @@
                     </c:if>
                     
                     <button type="submit" class="btn btn-primary" style="margin: 0 auto">Save</button>
-                    <a href="${pageContext.request.contextPath}/AdminProduct/list"><input type="button" class="btn" value="Cancel"></a>
+                    <a href="${pageContext.request.contextPath}/Category/list"><input type="button" class="btn" value="Cancel"></a>
                 </form>
 
             </div>

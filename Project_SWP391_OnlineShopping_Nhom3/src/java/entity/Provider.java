@@ -13,8 +13,17 @@ public class Provider {
     private String provider_name;
     private String provider_email;
     private String provider_address;
+    private boolean status;
 
     public Provider() {
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public int getProvider_id() {

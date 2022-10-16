@@ -7,7 +7,6 @@ package dao;
 import entity.Category;
 import entity.Product;
 import entity.Provider;
-import entity.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -175,7 +174,7 @@ public class ProductDAO extends DBContext {
         } 
     }
     
-    public void update(int pid, String pname, String img, float price, String description, boolean status, int cateID){
+    public void update(Integer pid, String pname, String img, float price, String description, boolean status, int cateID){
          try {
             String sql = "UPDATE [dbo].[Product]\n"
                     + "   SET \n"

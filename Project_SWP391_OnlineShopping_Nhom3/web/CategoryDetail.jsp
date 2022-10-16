@@ -23,40 +23,24 @@
             <jsp:include page="HeaderCustom.jsp"></jsp:include>
 
             <div class="container" style="margin-top: 16px;">
-                <form method="post" action="/AdminProduct/detail" style="margin: auto; width: 50%">
+                <form method="post" action="Category/detail" style="margin: auto; width: 50%">
                     <div class="form-group">
-                        <label for="pid">Product ID:</label>
-                        <input type="text" class="form-control" name="pid" placeholder="Product ID" readonly="readonly" value="${requestScope.pid}">
+                        <label for="cid">Category ID:</label>
+                        <input type="text" class="form-control" name="cid" placeholder="Category ID" readonly="readonly" value="${requestScope.cid}">
                     </div>
                     <div class="form-group">
-                        <label for="pname">Product Name:</label>
-                        <input type="text" class="form-control" name="pname" placeholder="Product Name" required="true" value="${requestScope.product.pname}">
-                    </div>
-                    <div class="form-group">
-                        <label for="Price">Price</label>
-                        <input type="number" class="form-control" pattern="[1-9][0-9]*" name="price" placeholder="Price" required="true" value="${requestScope.product.price}">VND
+                        <label for="cname">Category Name:</label>
+                        <input type="text" class="form-control" name="cname" placeholder="Category Name" required="true" value="${requestScope.category.cateName}">
                     </div>
                     <div class="form-group">
                         <label for="image">Image:</label>
-                        <input type="text" class="form-control" name="image" placeholder="Image" required="true" value="${requestScope.product.image}">
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <textarea class="form-control" name="description" placeholder="Description">${requestScope.product.description}</textarea>
+                        <input type="text" class="form-control" name="image" placeholder="Image" required="true" value="${requestScope.category.image}">
                     </div>
                     <div class="form-group">
                         <label for="status">Status</label>
                          <select class="form-control" name="status">
-                             <option value="1" <c:if test="${requestScope.product.status eq true}">selected="selected"</c:if>>Enable</option>
-                            <option value="0" <c:if test="${requestScope.product.status ne true}">selected="selected"</c:if>>Disable</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Category</label>
-                        <select class="form-control" name="category">
-                            <c:forEach items="${requestScope.categoryList}" var="c">
-                                <option value="${c.cateId}" <c:if test="${requestScope.product.cateId eq c.cateId}">selected="selected"</c:if>>${c.cateName}</option>
-                            </c:forEach>
+                             <option value="1" <c:if test="${requestScope.category.status eq true}">selected="selected"</c:if>>Enable</option>
+                            <option value="0" <c:if test="${requestScope.category.status ne true}">selected="selected"</c:if>>Disable</option>
                         </select>
                     </div>
                     <c:if test="${flag == false}">
@@ -64,7 +48,7 @@
                     </c:if>
                     
                     <button type="submit" class="btn btn-primary" style="margin: 0 auto">Save</button>
-                    <a href="${pageContext.request.contextPath}/AdminProduct/list"><input type="button" class="btn" value="Cancel"></a>
+                    <a href="${pageContext.request.contextPath}/Category/list"><input type="button" class="btn" value="Cancel"></a>
                 </form>
 
             </div>

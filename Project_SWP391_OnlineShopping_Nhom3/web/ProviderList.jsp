@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Admin Product List</title>
+        <title>Category List</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
@@ -25,14 +25,13 @@
             <jsp:include page="HeaderCustom.jsp"></jsp:include>
 
                 <div class="container">
-                    <form method="POST" action="list">
+                    <form method="POST" action="/Provider/list">
                         <div class="row" style="margin: 16px 0;">
                             <div style="display: flex; flex-direction: row; align-items: center">
                                 <div style="margin-right: 8px">Sort</div>
                                 <select class="form-select" name="sort">
-                                    <option value="a.pid" <c:if test="${requestScope.sort eq 'a.pid'}">selected="selected"</c:if>>id</option> 
-                                <option value="a.pname" <c:if test="${requestScope.sort eq 'a.pname'}">selected="selected"</c:if>>name</option>
-                                <option value="a.price" <c:if test="${requestScope.sort eq 'a.price'}">selected="selected"</c:if>>price</option>
+                                    <option value="provider_id" <c:if test="${requestScope.sort eq 'provider_id'}">selected="selected"</c:if>>id</option> 
+                                <option value="provider_name" <c:if test="${requestScope.sort eq 'provider_name'}">selected="selected"</c:if>>name</option>
                                 </select>
                             </div>
 
@@ -40,24 +39,12 @@
                                 <div style="margin-right: 8px">Filter</div>
                                 <select class="form-select" name="status">
                                     <option value="" <c:if test="${requestScope.status eq ''}">selected="selected"</c:if> >---Status---</option>
-                                <option value="1"<c:if test="${requestScope.status eq 1}">selected="selected"</c:if>>Enable</option>
-                                <option value="0"<c:if test="${requestScope.status eq 0}">selected="selected"</c:if>>Disable</option>
+                                    <option value="1"<c:if test="${requestScope.status eq 1}">selected="selected"</c:if>>Enable</option>
+                                    <option value="0"<c:if test="${requestScope.status eq 0}">selected="selected"</c:if>>Disable</option>
                                 </select>
-                                <select class="form-select" name="category">
-                                    <option value="" selected>---Category---</option>
-                                <c:forEach items="${requestScope.categories}" var="c">
-                                    <option value="${c.cateId}" <c:if test="${requestScope.category eq c.cateId}">selected="selected"</c:if>>${c.cateName}</option>
-                                </c:forEach>
-                            </select>
-                            <select class="form-select" name="provider">
-                                <option value="" selected>---Provider---</option>
-                                <c:forEach items="${requestScope.providers}" var="pr">
-                                    <option value="${pr.provider_id}" <c:if test="${requestScope.provider eq pr.provider_id}">selected="selected"</c:if>>${pr.provider_name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div style="display: flex; flex-direction: row; align-items: right; margin-left: 10%;">
-                            <input style="margin-left: 5%" type="text" name="search" placeholder="Search" <c:if test="${requestScope.search ne null}">value="${requestScope.search}"</c:if>>
+                            </div>
+                            <div style="display: flex; flex-direction: row; align-items: right; margin-left: 10%;">
+                                <input style="margin-left: 5%" type="text" name="search" placeholder="Search" <c:if test="${requestScope.search ne null}">value="${requestScope.search}"</c:if>>
                             </div>
 
                             <button style="margin-left: 5%;" type="submit" class="btn btn-primary">Search</button>
@@ -68,43 +55,36 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">pid</th>
-                                    <th scope="col">ProductName</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">IMG</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Category</th>
+                                    <th scope="col">ProviderID</th>
+                                    <th scope="col">ProviderName</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Address</th>
                                     <th scope="col">Status</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="p" items="${products}">
+                            <c:forEach var="p" items="${providers}">
                                 <tr>
-                                    <th scope="row">${p.pid}</td>
-                                    <td>${p.pname}</td>
-                                    <td>${p.quantity}</td> 
-                                    <td>${p.price}</td>
-                                    <td><img class="two" src="${p.image}" height="150px" width="200px"></td>
-                                    <td>${p.description}</td> 
-                                    <td>${p.category.cateName}</td>
+                                    <th scope="row">${p.provider_id}</td>
+                                    <td>${p.provider_name}</td>
+                                    <td>${p.provider_email}</td>
+                                    <td>${p.provider_address}</td>
                                     <td>
                                         <c:if test="${p.status eq true}">Enable</c:if>
                                         <c:if test="${p.status eq false}">Disable</c:if>
-                                        </td> 
-                                        <td style="display: flex; flex-direction: row;">
-                                            <a href="${pageContext.request.contextPath}/AdminProduct/detail?pid=${p.pid}"> <input type="button" value="Update"> </a>
-                                        <a href="${pageContext.request.contextPath}/RemoveProduct?pid=${p.pid}"> <input type="button" value="Delete"> </a>
+                                    </td> 
+                                    <td style="display: flex; flex-direction: row;">
+                                        <a href="${pageContext.request.contextPath}/Provider/detail?pid=${p.provider_id}"> <input type="button" value="Update"> </a>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
                 </div>
-                <div style="text-align: right"><a href="${pageContext.request.contextPath}/AdminProduct/detail"><input type="button" value="Add new"></a></div>
-
+                                <div style="text-align: right;"><a href="${pageContext.request.contextPath}/Provider/detail"> <input type="button" value="Add new"> </a></div>
                 <div id="bot_pagger" class="pagger"></div>
+                
                 <script>
                     render('bot_pagger',${requestScope.pageindex}, ${requestScope.totalpage}, 1);
                 </script>

@@ -5,10 +5,12 @@
 
 package controller.Admin;
 
+import dao.CategoryDAO;
 import dao.DAO;
 import dao.ProductDAO;
-import entity.Product;
+import dao.ProviderDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author apc
  */
-public class AdminProductDetail extends HttpServlet {
+public class ProviderList extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,16 +38,21 @@ public class AdminProductDetail extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DAO dao = new DAO();
-    ProductDAO productDAO = new ProductDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String pid = request.getParameter("pid");
-        request.setAttribute("categoryList", dao.getCategory());
-        request.setAttribute("product", dao.getProductById(pid));
-        request.setAttribute("pid", pid);
-        request.getRequestDispatcher("../AdminProductDetail.jsp").forward(request,response);
+        ProviderDAO providerDAO = new ProviderDAO();
+        int pagesize = Integer.parseInt(getServletContext().getInitParameter("PAGE_SIZE"));
+        String raw_page = request.getParameter("page");
+        if(raw_page == null)
+            raw_page = "1";
+        int pageindex = Integer.parseInt(raw_page);
+        int count = providerDAO.count();
+        int totalpage = (count%pagesize ==0)?count/pagesize:count/pagesize + 1;
+        request.setAttribute("pageindex", pageindex);
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("providers", providerDAO.getAllProvider(pageindex, pagesize));
+        request.getRequestDispatcher("../ProviderList.jsp").forward(request, response);
     } 
 
     /** 
@@ -58,23 +65,26 @@ public class AdminProductDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String raw_pid = request.getParameter("pid");
-        String raw_pname = request.getParameter("pname");
-        String raw_price = request.getParameter("price");
-        String raw_img = request.getParameter("image");
-        String raw_description = request.getParameter("description");
-        String raw_cid = request.getParameter("category");
+        String sort = request.getParameter("sort");
         String raw_status = request.getParameter("status");
-        boolean status = Boolean.parseBoolean(raw_status);
-        float price = Float.parseFloat(raw_price);
-        int cid = Integer.parseInt(raw_cid);
-        Integer pid = (raw_pid != null && raw_pid.length()>0)?new Integer(raw_pid):null;
-        if (pid == null) {
-            productDAO.insert(raw_pname, raw_img, price, raw_description, status, cid);
-        }else{
-            productDAO.update(pid, raw_pname, raw_img, price, raw_description, status, cid);
-        }
-        response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
+        String raw_search = request.getParameter("search");
+        int pagesize = Integer.parseInt(getServletContext().getInitParameter("PAGE_SIZE"));
+        String raw_page = request.getParameter("page");
+        if(raw_page ==null)
+            raw_page = "1";
+        int pageindex = Integer.parseInt(raw_page);
+        Boolean status = (raw_status !=null && raw_status.length()>0)?(raw_status.equals("0")?false:true):null;
+        String search = (raw_search !=null && raw_search.length()>0)?raw_search:null;
+        ProviderDAO providerDAO = new ProviderDAO();
+        int count = providerDAO.count();
+        int totalpage = (count%pagesize ==0)?count/pagesize:count/pagesize + 1;
+        request.setAttribute("sort", sort);
+        request.setAttribute("status", raw_status);
+        request.setAttribute("search", raw_search);
+        request.setAttribute("pageindex", pageindex);
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("providers", providerDAO.getAllProvider(sort, status, search, pageindex, pagesize));
+        request.getRequestDispatcher("../ProviderList.jsp").forward(request, response);
     }
 
     /** 
