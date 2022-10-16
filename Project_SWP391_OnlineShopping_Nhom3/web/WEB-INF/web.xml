@@ -97,6 +97,24 @@
         <servlet-class>controller.Admin.OrderList</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AdminProductDetail</servlet-name>
+        <servlet-class>controller.Admin.AdminProductDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryList</servlet-name>
+        <servlet-class>controller.Admin.CategoryList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProviderList</servlet-name>
+        <servlet-class>controller.Admin.ProviderList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProviderDetail</servlet-name>
+        <servlet-class>controller.Admin.ProviderDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryDetail</servlet-name>
+        <servlet-class>controller.Admin.CategoryDetail</servlet-class>
         <servlet-name>FeedbackList</servlet-name>
         <servlet-class>controller.Admin.FeedbackList</servlet-class>
     </servlet>
@@ -206,7 +224,31 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminProductList</servlet-name>
-        <url-pattern>/AdminProductList</url-pattern>
+        <url-pattern>/AdminProduct/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderList</servlet-name>
+        <url-pattern>/OrderList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminProductDetail</servlet-name>
+        <url-pattern>/AdminProduct/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryList</servlet-name>
+        <url-pattern>/Category/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProviderList</servlet-name>
+        <url-pattern>/Provider/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProviderDetail</servlet-name>
+        <url-pattern>/Provider/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryDetail</servlet-name>
+        <url-pattern>/Category/detail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>OrderList</servlet-name>

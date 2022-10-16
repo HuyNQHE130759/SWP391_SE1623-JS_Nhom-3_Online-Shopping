@@ -81,6 +81,7 @@ public class EditUser extends HttpServlet {
         try {
             DAO dao = new DAO();
             String msg = "";
+            //dat bien de check validate
             boolean flag = true;
             String username = request.getParameter("userName");
             String password = request.getParameter("password");
@@ -116,12 +117,14 @@ public class EditUser extends HttpServlet {
                 u.setMale(isMale);
                 u.setEmail(email);
                 dao.updateUser(u);
-                //msg = "Add user successfully!!!"; 
+                //msg = "Add user successfully!!!";
                 response.sendRedirect("ListUser");
             }
             else {
+                request.setAttribute("flag", flag);
                 request.setAttribute("msg", msg);
-                response.sendRedirect("EditUser");
+                //response.sendRedirect("EditUser?cid="+ request.getParameter("cid"));
+                request.getRequestDispatcher("EditUser.jsp?cid="+request.getParameter("cid")).forward(request, response);
             }
             
         } catch (SQLException e) {

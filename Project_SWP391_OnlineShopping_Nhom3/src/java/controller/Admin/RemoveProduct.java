@@ -58,7 +58,7 @@ public class RemoveProduct extends BasedRequiredAuthenticationController1 {
         String pid = request.getParameter("pid");
         DAO dao = new DAO();
         dao.removeProduct(pid);
-        response.sendRedirect(request.getContextPath() + "/AdminConsole");
+        response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
     }
 
     /**
