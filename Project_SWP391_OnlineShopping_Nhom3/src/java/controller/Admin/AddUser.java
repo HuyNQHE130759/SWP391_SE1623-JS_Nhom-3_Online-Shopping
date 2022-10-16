@@ -66,6 +66,7 @@ public class AddUser extends HttpServlet {
             DAO dao = new DAO();
             String msg = "";
             boolean flag = true;
+            //Get data from page
             String username = request.getParameter("userName");
             String password = request.getParameter("password");
             String repeatPassword = request.getParameter("repeatPassword");
@@ -75,10 +76,12 @@ public class AddUser extends HttpServlet {
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
             String rolename = request.getParameter("role");
+            //Validate username trung
             if (dao.userNameIsExist(username)) {
                 msg = "This username has already existed!!!";
                 flag = false;
             }
+            // validate password
             if (!password.equals(repeatPassword)) {
                 msg = "Repeat password is not correct";
                 flag = false;
@@ -87,8 +90,9 @@ public class AddUser extends HttpServlet {
                 msg = "This email has already existed!!!";
                 flag = false;
             }
-            
+            //Add user to DB
             if (flag) {
+                //If flag = true, add User to db
                 User u = new User();
                 u.setUsername(username);
                 u.setPassword(password);
@@ -103,6 +107,7 @@ public class AddUser extends HttpServlet {
                 response.sendRedirect("ListUser");
             }
             else {
+                //If flag = false, send msg to page
                 request.setAttribute("msg", msg);
                 response.sendRedirect("AddUser");
             }
