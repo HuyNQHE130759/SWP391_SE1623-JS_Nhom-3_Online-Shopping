@@ -18,16 +18,6 @@
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
     </head>
     <body>
-        <script>
-            function copyToClipboard($event: Event) {
-                // Copy text to clipboard
-                console.log($event);
-                navigator.clipboard.writeText(code);
-                // Alert the copied text
-                alert("Copied the text: " + code);
-            }
-        </script>
-
         <div class="super_container">
             <!-- Header -->
             <jsp:include page="HeaderCustom.jsp"></jsp:include>
@@ -44,8 +34,8 @@
                         <c:forEach var="i" items="${listVoucher}">
                             <tr>
                                 <td style="display: flex; flex-direction: row; justify-content: space-between;">
-                                    <span id="code-${i.code}">${i.code}</span>
-                                    <span style="cursor: pointer; color: blue;" onclick="copyToClipboard($event)">Copy</span>
+                                    <span id="code">${i.code}</span>
+                                    <span id="${i.code}" style="cursor: pointer; color: blue;" onclick="copyToClipboard(this)">Copy</button>
                                 </td>
                                 <td>${i.description}</td>
                                 <td>${i.timeEnd}</td>
