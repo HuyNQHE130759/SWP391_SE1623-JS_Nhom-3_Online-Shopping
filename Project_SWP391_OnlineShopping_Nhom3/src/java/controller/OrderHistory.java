@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Admin;
+package controller;
 
 import dao.DAO;
 import entity.BillDetail;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author ngoclong
  */
-public class OrderList extends HttpServlet {
+public class OrderHistory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,9 +34,22 @@ public class OrderList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             DAO dao = new DAO();
-        ArrayList<BillDetail> bdetail = dao.getAllBillDetail();
-       request.setAttribute("listBill", bdetail);
-       request.getRequestDispatcher("OrderList.jsp").forward(request, response);
+       int cid = Integer.parseInt(request.getParameter("cid"));
+        int page = Integer.parseInt(request.getParameter("page"));
+   
+       int count = dao.countNumberPhanTrang(cid);
+//       only 3 orders per page
+        int size=3; 
+       int endPage = count/size;
+       //check page have 13 order then + 1 page
+       if(count % size !=0){
+           endPage++;
+       }
+       
+       ArrayList<BillDetail> orderhistory = dao.getOrderHistoryByPage(cid,page);
+       request.setAttribute("history", orderhistory);
+       request.setAttribute("endPage", endPage);
+       request.getRequestDispatcher("OrderHistory.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }

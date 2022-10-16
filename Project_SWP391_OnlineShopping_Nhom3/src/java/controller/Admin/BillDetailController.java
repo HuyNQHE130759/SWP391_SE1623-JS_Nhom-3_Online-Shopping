@@ -8,17 +8,17 @@ import dao.DAO;
 import entity.BillDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 /**
  *
  * @author ngoclong
  */
-public class OrderList extends HttpServlet {
+public class BillDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,12 +31,14 @@ public class OrderList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         try {
-            DAO dao = new DAO();
-        ArrayList<BillDetail> bdetail = dao.getAllBillDetail();
-       request.setAttribute("listBill", bdetail);
-       request.getRequestDispatcher("OrderList.jsp").forward(request, response);
+            response.setContentType("text/html;charset=UTF-8");
+            /* TODO output your page here. You may use following sample code. */
+            int bid = Integer.parseInt(request.getParameter("bid"));
+        DAO dao = new DAO();
+        ArrayList<BillDetail> bdetail = dao.getBillDetailById(bid);
+        request.setAttribute("billDetail", bdetail);
+        request.getRequestDispatcher("BillDetail.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }

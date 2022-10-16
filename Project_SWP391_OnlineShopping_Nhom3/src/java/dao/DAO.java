@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Bill;
+import entity.BillDetail;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import entity.Cart;
 import entity.Category;
 import entity.CheckOut;
@@ -30,7 +32,7 @@ public class DAO extends DBContext {
     public DAO() {
         connect();
     }
-    
+
     public void connect() {
         try {
             con = (new DBContext().connection);
@@ -87,7 +89,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Category";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                c.setCateId(rs.getString(1));
+//                c.setCateId(rs.getInt(1));
                 c.setCateName(rs.getString(2));
                 c.setImage(rs.getString(3));
                 c.setStatus(rs.getBoolean(4));
@@ -100,7 +102,6 @@ public class DAO extends DBContext {
 
         return cl;
     }
-
     public ArrayList getProvider() {
         ArrayList<Provider> list = new ArrayList<>();
         try {
@@ -128,7 +129,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product]";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+//                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -154,7 +155,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where cateId= '" + cid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+//                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -180,7 +181,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where pid= '" + pid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+//                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -259,22 +260,22 @@ public class DAO extends DBContext {
 
         return u;
     }
-
+    
     public void updateUserInfo(User user) {
         try {
             rs = state.executeQuery("UPDATE [dbo].[User]\n"
-                    + "   SET [fullName] = '" + user.getFullName() + "'\n"
-                    + "      ,[address] = '" + user.getAddress() + "'\n"
-                    + "      ,[phone] = '" + user.getPhone() + "'\n"
-                    + "      ,[email] = '" + user.getEmail() + "'\n"
-                    + "      ,[gender] = " + (user.isGender() ? 1 : 0) + "\n"
-                    + " WHERE cid = " + user.getCid());
+                    + "   SET [fullName] = '"+user.getFullName()+"'\n"
+                    + "      ,[address] = '"+user.getAddress()+"'\n"
+                    + "      ,[phone] = '"+user.getPhone()+"'\n"
+                    + "      ,[email] = '"+user.getEmail()+"'\n"
+                    + "      ,[gender] = "+(user.isGender() ? 1 : 0)+"\n"
+                    + " WHERE cid = "+user.getCid());
             ;
         } catch (Exception e) {
             System.out.println("Error Customer " + e.getMessage());
         }
     }
-
+    
     public void insertContact(String cname, String cemail, String Subject, String Message) {
 
         //System.out.println(p_pid);
@@ -390,7 +391,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+//                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getInt(4));
@@ -451,7 +452,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product WHERE pid = '" + pid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+//                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getInt(4));
@@ -523,32 +524,27 @@ public class DAO extends DBContext {
     }
 
     public ArrayList<User> getListUser(String role, String status, String sort) {
-
         ArrayList<User> list = new ArrayList<>();
         try {
-            // query to get all User from DB
             String query = "select * "
                     + "from [User] u "
                     + "left join [Role] r on u.roleid = r.roleid ";
-            // check cac truong hop 
-            // role va status blank
-            if (role.isEmpty() && !status.isEmpty()) {
+            
+            if(role.isEmpty() && !status.isEmpty()) {
                 query += "where status = " + "'" + status + "' ";
             }
-            // role co gia tri va status = blank
-            if (!role.isEmpty() && status.isEmpty()) {
+            if(!role.isEmpty() && status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' ";
             }
-            // ca role va status deu co gia tri
-            if (!role.isEmpty() && !status.isEmpty()) {
+            if(!role.isEmpty() && !status.isEmpty()) {
                 query += "where rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
             }
-            //order by
+            
             query += "order by " + "'" + sort + "' ";
-
+            
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rslt = ps.executeQuery();
-            while (rslt.next()) {
+            while(rslt.next()) {
                 User u = new User();
                 u.setCid(rslt.getInt("cid"));
                 u.setFullName(rslt.getString("fullName"));
@@ -560,15 +556,14 @@ public class DAO extends DBContext {
                 u.setRole(rslt.getString("rolename"));
                 u.setStatus(rslt.getBoolean("status"));
                 list.add(u);
-
+               
             }
             return list;
         } catch (SQLException e) {
         }
         return null;
-    }
-
-    ; 
+    }; 
+    
     
     public ArrayList getBillList() {
         Bill bill = new Bill();
@@ -593,8 +588,8 @@ public class DAO extends DBContext {
 
         return bi;
     }
-
-    public Bill getBillById(int bid) {
+    
+     public Bill getBillById(int bid) {
         Bill bill = new Bill();
         try {
             String strSelect = "select * from Bill WHERE bid = '" + bid + "'";
@@ -614,140 +609,262 @@ public class DAO extends DBContext {
         }
         return bill;
     }
-
-    ; 
-    
-    public void addUser(User u) throws SQLException {
+     
+     public ArrayList getAllBillDetail() {
+         BillDetail bdetail = new BillDetail();
+         ArrayList<BillDetail> bi = new ArrayList<>();
         try {
-            String query = "Insert into [User] values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, getRoleId(u.getRole()));
-            ps.setString(2, u.getFullName());
-            ps.setString(3, u.getAddress());
-            ps.setString(4, u.getPhone());
-            ps.setString(5, u.getEmail());
-            ps.setString(6, u.getUsername());
-            ps.setString(7, u.getPassword());
-            ps.setBoolean(8, true);
-            ps.setBoolean(9, u.isMale());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw e;
-        }
-    }
-
-    public int getLastUserId() {
-        try {
-            String query = "select top 1 cid from [User] order by cid desc";
-            PreparedStatement ps = con.prepareStatement(query);
-            ResultSet rslt = ps.executeQuery();
-            if (rslt.next()) {
-                return rslt.getInt(1);
+            String strSelect = "select b.bid,b.dateCreate,b.total,db.quantity,u.*,p.pname,p.price,p.image from Bill as b\n" +
+"join BillDetail as db on b.bid = db.bid\n" +
+"join [User] as u on u.cid = b.cid\n" +
+"join Product as p on db.pid = p.pid\n";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                bdetail.setBid(rs.getInt(1));
+                bdetail.setDateCreate(rs.getDate(2));
+                bdetail.setTotal(rs.getDouble(3));
+                bdetail.setQuantity(rs.getInt(4));
+                bdetail.setCid(rs.getInt(5));
+                bdetail.setFullName(rs.getString(7));
+                bdetail.setAddress(rs.getString(8));
+                bdetail.setPhone(rs.getString(9));
+                bdetail.setEmail(rs.getString(10));
+                bdetail.setUsername(rs.getString(11));
+                bdetail.setPname(rs.getString(15));
+                bdetail.setPrice(rs.getDouble(16));
+                bdetail.setImage(rs.getString(17));
+bi.add(new BillDetail(bdetail.getRowNumber(),bdetail.getBid(), bdetail.getDateCreate(), bdetail.getTotal(), bdetail.getQuantity(), bdetail.getCid(), bdetail.getFullName(), bdetail.getAddress(), bdetail.getPhone(), bdetail.getEmail(), bdetail.getUsername(), bdetail.getPname(), bdetail.getPrice(), bdetail.getImage()));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return bi;
+    }
+     
+     public ArrayList getBillDetailById(int bid) {
+         BillDetail bdetail = new BillDetail();
+         ArrayList<BillDetail> bi = new ArrayList<>();
+        try {
+            String strSelect = "select b.bid,b.dateCreate,b.total,db.quantity,u.*,p.pname,p.price,p.image from Bill as b\n" +
+"join BillDetail as db on b.bid = db.bid\n" +
+"join [User] as u on u.cid = b.cid\n" +
+"join Product as p on db.pid = p.pid\n" +
+"where b.bid = '" + bid + "'";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                bdetail.setBid(rs.getInt(1));
+                bdetail.setDateCreate(rs.getDate(2));
+                bdetail.setTotal(rs.getDouble(3));
+                bdetail.setQuantity(rs.getInt(4));
+                bdetail.setCid(rs.getInt(5));
+                bdetail.setFullName(rs.getString(7));
+                bdetail.setAddress(rs.getString(8));
+                bdetail.setPhone(rs.getString(9));
+                bdetail.setEmail(rs.getString(10));
+                bdetail.setUsername(rs.getString(11));
+                bdetail.setPname(rs.getString(15));
+                bdetail.setPrice(rs.getDouble(16));
+                bdetail.setImage(rs.getString(17));
+bi.add(new BillDetail(bdetail.getRowNumber(),bdetail.getBid(), bdetail.getDateCreate(), bdetail.getTotal(), bdetail.getQuantity(), bdetail.getCid(), bdetail.getFullName(), bdetail.getAddress(), bdetail.getPhone(), bdetail.getEmail(), bdetail.getUsername(), bdetail.getPname(), bdetail.getPrice(), bdetail.getImage()));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return bi;
+    }
+     
+     public ArrayList getOrderHistoryById(int cid) {
+         BillDetail bdetail = new BillDetail();
+         ArrayList<BillDetail> bi = new ArrayList<>();
+        try {
+            String strSelect = "select b.bid,b.dateCreate,b.total,db.quantity,u.*,p.pname,p.price,p.image from Bill as b\n" +
+"join BillDetail as db on b.bid = db.bid\n" +
+"join [User] as u on u.cid = b.cid\n" +
+"join Product as p on db.pid = p.pid\n" +
+"where b.cid = '" + cid + "'";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                bdetail.setBid(rs.getInt(1));
+                bdetail.setDateCreate(rs.getDate(2));
+                bdetail.setTotal(rs.getDouble(3));
+                bdetail.setQuantity(rs.getInt(4));
+                bdetail.setCid(rs.getInt(5));
+                bdetail.setFullName(rs.getString(7));
+                bdetail.setAddress(rs.getString(8));
+                bdetail.setPhone(rs.getString(9));
+                bdetail.setEmail(rs.getString(10));
+                bdetail.setUsername(rs.getString(11));
+                bdetail.setPname(rs.getString(15));
+                bdetail.setPrice(rs.getDouble(16));
+                bdetail.setImage(rs.getString(17));
+bi.add(new BillDetail(bdetail.getRowNumber(),bdetail.getBid(), bdetail.getDateCreate(), bdetail.getTotal(), bdetail.getQuantity(), bdetail.getCid(), bdetail.getFullName(), bdetail.getAddress(), bdetail.getPhone(), bdetail.getEmail(), bdetail.getUsername(), bdetail.getPname(), bdetail.getPrice(), bdetail.getImage()));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return bi;
+    }
+     
+     public ArrayList getOrderHistoryByPage(int cid,int index) {
+         BillDetail bdetail = new BillDetail();
+         ArrayList<BillDetail> bi = new ArrayList<>();
+         
+        try {
+            String strSelect = "select * from (select ROW_NUMBER() over(order by b.bid asc) as r , b.bid,b.dateCreate,b.total,db.quantity,u.*,p.pname,p.price,p.image from Bill as b\n" +
+"join BillDetail as db on b.bid = db.bid\n" +
+"join [User] as u on u.cid = b.cid\n" +
+"join Product as p on db.pid = p.pid) as x\n" +
+"where r between '" + (index*3-2) + "' and '" + (index*3) + "' AND x.cid = '" + cid + "'";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                bdetail.setRowNumber(rs.getInt(1));
+                bdetail.setBid(rs.getInt(2));
+                bdetail.setDateCreate(rs.getDate(3));
+                bdetail.setTotal(rs.getDouble(4));
+                bdetail.setQuantity(rs.getInt(5));
+                bdetail.setCid(rs.getInt(6));
+                bdetail.setFullName(rs.getString(8));
+                bdetail.setAddress(rs.getString(9));
+                bdetail.setPhone(rs.getString(10));
+                bdetail.setEmail(rs.getString(11));
+                bdetail.setUsername(rs.getString(12));
+                bdetail.setPname(rs.getString(16));
+                bdetail.setPrice(rs.getDouble(17));
+                bdetail.setImage(rs.getString(18));
+            bi.add(new BillDetail(bdetail.getRowNumber(),bdetail.getBid(), bdetail.getDateCreate(), bdetail.getTotal(), bdetail.getQuantity(), bdetail.getCid(), bdetail.getFullName(), bdetail.getAddress(), bdetail.getPhone(), bdetail.getEmail(), bdetail.getUsername(), bdetail.getPname(), bdetail.getPrice(), bdetail.getImage()));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return bi;
+    }
+     
+      public ArrayList getOrderHistoryByPageWithTotalAsc(int cid,int index) {
+         BillDetail bdetail = new BillDetail();
+         ArrayList<BillDetail> bi = new ArrayList<>();
+         
+        try {
+            String strSelect = "select * from (select ROW_NUMBER() over(order by b.total asc) as r , b.bid,b.dateCreate,b.total,db.quantity,u.*,p.pname,p.price,p.image from Bill as b\n" +
+"join BillDetail as db on b.bid = db.bid\n" +
+"join [User] as u on u.cid = b.cid\n" +
+"join Product as p on db.pid = p.pid) as x\n" +
+"where x.cid = '" + cid + "' order by total asc";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                bdetail.setRowNumber(rs.getInt(1));
+                bdetail.setBid(rs.getInt(2));
+                bdetail.setDateCreate(rs.getDate(3));
+                bdetail.setTotal(rs.getDouble(4));
+                bdetail.setQuantity(rs.getInt(5));
+                bdetail.setCid(rs.getInt(6));
+                bdetail.setFullName(rs.getString(8));
+                bdetail.setAddress(rs.getString(9));
+                bdetail.setPhone(rs.getString(10));
+                bdetail.setEmail(rs.getString(11));
+                bdetail.setUsername(rs.getString(12));
+                bdetail.setPname(rs.getString(16));
+                bdetail.setPrice(rs.getDouble(17));
+                bdetail.setImage(rs.getString(18));
+            bi.add(new BillDetail(bdetail.getRowNumber(),bdetail.getBid(), bdetail.getDateCreate(), bdetail.getTotal(), bdetail.getQuantity(), bdetail.getCid(), bdetail.getFullName(), bdetail.getAddress(), bdetail.getPhone(), bdetail.getEmail(), bdetail.getUsername(), bdetail.getPname(), bdetail.getPrice(), bdetail.getImage()));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return bi;
+    }
+      
+      public ArrayList getOrderHistoryByPageWithDateAsc(int cid,int index) {
+         BillDetail bdetail = new BillDetail();
+         ArrayList<BillDetail> bi = new ArrayList<>();
+         
+        try {
+            String strSelect = "select * from (select ROW_NUMBER() over(order by dateCreate asc) as r , b.bid,b.dateCreate,b.total,db.quantity,u.*,p.pname,p.price,p.image from Bill as b\n" +
+"join BillDetail as db on b.bid = db.bid\n" +
+"join [User] as u on u.cid = b.cid\n" +
+"join Product as p on db.pid = p.pid) as x\n" +
+"where x.cid = '" + cid + "' order by dateCreate asc";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                bdetail.setRowNumber(rs.getInt(1));
+                bdetail.setBid(rs.getInt(2));
+                bdetail.setDateCreate(rs.getDate(3));
+                bdetail.setTotal(rs.getDouble(4));
+                bdetail.setQuantity(rs.getInt(5));
+                bdetail.setCid(rs.getInt(6));
+                bdetail.setFullName(rs.getString(8));
+                bdetail.setAddress(rs.getString(9));
+                bdetail.setPhone(rs.getString(10));
+                bdetail.setEmail(rs.getString(11));
+                bdetail.setUsername(rs.getString(12));
+                bdetail.setPname(rs.getString(16));
+                bdetail.setPrice(rs.getDouble(17));
+                bdetail.setImage(rs.getString(18));
+            bi.add(new BillDetail(bdetail.getRowNumber(),bdetail.getBid(), bdetail.getDateCreate(), bdetail.getTotal(), bdetail.getQuantity(), bdetail.getCid(), bdetail.getFullName(), bdetail.getAddress(), bdetail.getPhone(), bdetail.getEmail(), bdetail.getUsername(), bdetail.getPname(), bdetail.getPrice(), bdetail.getImage()));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return bi;
+    }
+     
+     public ArrayList getOrderInformationByCustomer(int cid,int bid) {
+         BillDetail bdetail = new BillDetail();
+         ArrayList<BillDetail> bi = new ArrayList<>();
+        try {
+            String strSelect = "select b.bid,b.dateCreate,b.total,db.quantity,u.*,p.pname,p.price,p.image from Bill as b\n" +
+"join BillDetail as db on b.bid = db.bid\n" +
+"join [User] as u on u.cid = b.cid\n" +
+"join Product as p on db.pid = p.pid\n" +
+"where b.cid = '" + cid + "' AND b.bid = '" + bid + "'";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                bdetail.setBid(rs.getInt(1));
+                bdetail.setDateCreate(rs.getDate(2));
+                bdetail.setTotal(rs.getDouble(3));
+                bdetail.setQuantity(rs.getInt(4));
+                bdetail.setCid(rs.getInt(5));
+                bdetail.setFullName(rs.getString(7));
+                bdetail.setAddress(rs.getString(8));
+                bdetail.setPhone(rs.getString(9));
+                bdetail.setEmail(rs.getString(10));
+                bdetail.setUsername(rs.getString(11));
+                bdetail.setPname(rs.getString(15));
+                bdetail.setPrice(rs.getDouble(16));
+                bdetail.setImage(rs.getString(17));
+                bi.add(new BillDetail(bdetail.getRowNumber(),bdetail.getBid(), bdetail.getDateCreate(), bdetail.getTotal(), bdetail.getQuantity(), bdetail.getCid(), bdetail.getFullName(), bdetail.getAddress(), bdetail.getPhone(), bdetail.getEmail(), bdetail.getUsername(), bdetail.getPname(), bdetail.getPrice(), bdetail.getImage()));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return bi;
+    }
+     
+   
+
+      public int countNumberPhanTrang(int cid) {
+        try {
+            String strSelect = "select count(*) from Bill as b\n" +
+"join BillDetail as db on b.bid = db.bid\n" +
+"join [User] as u on u.cid = b.cid\n" +
+"join Product as p on db.pid = p.pid\n" +
+"where b.cid = '" + cid + "'";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
         }
         return 0;
     }
 
-    public int getRoleId(String rolename) {
-        try {
-            String query = "select roleid from [Role] where rolename = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, rolename);
-            ResultSet rslt = ps.executeQuery();
-            if (rslt.next()) {
-                return rslt.getInt(1);
-            }
-        } catch (SQLException e) {
+    public static void main(String[] args) {
+        System.out.println(new DAO().checkLogin("Huy", "123"));
+        DAO dao = new DAO();
+  ArrayList<BillDetail> bdetail = dao.getOrderHistoryByPageWithDateAsc(2,2);
+            for (BillDetail bill : bdetail) {
+                System.out.println(bill);
         }
-        return 1;
-    }
-
-    public String getRoleName(int roleid) {
-        try {
-            String query = "select rolename from [Role] where roleid = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, roleid);
-            ResultSet rslt = ps.executeQuery();
-            if (rslt.next()) {
-                return rslt.getString(1);
-            }
-        } catch (SQLException e) {
-        }
-        return "";
-    }
-
-    public boolean userNameIsExist(String username) {
-        try {
-            String query = "select count(*) as num from [User] where username = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, username);
-            ResultSet rslt = ps.executeQuery();
-            if (rslt.next()) {
-                return Integer.parseInt(rslt.getString(1)) > 0;
-            }
-        } catch (SQLException e) {
-        }
-        return false;
-    }
-
-    public boolean emailIsExist(String email) {
-        try {
-            String query = "select count(*) as num from [User] where email = ?";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, email);
-            ResultSet rslt = ps.executeQuery();
-            if (rslt.next()) {
-                return Integer.parseInt(rslt.getString(1)) > 0;
-            }
-        } catch (SQLException e) {
-        }
-        return false;
-    }
-
-    public User getUserById(int cid) {
-        try {
-            User u = new User();
-            String query = "select * from [User] WHERE cid = ?";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, cid);
-            ResultSet rslt = ps.executeQuery();
-            if (rslt.next()) {
-                u.setCid(rslt.getInt("cid"));
-                u.setFullName(rslt.getString("fullName"));
-                u.setUsername(rslt.getString("username"));
-                u.setMale(rslt.getBoolean("gender"));
-                u.setAddress(rslt.getString("address"));
-                u.setEmail(rslt.getString("email"));
-                u.setPhone(rslt.getString("phone"));
-                u.setRole(getRoleName(rslt.getInt("roleid")));
-                u.setStatus(rslt.getBoolean("status"));
-            }
-            return u;
-        } catch (SQLException e) {
-
-        }
-        return null;
-    }
-
-    public void updateUser(User u) throws SQLException {
-        try {
-            String query = "UPDATE [User]\n"
-                    + "SET roleid = ?, fullName = ?, address = ?, phone = ?, email = ?, username = ?, password = ?, gender = ?\n"
-                    + "WHERE cid = ?;";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, getRoleId(u.getRole()));
-            ps.setString(2, u.getFullName());
-            ps.setString(3, u.getAddress());
-            ps.setString(4, u.getPhone());
-            ps.setString(5, u.getEmail());
-            ps.setString(6, u.getUsername());
-            ps.setString(7, u.getPassword());
-            ps.setBoolean(8, u.isMale());
-            ps.setInt(9, u.getCid());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw e;
-        }
+        
     }
 }

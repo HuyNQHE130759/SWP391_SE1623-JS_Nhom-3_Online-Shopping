@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Admin;
+package controller;
 
 import dao.DAO;
 import entity.BillDetail;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author ngoclong
  */
-public class OrderList extends HttpServlet {
+public class OrderInformation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,9 +34,11 @@ public class OrderList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             DAO dao = new DAO();
-        ArrayList<BillDetail> bdetail = dao.getAllBillDetail();
-       request.setAttribute("listBill", bdetail);
-       request.getRequestDispatcher("OrderList.jsp").forward(request, response);
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        int bid = Integer.parseInt(request.getParameter("bid"));
+        ArrayList<BillDetail> bdetail = dao.getOrderInformationByCustomer(cid, bid);
+        request.setAttribute("billDetail", bdetail);
+        request.getRequestDispatcher("OrderInformation.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }
