@@ -31,7 +31,7 @@ public class DAO extends DBContext {
     public DAO() {
         connect();
     }
-    
+
     public void connect() {
         try {
             con = (new DBContext().connection);
@@ -46,7 +46,7 @@ public class DAO extends DBContext {
         User u = new User();
         ArrayList<User> ul = new ArrayList<>();
         try {
-            String strSelect = "select * from dbo.[User] where username = '" + username + "' and password='" + pass + "' and status = 1";
+            String strSelect = "select * from dbo.[User] where status = 1";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
                 u.setCid(rs.getInt("cid"));
@@ -57,7 +57,9 @@ public class DAO extends DBContext {
                 u.setPassword(rs.getString("password"));
                 u.setStatus(rs.getBoolean("status"));
                 u.setEmail(rs.getString("email"));
-                ul.add(u);
+                if (username.equals(rs.getString("username")) && pass.equals(rs.getString("password"))) {
+                    ul.add(u);
+                }
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
@@ -751,7 +753,7 @@ public class DAO extends DBContext {
             throw e;
         }
     }
-    
+
     public ArrayList<Voucher> getVoucherList() {
         try {
             ArrayList<Voucher> list = new ArrayList<>();
@@ -773,21 +775,21 @@ public class DAO extends DBContext {
         }
         return null;
     }
-    
+
     public void addNewVoucher(Voucher v) throws SQLException {
         try {
             String query = "Insert into [Voucher] values (?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, v.getCode());
             ps.setInt(2, v.getDiscount());
-            ps.setString(3,v.getDescription());
+            ps.setString(3, v.getDescription());
             ps.setDate(4, v.getTimeEnd());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
         }
     }
-    
+
     public boolean voucherCodeIsExist(String voucher) throws SQLException {
         try {
             String query = "Select count(*) as num from Voucher where code = ?";

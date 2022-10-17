@@ -18,7 +18,7 @@
         <h1>Feedback Detail</h1>
         <div class="card">
             <div class="card-body">
-                <form method="" action="">
+                <form method="post" action="EditFeedback">
                     <div class="row">
                         <div class="col-md-6">
                             <label>Contact full name</label>

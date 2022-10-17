@@ -11,8 +11,8 @@ public class SendMail {
     public static void send(String to, String sub,
             String msg) throws AddressException,
             MessagingException {
-        String user = "hunghtfx09440@funix.edu.vn";
-        String pass = "PYfvN3JTjGp1";
+        String user = "phongdhhe151364@fpt.edu.vn";
+        String pass = "phong15081996@";
         Properties props = new Properties();
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
         props.put("mail.smtp.host", "smtp.gmail.com");

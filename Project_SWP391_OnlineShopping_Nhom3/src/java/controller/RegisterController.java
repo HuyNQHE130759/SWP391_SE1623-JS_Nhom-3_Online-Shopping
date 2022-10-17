@@ -28,7 +28,7 @@ public class RegisterController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -80,8 +80,8 @@ public class RegisterController extends HttpServlet {
         String resultMessage = "";
         if (dao.checkEmailExist(email)) {
             request.setAttribute("messRegister", "Email address alredy exist!");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);
             request.getRequestDispatcher("register.jsp").forward(request, response);
+
         } else {
             dao.insertCustomer(fname, address, phone, usname, password, false, email, gender);
             try {
@@ -92,21 +92,21 @@ public class RegisterController extends HttpServlet {
                 resultMessage = "Create new account successfully!Please check your email";
             } catch (Exception ex) {
                 ex.printStackTrace();
-                try (PrintWriter out = response.getWriter()) {
+                try ( PrintWriter out = response.getWriter()) {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert(" + "There were an error: " + ex.getMessage() + ");");
                     out.println("location='" + request.getContextPath() + "/Register';");
                     out.println("</script>");
                 }
             } finally {
-                try (PrintWriter out = response.getWriter()) {
+                try ( PrintWriter out = response.getWriter()) {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Create new account successfully!Please check your email');");
                     out.println("location='" + request.getContextPath() + "/HomePage';");
                     out.println("</script>");
                 }
-//                request.setAttribute("messRegister", resultMessage);
-//                request.getRequestDispatcher("register.jsp").forward(request, response);
+                request.setAttribute("messRegister", resultMessage);
+                request.getRequestDispatcher("register.jsp").forward(request, response);
             }
         }
 

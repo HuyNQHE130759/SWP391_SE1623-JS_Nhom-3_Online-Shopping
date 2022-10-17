@@ -265,10 +265,10 @@ public class FeedbackDAO extends DBContext {
 
     public static void main(String[] args) {
         FeedbackDAO ao = new FeedbackDAO();
-        ao.insertFeedback("1010", "3", "comment abc123", "2", "img12332.png");
-        ao.deleteFeedback("2");
-        ao.updatestatus("3", "0");
-        ao.updateFeedback("update commnet", "2", "update img", "0", "1");
+//        ao.insertFeedback("1010", "3", "comment abc123", "2", "img12332.png");
+//        ao.deleteFeedback("2");
+//        ao.updatestatus("3", "0");
+        ao.updateFeedback("update qweqwe commnet", "2", "update img", "0", "4");
         ArrayList<Feedback> flist = ao.getAllFeedback("", "", "", 1, 3);
         for (Feedback f : flist) {
             System.out.println(f.getUser_comment() + " - " + f.getUser_rating() + " - " + f.getUser().getFullName() + " " + f.getProduct().getPname());

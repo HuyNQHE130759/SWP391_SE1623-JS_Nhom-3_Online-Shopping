@@ -74,6 +74,7 @@ public class EditFeedback extends HttpServlet {
         String status = request.getParameter("status");
         FeedbackDAO fdao = new FeedbackDAO();
         fdao.updateFeedback(comment, rating, img, status, fid);
+        
         response.sendRedirect("./FeedbackList");
     }
 

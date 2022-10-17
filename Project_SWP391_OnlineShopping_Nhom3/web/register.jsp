@@ -38,15 +38,15 @@
                                 <h2>New User Signup!</h2>
 
                                 <form action="${pageContext.request.contextPath}/Register" method="POST">
-                                Fullname: <input type="text" name="name"><br/>
-                                Email: <input type="email" name="email"><br/>
-                                Address: <input type="text" name="address"><br/>
-                                Phone: <input type="text" name="phone"><br/>
-                                Username: <input type="text" name="usname"><br/>
-                                Gender: <input style="display: inline-block; height: auto; width: auto; padding: none; margin-bottom: 10px;" type="radio" name="gender" value="1"> Male 
+                                Fullname: <input type="text" required name="name" pattern="\S(.*\S)?"><br/>
+                                Email: <input type="email" required name="email" pattern="\S(.*\S)?"><br/>
+                                Address: <input type="text" required name="address" pattern="\S(.*\S)?"><br/>
+                                Phone: <input type="text" required name="phone" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"><br/>
+                                Username: <input type="text" required name="usname" pattern="\S(.*\S)?"><br/>
+                                Gender: <input style="display: inline-block; height: auto; width: auto; padding: none; margin-bottom: 10px;" type="radio" checked name="gender" value="1"> Male 
                                 <input  style="display: inline-block; height: auto; width: auto; padding: none;margin-bottom: 10px;" type="radio" name="gender" value="0"> Female<br/>
                                 <br/>
-                                Password: <input type="password" name="password"><br/>
+                                Password: <input type="password" required name="password" minlength="8"><br/>
                                 <p style="color: red">${messRegister}</p><br>
                                 <input type="submit" class="btn btn-default" name="save" value="Register"> 
                             </form>
