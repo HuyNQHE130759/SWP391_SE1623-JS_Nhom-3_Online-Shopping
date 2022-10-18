@@ -4,7 +4,10 @@
  */
 package controller.Admin;
 
+import dao.CommonDAO;
 import dao.DAO;
+import dao.VoucherDAO;
+import entity.User;
 import entity.Voucher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,9 +63,21 @@ public class VoucherList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAO dao = new DAO();
-        ArrayList<Voucher> listVoucher = dao.getVoucherList();
-        request.setAttribute("listVoucher", listVoucher);
+        VoucherDAO voucherDAO = new VoucherDAO();
+        CommonDAO commonDAO = new CommonDAO();
+        //Get List Voucher
+        int itemPerPage = 5;
+        String pageCurrent = request.getParameter("page");
+        if (pageCurrent != null && !pageCurrent.isEmpty()) {
+            int intPageCurrent = Integer.parseInt(pageCurrent);
+            ArrayList<Voucher> listVoucher = voucherDAO.getVoucherList(itemPerPage, intPageCurrent);
+            request.setAttribute("listVoucher", listVoucher);
+            // get number page to paging
+            int numberPage = commonDAO.getNumberPage(itemPerPage, "Voucher");
+            request.setAttribute("numberPage", numberPage);
+            // get page current
+            request.setAttribute("pageCurrent", intPageCurrent);
+        }
         request.getRequestDispatcher("VoucherList.jsp").forward(request, response);
     }
 

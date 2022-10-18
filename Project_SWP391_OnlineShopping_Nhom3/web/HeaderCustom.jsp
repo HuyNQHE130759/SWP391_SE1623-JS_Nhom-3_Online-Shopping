@@ -1,5 +1,4 @@
-
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -37,7 +36,10 @@
                                     <li><a href="#">shop</a></li>
                                     <li><a href="${pageContext.request.contextPath}/OrderList">order list</a></li>
                                     <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
-                                    <li><a href="ListUser">list user</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/VoucherList?page=1">voucher list</a></li>
+                                    <c:if test="${sessionScope.roleName == 'Admin'}">
+                                        <li><a href="ListUser?page=1">list user</a></li>
+                                    </c:if>
                                 </ul>
                                 <ul class="navbar_user">
                                     <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>

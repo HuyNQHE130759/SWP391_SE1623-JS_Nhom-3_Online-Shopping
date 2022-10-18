@@ -6,6 +6,7 @@
 package controller;
 
 import dao.DAO;
+import dao.RoleDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -29,12 +30,12 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");            
+            out.println("<title>Servlet LoginController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
@@ -72,14 +73,20 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String pass = request.getParameter("password");
         DAO dao = new DAO();
+        RoleDAO roleDAO = new RoleDAO();
         ArrayList<User> ul = new ArrayList<>();
         ul = dao.checkLogin(username, pass);
         for (int i = 0; i < ul.size(); i++) {
             if (ul.size() > 0) {
                 //request.getSession().setAttribute("error", "Login Successfully!!");
                 request.getSession().setAttribute("user", ul.get(i));
+                //Set role for user
+                if (ul.get(i) != null) {
+                    String roleName = roleDAO.getRoleNameByUser(ul.get(i).getUsername());
+                    request.getSession().setAttribute("roleName", roleName);
+                }
                 //request.getSession().setAttribute("error", "Login successful!");
-                try (PrintWriter out = response.getWriter()) {
+                try ( PrintWriter out = response.getWriter()) {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Login successful!');");
                     out.println("location='" + request.getContextPath() + "/HomePage';");
@@ -91,7 +98,7 @@ public class LoginController extends HttpServlet {
         if (ul.size() <= 0) {
             request.getSession().setAttribute("user", null);
             //request.getSession().setAttribute("error", "Username or password didn't matched !!");
-            try (PrintWriter out = response.getWriter()) {
+            try ( PrintWriter out = response.getWriter()) {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Username or password is invalid!');");
                 out.println("location='" + request.getContextPath() + "/Login';");

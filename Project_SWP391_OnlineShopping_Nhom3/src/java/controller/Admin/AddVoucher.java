@@ -1,6 +1,7 @@
 package controller.Admin;
 
 import dao.DAO;
+import dao.VoucherDAO;
 import entity.Voucher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -78,23 +79,23 @@ public class AddVoucher extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            DAO dao = new DAO();
+            VoucherDAO voucherDAO = new VoucherDAO();
             String msg = "";
             boolean flag = true;
             //Get data from page
             String code = "";
+            //Loop until random code not exist in DB
             do {
                 code = randomGeneratedString(10);
                 request.setAttribute("code", code);
-            } while (dao.voucherCodeIsExist(code));
+            } while (voucherDAO.voucherCodeIsExist(code));
             int discount = Integer.parseInt(request.getParameter("discount"));
             String description = request.getParameter("description");
+            //Validate time end
             java.util.Date utilTimeEnd = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("timeEnd"));
             java.sql.Date sqlTimeEnd = new java.sql.Date(utilTimeEnd.getTime());
             LocalDate today = LocalDate.now(ZoneId.of("America/Santarem"));
             LocalDate timeEndLocalDate = LocalDate.parse(request.getParameter("timeEnd"), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            System.out.println("Code: " + code);
-            //Validate time end
             if (timeEndLocalDate.isBefore(today) || timeEndLocalDate.isEqual(today)) {
                 msg = "Time of voucher end must be greater than today";
                 flag = false;
@@ -108,8 +109,8 @@ public class AddVoucher extends HttpServlet {
                 v.setDiscount(discount);
                 v.setDescription(description);
                 v.setTimeEnd(sqlTimeEnd);
-                dao.addNewVoucher(v);
-                response.sendRedirect("VoucherList");
+                voucherDAO.addNewVoucher(v);
+                response.sendRedirect("VoucherList?page=1");
             } else {
                 //If flag = false, send msg to page
                 request.setAttribute("msg", msg);

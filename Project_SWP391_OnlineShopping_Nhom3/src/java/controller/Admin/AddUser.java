@@ -4,10 +4,9 @@
  */
 package controller.Admin;
 
-import dao.DAO;
+import dao.UserDAO;
 import entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -63,7 +62,7 @@ public class AddUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            DAO dao = new DAO();
+            UserDAO userDAO = new UserDAO();
             String msg = "";
             boolean flag = true;
             //Get data from page
@@ -77,7 +76,7 @@ public class AddUser extends HttpServlet {
             String phone = request.getParameter("phone");
             String rolename = request.getParameter("role");
             //Validate username trung
-            if (dao.userNameIsExist(username)) {
+            if (userDAO.userNameIsExist(username)) {
                 msg = "This username has already existed!!!";
                 flag = false;
             }
@@ -86,7 +85,7 @@ public class AddUser extends HttpServlet {
                 msg = "Repeat password is not correct";
                 flag = false;
             }
-            if (dao.emailIsExist(email)) {
+            if (userDAO.emailIsExist(email)) {
                 msg = "This email has already existed!!!";
                 flag = false;
             }
@@ -102,8 +101,7 @@ public class AddUser extends HttpServlet {
                 u.setPhone(phone);
                 u.setMale(isMale);
                 u.setEmail(email);
-                dao.addUser(u);
-                //msg = "Add user successfully!!!"; 
+                userDAO.addUser(u);
                 response.sendRedirect("ListUser");
             }
             else {

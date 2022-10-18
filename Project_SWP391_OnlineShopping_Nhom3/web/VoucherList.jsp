@@ -43,7 +43,21 @@
                         </c:forEach>
                     </tbody>
                 </table>
-                <a style="color: white;" class="btn btn-primary" href="/AddVoucher">Add Voucher</a>
+                <div class="flex text-center">
+                    <c:if test="${numberPage != 1}">
+                        <c:forEach var="page" begin="1" end="${numberPage}">
+                            <c:if test="${pageCurrent == page}">
+                                <a href="VoucherList?page=${page}" class="mx-2" style="font-weight: bold">${page}</a>
+                            </c:if>
+                            <c:if test="${pageCurrent != page}">
+                                <a href="VoucherList?page=${page}" class="mx-2" style="color: black">${page}</a>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                </div>
+                <c:if test="${roleName == 'Admin'}">
+                    <a style="color: white;" class="btn btn-primary" href="/AddVoucher">Add Voucher</a>
+                </c:if>
             </div>
 
 

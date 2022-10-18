@@ -68,7 +68,7 @@
                             <option value="Manager">Manager</option>
                         </select>
                     </div>
-                    <c:if test="${flag == false}">
+                    <c:if test="${not empty msg}">
                         <small id="error" class="form-text" style="color: red">${msg}</small>
                     </c:if>
                     

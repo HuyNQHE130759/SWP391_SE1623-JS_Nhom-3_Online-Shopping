@@ -1,6 +1,8 @@
 package controller.Admin;
 
+import dao.CommonDAO;
 import dao.DAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -35,15 +37,32 @@ public class ListUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAO dao = new DAO();
+        UserDAO userDAO = new UserDAO();
+        CommonDAO commonDAO = new CommonDAO();
         ArrayList<User> listUser;
-        if (request.getParameter("selectRole") == null && request.getParameter("selectStatus") == null && request.getParameter("selectSort") == null) {
-            listUser = dao.getListUser("", "", "cid");
-        } else {
-            listUser = dao.getListUser(request.getParameter("selectRole"), request.getParameter("selectStatus"), request.getParameter("selectSort"));
-        }
+        String selectedRole = (String) request.getSession().getAttribute("selectedRole");
+        String selectedStatus = (String) request.getSession().getAttribute("selectedStatus");
+        String selectedSort = (String) request.getSession().getAttribute("selectedSort");
+        int itemPerPage = 5;
+        String pageCurrent = request.getParameter("page");
+        if (pageCurrent != null && !pageCurrent.isEmpty()) {
+            int intPageCurrent = Integer.parseInt(pageCurrent);
+            if (selectedRole == null && selectedStatus == null && selectedSort == null) {
+                listUser = userDAO.getListUser("", "", "cid", itemPerPage, intPageCurrent);
 
-        request.setAttribute("listUser", listUser);
+            } else {
+                listUser = userDAO.getListUser(selectedRole, selectedStatus, selectedSort, itemPerPage, intPageCurrent);
+                request.setAttribute("selectedRole", selectedRole);
+                request.setAttribute("selectedStatus", selectedStatus);
+                request.setAttribute("selectedSort", selectedSort);
+            }
+            request.setAttribute("listUser", listUser);
+            // get number page to paging
+            int numberPage = commonDAO.getNumberPage(itemPerPage, "[User]");
+            request.setAttribute("numberPage", numberPage);
+            // get page current
+            request.setAttribute("pageCurrent", intPageCurrent);
+        }
         request.getRequestDispatcher("ListUser.jsp").forward(request, response);
     }
 
@@ -58,7 +77,13 @@ public class ListUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        String selectedRole = request.getParameter("selectRole");
+        String selectedStatus = request.getParameter("selectStatus");
+        String selectedSort = request.getParameter("selectSort");
+        request.getSession().setAttribute("selectedRole", selectedRole);
+        request.getSession().setAttribute("selectedStatus", selectedStatus);
+        request.getSession().setAttribute("selectedSort", selectedSort);
+        response.sendRedirect("ListUser?page=1");
     }
 
     /**
