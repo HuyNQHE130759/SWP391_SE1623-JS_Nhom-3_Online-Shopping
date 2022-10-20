@@ -26,7 +26,7 @@
                 <form method="post" action="AddUser" style="margin: auto; width: 50%">
                     <div class="form-group">
                         <label for="userName">Username<span style="color: red">*</span></label>
-                        <input type="text" class="form-control" name="userName" placeholder="Enter username" required="true">
+                        <input type="text" class="form-control" name="userName" placeholder="Enter username" required="true" value="${username != "" ? username : ""}">
                     </div>
                     <div class="form-group">
                         <label for="password">Password<span style="color: red">*</span></label>
@@ -38,41 +38,43 @@
                     </div>
                     <div class="form-group">
                         <label for="fullName">Full name</label>
-                        <input type="text" class="form-control" name="fullName" placeholder="Enter full name">
+                        <input type="text" class="form-control" name="fullName" placeholder="Enter full name" value="${fullName != "" ? fullName : ""}">
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender</label>
                         <select class="form-control" name="gender">
-                            <option value="1">Male</option>
-                            <option value="0">Female</option>
+                            <option value="1" ${isMale == true ? 'selected' : ''}>Male</option>
+                            <option value="0" ${isMale == false ? 'selected' : ''}>Female</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="email">Email<span style="color: red">*</span></label>
-                        <input type="email" class="form-control" name="email" placeholder="Enter email" required="true">
+                        <input type="email" class="form-control" name="email" placeholder="Enter email" required="true" value="${email != "" ? email : ""}">
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="tel" class="form-control" name="phone" placeholder="Enter phone">
+                        <input type="tel" class="form-control" name="phone" placeholder="Enter phone" value="${phone != "" ? phone : ""}">
                     </div>
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" name="address" placeholder="Enter address">
+                        <input type="text" class="form-control" name="address" placeholder="Enter address" value="${address != "" ? address : ""}">
                     </div>
                     <div class="form-group">
                         <label for="role">Role</label>
                         <select class="form-control" name="role">
-                            <option value="User">User</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Provider">Provider</option>
-                            <option value="Manager">Manager</option>
+                            <option value="User" ${rolename == "User" ? 'selected' : ''}>User</option>
+                            <option value="Admin" ${rolename == "Admin" ? 'selected' : ''}>Admin</option>
+                            <option value="Provider" ${rolename == "Provider" ? 'selected' : ''}>Provider</option>
+                            <option value="Manager" ${rolename == "Manager" ? 'selected' : ''}>Manager</option>
                         </select>
                     </div>
                     <c:if test="${not empty msg}">
-                        <small id="error" class="form-text" style="color: red">${msg}</small>
+                        <ul>
+                            ${msg}
+                        </ul>
                     </c:if>
                     
-                    <button type="submit" class="btn btn-primary" style="margin: 0 auto">Save</button>
+                    <button type="submit" class="btn btn-primary" style="margin: 8px 0">Save</button>
                 </form>
 
             </div>

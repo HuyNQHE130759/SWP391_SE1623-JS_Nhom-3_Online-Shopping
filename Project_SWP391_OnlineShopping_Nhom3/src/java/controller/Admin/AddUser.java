@@ -77,16 +77,16 @@ public class AddUser extends HttpServlet {
             String rolename = request.getParameter("role");
             //Validate username trung
             if (userDAO.userNameIsExist(username)) {
-                msg = "This username has already existed!!!";
+                msg += "<li style='color: red'>This username has already existed!!!</li>";
                 flag = false;
             }
             // validate password
             if (!password.equals(repeatPassword)) {
-                msg = "Repeat password is not correct";
+                msg += "<li style='color: red'>Repeat password is not correct</li>";
                 flag = false;
             }
             if (userDAO.emailIsExist(email)) {
-                msg = "This email has already existed!!!";
+                msg += "<li style='color: red'>This email has already existed!!!</li>";
                 flag = false;
             }
             //Add user to DB
@@ -102,12 +102,20 @@ public class AddUser extends HttpServlet {
                 u.setMale(isMale);
                 u.setEmail(email);
                 userDAO.addUser(u);
-                response.sendRedirect("ListUser");
+                response.sendRedirect("ListUser?page=1");
             }
             else {
                 //If flag = false, send msg to page
                 request.setAttribute("msg", msg);
-                response.sendRedirect("AddUser");
+                System.out.println(msg);
+                request.setAttribute("username", username);
+                request.setAttribute("rolename", rolename);
+                request.setAttribute("fullName", fullName);
+                request.setAttribute("address", address);
+                request.setAttribute("phone", phone);
+                request.setAttribute("isMale", isMale);
+                request.setAttribute("email", email);
+                request.getRequestDispatcher("/AddUser.jsp").forward(request, response);
             }
             
         } catch (SQLException e) {
