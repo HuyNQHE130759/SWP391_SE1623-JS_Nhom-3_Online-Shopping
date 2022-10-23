@@ -137,7 +137,6 @@ public class DAO extends DBContext {
                 p.setDescription(rs.getString(6));
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
-
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
@@ -147,6 +146,8 @@ public class DAO extends DBContext {
 
         return pl;
     }
+    
+    
 
     public ArrayList getProductbyCate(String cid) {
         Product p = new Product();

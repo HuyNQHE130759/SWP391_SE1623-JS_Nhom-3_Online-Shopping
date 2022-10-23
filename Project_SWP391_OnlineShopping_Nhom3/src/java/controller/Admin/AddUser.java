@@ -107,7 +107,6 @@ public class AddUser extends HttpServlet {
             else {
                 //If flag = false, send msg to page
                 request.setAttribute("msg", msg);
-                System.out.println(msg);
                 request.setAttribute("username", username);
                 request.setAttribute("rolename", rolename);
                 request.setAttribute("fullName", fullName);

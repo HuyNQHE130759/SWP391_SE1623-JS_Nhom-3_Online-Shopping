@@ -114,6 +114,9 @@ public class AddVoucher extends HttpServlet {
             } else {
                 //If flag = false, send msg to page
                 request.setAttribute("msg", msg);
+                request.setAttribute("discount", request.getParameter("discount"));
+                request.setAttribute("description", description);
+                request.setAttribute("timeEnd", request.getParameter("timeEnd"));
                 request.getRequestDispatcher("/AddVoucher.jsp").forward(request, response);
             }
 

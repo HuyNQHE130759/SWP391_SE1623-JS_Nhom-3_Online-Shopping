@@ -31,25 +31,25 @@
                         <div class="form-group">
                             <label for="discount">Discount<span style="color: red">*</span></label>
                             <select class="form-control" name="discount" required="true">
-                                <option value="10">10%</option>
-                                <option value="20">20%</option>
-                                <option value="30">30%</option>
-                                <option value="40">40%</option>
-                                <option value="50">50%</option>
-                                <option value="60">60%</option>
-                                <option value="70">70%</option>
-                                <option value="80">80%</option>
-                                <option value="90">90%</option>
-                                <option value="100">100%</option>
+                                <option value="10" ${discount == "10" ? 'selected' : ''}>10%</option>
+                                <option value="20" ${discount == "20" ? 'selected' : ''}>20%</option>
+                                <option value="30" ${discount == "30" ? 'selected' : ''}>30%</option>
+                                <option value="40" ${discount == "40" ? 'selected' : ''}>40%</option>
+                                <option value="50" ${discount == "50" ? 'selected' : ''}>50%</option>
+                                <option value="60" ${discount == "60" ? 'selected' : ''}>60%</option>
+                                <option value="70" ${discount == "70" ? 'selected' : ''}>70%</option>
+                                <option value="80" ${discount == "80" ? 'selected' : ''}>80%</option>
+                                <option value="90" ${discount == "90" ? 'selected' : ''}>90%</option>
+                                <option value="100" ${discount == "100" ? 'selected' : ''}>100%</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <input type="text" class="form-control" name="description" placeholder="Enter description">
+                            <input type="text" class="form-control" name="description" placeholder="Enter description" value="${description != "" ? description : ""}">
                         </div>
                         <div class="form-group">
                             <label for="fullName">Time End</label>
-                            <input type="date" class="form-control" name="timeEnd" placeholder="Select time end" required="true">
+                            <input type="date" class="form-control" name="timeEnd" placeholder="Select time end" required="true" value="${timeEnd != "" ? timeEnd : ""}">
                         </div>
                     <c:if test="${not empty msg}">
                         <small id="error" class="form-text" style="color: red">${msg}</small>
