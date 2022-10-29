@@ -1,4 +1,4 @@
-/*
+                                                        /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -16,7 +16,7 @@ public class DBContext {
     {
         try {
             String username = "sa";
-            String password = "sa";
+            String password = "123456";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=SWDHutech";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);

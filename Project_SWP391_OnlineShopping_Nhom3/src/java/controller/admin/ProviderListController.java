@@ -3,10 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.Admin;
+package controller.admin;
 
-import dao.CategoryDAO;
-import dao.DAO;
+import dao.ProviderDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author apc
  */
-public class CategoryList extends HttpServlet {
+public class ProviderListController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,18 +37,18 @@ public class CategoryList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        CategoryDAO categoryDAO = new CategoryDAO();
+        ProviderDAO providerDAO = new ProviderDAO();
         int pagesize = Integer.parseInt(getServletContext().getInitParameter("PAGE_SIZE"));
         String raw_page = request.getParameter("page");
         if(raw_page == null)
             raw_page = "1";
         int pageindex = Integer.parseInt(raw_page);
-        int count = categoryDAO.count();
+        int count = providerDAO.count();
         int totalpage = (count%pagesize ==0)?count/pagesize:count/pagesize + 1;
         request.setAttribute("pageindex", pageindex);
         request.setAttribute("totalpage", totalpage);
-        request.setAttribute("categories", categoryDAO.getAllCategory(pageindex, pagesize));
-        request.getRequestDispatcher("../CategoryList.jsp").forward(request, response);
+        request.setAttribute("providers", providerDAO.getAllProvider(pageindex, pagesize));
+        request.getRequestDispatcher("../ProviderList.jsp").forward(request, response);
     } 
 
     /** 
@@ -70,19 +69,18 @@ public class CategoryList extends HttpServlet {
         if(raw_page ==null)
             raw_page = "1";
         int pageindex = Integer.parseInt(raw_page);
-        Boolean status = (raw_status !=null && raw_status.length()>0)?(raw_status.equals("0")?false:true):null;
+        Boolean status = (raw_status !=null && raw_status.length()>0 && !raw_status.equals("-1"))?(raw_status.equals("0")?false:true):null;
         String search = (raw_search !=null && raw_search.length()>0)?raw_search:null;
-        CategoryDAO categoryDAO = new CategoryDAO();
-        DAO dao = new DAO();
-        int count = categoryDAO.count();
+        ProviderDAO providerDAO = new ProviderDAO();
+        int count = providerDAO.count();
         int totalpage = (count%pagesize ==0)?count/pagesize:count/pagesize + 1;
         request.setAttribute("sort", sort);
         request.setAttribute("status", raw_status);
         request.setAttribute("search", raw_search);
         request.setAttribute("pageindex", pageindex);
         request.setAttribute("totalpage", totalpage);
-        request.setAttribute("categories", categoryDAO.getAllCategory(sort, status, search, pageindex, pagesize));
-        request.getRequestDispatcher("../CategoryList.jsp").forward(request, response);
+        request.setAttribute("providers", providerDAO.getAllProvider(sort, status, search, pageindex, pagesize));
+        request.getRequestDispatcher("../ProviderList.jsp").forward(request, response);
     }
 
     /** 

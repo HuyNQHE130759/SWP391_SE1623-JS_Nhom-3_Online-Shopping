@@ -23,7 +23,7 @@
             <jsp:include page="HeaderCustom.jsp"></jsp:include>
 
             <div class="container" style="margin-top: 16px;">
-                <form method="post" action="Category/detail" style="margin: auto; width: 50%">
+                <form method="post" action="/Category/detail" style="margin: auto; width: 50%">
                     <div class="form-group">
                         <label for="cid">Category ID:</label>
                         <input type="text" class="form-control" name="cid" placeholder="Category ID" readonly="readonly" value="${requestScope.cid}">

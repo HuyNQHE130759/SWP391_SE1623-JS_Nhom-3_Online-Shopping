@@ -38,7 +38,7 @@
                             <div style="display: flex; flex-direction: row; align-items: center; margin-left: 10%;">
                                 <div style="margin-right: 8px">Filter</div>
                                 <select class="form-select" name="status">
-                                    <option value="" <c:if test="${requestScope.status eq ''}">selected="selected"</c:if> >---Status---</option>
+                                    <option value="-1" <c:if test="${requestScope.status eq -1}">selected="selected"</c:if> >---Status---</option>
                                 <option value="1"<c:if test="${requestScope.status eq 1}">selected="selected"</c:if>>Enable</option>
                                 <option value="0"<c:if test="${requestScope.status eq 0}">selected="selected"</c:if>>Disable</option>
                                 </select>

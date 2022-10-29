@@ -25,15 +25,15 @@
             <div class="container" style="margin-top: 16px;">
                 <form method="post" action="AddUser" style="margin: auto; width: 50%">
                     <div class="form-group">
-                        <label for="userName">Username</label>
+                        <label for="userName">Username<span style="color: red">*</span></label>
                         <input type="text" class="form-control" name="userName" placeholder="Enter username" required="true">
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password">Password<span style="color: red">*</span></label>
                         <input type="password" class="form-control" name="password" placeholder="Password" required="true">
                     </div>
                     <div class="form-group">
-                        <label for="repeatPassword">Repeat Password</label>
+                        <label for="repeatPassword">Repeat Password<span style="color: red">*</span></label>
                         <input type="password" class="form-control" name="repeatPassword" placeholder="Repeat Password" required="true">
                     </div>
                     <div class="form-group">
@@ -48,7 +48,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">Email<span style="color: red">*</span></label>
                         <input type="email" class="form-control" name="email" placeholder="Enter email" required="true">
                     </div>
                     <div class="form-group">

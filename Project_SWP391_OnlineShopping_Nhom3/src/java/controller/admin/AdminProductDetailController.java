@@ -3,11 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.Admin;
+package controller.admin;
 
-import dao.DAO;
+import dao.CategoryDAO;
+import dao.CategoryDAOInterface;
 import dao.ProductDAO;
-import entity.Product;
+import dao.ProductDAOInterface;
+import dao.ProviderDAO;
+import dao.ProviderDAOInterface;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author apc
  */
-public class AdminProductDetail extends HttpServlet {
+public class AdminProductDetailController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,14 +39,17 @@ public class AdminProductDetail extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DAO dao = new DAO();
-    ProductDAO productDAO = new ProductDAO();
+    CategoryDAOInterface categoryDAO = new CategoryDAO();
+    ProductDAOInterface productDAO = new ProductDAO();
+    ProviderDAOInterface providerDAO = new ProviderDAO();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String pid = request.getParameter("pid");
-        request.setAttribute("categoryList", dao.getCategory());
-        request.setAttribute("product", dao.getProductById(pid));
+        String raw_pid = request.getParameter("pid");
+        Integer pid = (raw_pid !=null && raw_pid.length()>0)?new Integer(raw_pid):null;
+        request.setAttribute("categoryList", categoryDAO.getAllCategory());
+        request.setAttribute("providers", providerDAO.getAllProvider());
+        request.setAttribute("product", productDAO.getProductById(pid));
         request.setAttribute("pid", pid);
         request.getRequestDispatcher("../AdminProductDetail.jsp").forward(request,response);
     } 

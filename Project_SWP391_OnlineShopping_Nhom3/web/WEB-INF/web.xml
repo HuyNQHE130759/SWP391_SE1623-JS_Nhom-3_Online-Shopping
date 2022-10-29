@@ -54,19 +54,19 @@
     </servlet>
     <servlet>
         <servlet-name>AdminConsole</servlet-name>
-        <servlet-class>controller.Admin.AdminConsole</servlet-class>
+        <servlet-class>controller.admin.AdminConsole</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>InsertProduct</servlet-name>
-        <servlet-class>controller.Admin.InsertProduct</servlet-class>
+        <servlet-class>controller.admin.InsertProduct</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RemoveProduct</servlet-name>
-        <servlet-class>controller.Admin.RemoveProduct</servlet-class>
+        <servlet-class>controller.admin.RemoveProduct</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateProduct</servlet-name>
-        <servlet-class>controller.Admin.UpdateProduct</servlet-class>
+        <servlet-class>controller.admin.UpdateProduct</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AccountInfo</servlet-name>
@@ -86,49 +86,67 @@
     </servlet>
     <servlet>
         <servlet-name>UserController</servlet-name>
-        <servlet-class>controller.Admin.UserController</servlet-class>
+        <servlet-class>controller.admin.UserController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminProductList</servlet-name>
-        <servlet-class>controller.Admin.AdminProductList</servlet-class>
+        <servlet-class>controller.admin.AdminProductListController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>OrderList</servlet-name>
-        <servlet-class>controller.Admin.OrderList</servlet-class>
+        <servlet-class>controller.admin.OrderList</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminProductDetail</servlet-name>
-        <servlet-class>controller.Admin.AdminProductDetail</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CategoryList</servlet-name>
-        <servlet-class>controller.Admin.CategoryList</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProviderList</servlet-name>
-        <servlet-class>controller.Admin.ProviderList</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProviderDetail</servlet-name>
-        <servlet-class>controller.Admin.ProviderDetail</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CategoryDetail</servlet-name>
-        <servlet-class>controller.Admin.CategoryDetail</servlet-class>
         <servlet-name>FeedbackList</servlet-name>
-        <servlet-class>controller.Admin.FeedbackList</servlet-class>
+        <servlet-class>controller.admin.FeedbackList</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FeedbackDetail</servlet-name>
-        <servlet-class>controller.Admin.FeedbackDetail</servlet-class>
+        <servlet-class>controller.admin.FeedbackDetail</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddFeedback</servlet-name>
-        <servlet-class>controller.Admin.AddFeedback</servlet-class>
+        <servlet-class>controller.admin.AddFeedback</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteFeedback</servlet-name>
-        <servlet-class>controller.Admin.DeleteFeedback</servlet-class>
+        <servlet-class>controller.admin.DeleteFeedback</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeFeedbackStatus</servlet-name>
+        <servlet-class>controller.admin.ChangeFeedbackStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditFeedback</servlet-name>
+        <servlet-class>controller.admin.EditFeedback</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminProductDetail</servlet-name>
+        <servlet-class>controller.admin.AdminProductDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryList</servlet-name>
+        <servlet-class>controller.admin.CategoryListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryDetail</servlet-name>
+        <servlet-class>controller.admin.CategoryDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProviderList</servlet-name>
+        <servlet-class>controller.admin.ProviderListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProviderDetail</servlet-name>
+        <servlet-class>controller.admin.ProviderDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImportHistoryController</servlet-name>
+        <servlet-class>controller.admin.ImportHistoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImportProductController</servlet-name>
+        <servlet-class>controller.admin.ImportProductController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -215,34 +233,6 @@
         <url-pattern>/userlist</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminProductList</servlet-name>
-        <url-pattern>/AdminProduct/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OrderList</servlet-name>
-        <url-pattern>/OrderList</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminProductDetail</servlet-name>
-        <url-pattern>/AdminProduct/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CategoryList</servlet-name>
-        <url-pattern>/Category/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProviderList</servlet-name>
-        <url-pattern>/Provider/list</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProviderDetail</servlet-name>
-        <url-pattern>/Provider/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CategoryDetail</servlet-name>
-        <url-pattern>/Category/detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>OrderList</servlet-name>
         <url-pattern>/OrderList</url-pattern>
     </servlet-mapping>
@@ -261,6 +251,46 @@
     <servlet-mapping>
         <servlet-name>DeleteFeedback</servlet-name>
         <url-pattern>/DeleteFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeFeedbackStatus</servlet-name>
+        <url-pattern>/ChangeFeedbackStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditFeedback</servlet-name>
+        <url-pattern>/EditFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminProductList</servlet-name>
+        <url-pattern>/AdminProduct/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminProductDetail</servlet-name>
+        <url-pattern>/AdminProduct/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryList</servlet-name>
+        <url-pattern>/Category/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryDetail</servlet-name>
+        <url-pattern>/Category/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProviderList</servlet-name>
+        <url-pattern>/Provider/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProviderDetail</servlet-name>
+        <url-pattern>/Provider/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImportHistoryController</servlet-name>
+        <url-pattern>/Import/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImportProductController</servlet-name>
+        <url-pattern>/Import/detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

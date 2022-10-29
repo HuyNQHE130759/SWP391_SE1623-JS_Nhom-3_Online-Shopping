@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Price">Price</label>
-                        <input type="number" class="form-control" pattern="[1-9][0-9]*" name="price" placeholder="Price" required="true" value="${requestScope.product.price}">VND
+                        <input type="number" class="form-control" pattern="[1-9][0-9]*" name="price" placeholder="Price" required="true" value="${requestScope.product.price}">$
                     </div>
                     <div class="form-group">
                         <label for="image">Image:</label>

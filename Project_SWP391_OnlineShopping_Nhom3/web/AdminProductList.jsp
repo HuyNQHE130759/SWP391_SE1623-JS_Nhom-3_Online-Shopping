@@ -39,7 +39,7 @@
                             <div style="display: flex; flex-direction: row; align-items: center; margin-left: 10%;">
                                 <div style="margin-right: 8px">Filter</div>
                                 <select class="form-select" name="status">
-                                    <option value="" <c:if test="${requestScope.status eq ''}">selected="selected"</c:if> >---Status---</option>
+                                    <option value="-1" <c:if test="${requestScope.status eq -1}">selected="selected"</c:if> >---Status---</option>
                                 <option value="1"<c:if test="${requestScope.status eq 1}">selected="selected"</c:if>>Enable</option>
                                 <option value="0"<c:if test="${requestScope.status eq 0}">selected="selected"</c:if>>Disable</option>
                                 </select>
@@ -85,7 +85,7 @@
                                     <th scope="row">${p.pid}</td>
                                     <td>${p.pname}</td>
                                     <td>${p.quantity}</td> 
-                                    <td>${p.price}</td>
+                                    <td>$${p.price}</td>
                                     <td><img class="two" src="${p.image}" height="150px" width="200px"></td>
                                     <td>${p.description}</td> 
                                     <td>${p.category.cateName}</td>

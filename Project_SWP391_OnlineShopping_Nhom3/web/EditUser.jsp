@@ -24,16 +24,19 @@
 
             <div class="container" style="margin-top: 16px;">
                 <form method="post" action="EditUser" style="margin: auto; width: 50%">
+                    <div class="form-group" style="display: none;">
+                        <input type="text" class="form-control" name="cid" placeholder="Enter username" required="true" value="${user.cid}">
+                    </div>
                     <div class="form-group">
-                        <label for="userName">Username</label>
+                        <label for="userName">Username<span style="color: red">*</span></label>
                         <input type="text" class="form-control" name="userName" placeholder="Enter username" required="true" value="${user.username}">
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password">Password <span style="color: red">*</span></label>
                         <input type="password" class="form-control" name="password" placeholder="Password" required="true">
                     </div>
                     <div class="form-group">
-                        <label for="repeatPassword">Repeat Password</label>
+                        <label for="repeatPassword">Repeat Password<span style="color: red">*</span></label>
                         <input type="password" class="form-control" name="repeatPassword" placeholder="Repeat Password" required="true">
                     </div>
                     <div class="form-group">
@@ -48,7 +51,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">Email<span style="color: red">*</span></label>
                         <input type="email" class="form-control" name="email" placeholder="Enter email" required="true" value="${user.email}">
                     </div>
                     <div class="form-group">
@@ -68,8 +71,8 @@
                             <option value="Manager">Manager</option>
                         </select>
                     </div>
-                    <c:if test="${flag == false}">
-                        <small id="error" class="form-text" style="color: red">${msg}</small>
+                    <c:if test="${requestScope.flag == false}">
+                        <small id="error" class="form-text" style="color: red">${requestScope.msg}</small>
                     </c:if>
                     
                     <button type="submit" class="btn btn-primary" style="margin: 0 auto">Save</button>
