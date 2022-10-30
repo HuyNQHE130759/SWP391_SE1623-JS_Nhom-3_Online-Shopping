@@ -43,13 +43,13 @@
                                             <img src="<%=pl.get(i).getImage()%>" alt="" />
                                             <h2>$<%=pl.get(i).getPrice()%></h2>
                                             <a href="${pageContext.request.contextPath}/ProductDetail?pid=<%=pl.get(i).getPid()%>"><p><%=pl.get(i).getPname()%></p></a>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            <a href="./AddToCart?pid=<%=pl.get(i).getPid()%>&quantity=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </div>
                                         <div class="product-overlay">
                                             <div class="overlay-content">
                                                 <h2><%=pl.get(i).getPrice()%></h2>
                                                 <a href="${pageContext.request.contextPath}/ProductDetail?pid=<%=pl.get(i).getPid()%>"><p><%=pl.get(i).getPname()%></p></a>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                <a href="./AddToCart?pid=<%=pl.get(i).getPid()%>&quantity=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                             </div>
                                         </div>
                                     </div>

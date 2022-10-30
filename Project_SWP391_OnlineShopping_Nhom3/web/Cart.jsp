@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="entity.User"%>
 <%@page import="dao.DAO"%>
 <%@page import="entity.Product"%>
@@ -34,70 +35,69 @@
                 <div class="breadcrumbs">
                     <ol class="breadcrumb">
                         <li><a href="#">Home</a></li>
-                        <li class="active">Shopping Cart</li>
+                        <li class="active">Shopping Cart${sessionScope.cart.getItems().size()}</li>
                     </ol>
                 </div>
                 <div class="table-responsive cart_info">
                     <table class="table table-condensed">
                         <thead>
                             <tr class="cart_menu">
-                                <td class="image">Item</td>
-                                <td class="description"></td>
-                                <td class="price">Price</td>
-                                <td class="quantity">Quantity</td>
-                                <td class="total">Total</td>
-                                <td></td>
+                                <th >Product Name</th>
+                                <th class="product-name">Product Image</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-subtotal">Total</th>
+                                <th class="product-subtotal">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% for (int i = 0; i < cl.size(); i++) {%>
-                            <%pl = dao.getSingleProduct(cl.get(i).getpID()); %>
-                            <% for (int y = 0; y < pl.size(); y++) {%>
-                                    <tr>
-                                <td class="cart_product">
-                                    <a href=""><img src="<%=pl.get(y).getImage() %>" height="150px" width="200px" alt=""></a>
-                                </td>
-                                <td class="cart_description">
-                                    <h4><a href=""><%=pl.get(y).getPname() %></a></h4>
-                                    <p>Web ID: <%=pl.get(y).getPid() %></p>
-                                </td>
-                                <td class="cart_price">
-                                    <p>$<%=pl.get(y).getPrice() %></p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
+                            <c:forEach var="cart" items="${sessionScope.cart.getItems()}">
+                                <tr>
+                                    <td >
+                                        <a href="#">${cart.getProduct().getPname()}</a>
+                                    </td>
+                                    <td class="product-thumbnail" data-title="Product Name">
                                         
-                                        <input disabled="disabled" class="cart_quantity_input" type="text" name="quantity" value="<%=cl.get(i).getpQuantity() %>" autocomplete="off" size="2">
-                                        
-                                    </div>
-                                </td>
-                                <%double total = pl.get(y).getPrice() * cl.get(i).getpQuantity() ; %>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">$<%=total %></p>
-                                </td>
-                                <td class="cart_delete">
-                                    <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/removeCart?pid=<%=pl.get(y).getPid() %>"><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
-                            <%all += total; %>
-                            <% } %>
-                               <% }
-                            %>
-                            
-                            
-                            
-                            
+                                        <a class="prd-thumb" href="#">
+                                            <figure><img width="113" height="113" src="${cart.getProduct().getImage()}" alt="shipping cart"></figure>
+                                        </a>
+                                    </td>
+
+                                    <td class="product-price" data-title="Price">
+                                        <div class="price price-contain">
+                                            <ins><span class="price-amount"><span class="currencySymbol">$</span>${cart.getProduct().getPrice()}</span></ins>
+                                        </div>
+                                    </td>
+                                    <td class="product-quantity" data-title="Quantity">
+                                        <div class="quantity-box type1">
+                                            <div class="qty-input">
+                                                <input type="text" name="qty12554" value="${cart.getQuantity()}">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal" data-title="Total">
+                                        <div class="price price-contain">
+                                            <ins><span class="price-amount"><span class="currencySymbol">$</span>${cart.getProduct().getPrice()*cart.getQuantity()}</span></ins>
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal" data-title="Total">
+                                        <div class="action">
+                                            <a href="./DeleteCartItem?pid=${cart.getProduct().getPid()}"style="color: red; font-size: 40px;" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>
-                            <p class="cart_total_price clearfix "> Total price : $<%=all %></p> 
-                            <form action="${pageContext.request.contextPath}/CheckOut"  method="POST">
-                                <input type="hidden" name="total" value="<%=all %>">
-                                <input type="hidden" name="cid" value="<%=us.getCid() %>">
-                                <button class="btn btn-default check_out clearfix pull-right">Check Out</button>
-                            </form>
-                            
-                            <br><br><br><br><br><br><br><br>
+                <p class="cart_total_price clearfix "> Total price : $${sessionScope.cart.getTotalBill()}</p> 
+                <form action="${pageContext.request.contextPath}/CheckOut"  method="POST">
+                    <input type="hidden" name="total" value="<%=all %>">
+                    <input type="hidden" name="cid" value="<%=us.getCid() %>">
+                    <button class="btn btn-default check_out clearfix pull-right">Check Out</button>
+                </form>
+
+                <br><br><br><br><br><br><br><br>
             </div>
         </section> <!--/#cart_items-->
 

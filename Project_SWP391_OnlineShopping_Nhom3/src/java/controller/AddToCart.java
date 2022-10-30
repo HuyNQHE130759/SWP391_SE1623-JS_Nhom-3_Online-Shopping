@@ -6,20 +6,25 @@
 package controller;
 
 import dao.DAO;
-import entity.Cart;
+import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import entity.CartDB;
-import entity.CartItem;
-import entity.User;
 import jakarta.servlet.http.HttpSession;
+import entity.*;
+import jakarta.servlet.annotation.WebServlet;
 
-public class CartController extends HttpServlet {
+/**
+ *
+ * @author Admin
+ */
+@WebServlet(name = "AddToCart", urlPatterns = {"/AddToCart"})
+public class AddToCart extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,18 +38,34 @@ public class CartController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CartController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CartController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        try {
+            HttpSession session = request.getSession();
+            Object object = session.getAttribute("cart");
+            ProductDAO productDao = new ProductDAO();
+            DAO dao = new DAO();
+            Cart cart = null;
+            List<CartItem> items = new ArrayList<>();
+            response.getWriter().println("||-|| \n");
+            // Check the variable object is not null or not
+            if (object != null) {
+                cart = (Cart) object;
+            } else {
+                cart = new Cart(items);
+            }
+            String productId =  request.getParameter("pid");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            entity.Product product = dao.getProductById(productId);
+            System.out.println(product.toString());
+            CartItem item = new CartItem(product, quantity);
+
+            cart.addItem(item);
+            session.setAttribute("cart", cart);
+            response.sendRedirect("./Product");
+
+        } catch (Exception e) {
+            response.getWriter().println(e);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,22 +77,10 @@ public class CartController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    DAO dao = new DAO();
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-//        User us = (User) request.getSession().getAttribute("user");
-//        ArrayList<CartDB> cl = new ArrayList<>();
-//        cl = dao.getCartbyUser(us.getCid());
-//        request.setAttribute("CartList", cl);
-        HttpSession session = request.getSession();
-        Cart c = (Cart) session.getAttribute("cart");
-        for (CartItem item : c.getItems()) {
-            response.getWriter().println(item.getProduct().toString());
-        }
-        request.getRequestDispatcher("Cart.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -85,19 +94,7 @@ public class CartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        String pid = request.getParameter("pid");
-        int cid = Integer.parseInt(request.getParameter("cid"));
-        //String cid = request.getParameter("cid");
-        //System.out.println(pid+ " "+ cid);
-
-        dao.inserttoCart(pid, cid, quantity);
-        try ( PrintWriter out = response.getWriter()) {
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Your Product has been added to cart!');");
-            out.println("location='" + request.getContextPath() + "/Cart';");
-            out.println("</script>");
-        }
+        processRequest(request, response);
     }
 
     /**

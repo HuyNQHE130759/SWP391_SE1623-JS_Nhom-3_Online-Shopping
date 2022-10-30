@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import entity.Cart;
+import entity.CartDB;
 import entity.Category;
 import entity.CheckOut;
 import entity.Product;
@@ -299,8 +299,8 @@ public class DAO extends DBContext {
     }
 
     public ArrayList getCartbyUser(int cid) {
-        Cart c = new Cart();
-        ArrayList<Cart> cl = new ArrayList<>();
+        CartDB c = new CartDB();
+        ArrayList<CartDB> cl = new ArrayList<>();
         try {
             String strSelect = "select * from Cart where cid = '" + cid + "'";
             rs = state.executeQuery(strSelect);
@@ -310,7 +310,7 @@ public class DAO extends DBContext {
                 c.setpID(rs.getString(3));
                 c.setpQuantity(rs.getInt(4));
 
-                cl.add(new Cart(c.getcID(), c.getCuID(), c.getpID(), c.getpQuantity()));
+                cl.add(new CartDB(c.getcID(), c.getCuID(), c.getpID(), c.getpQuantity()));
 
             }
         } catch (Exception e) {
@@ -470,7 +470,10 @@ public class DAO extends DBContext {
 
         return p;
     }
-
+    public static void main(String[] args) {
+        DAO dao = new DAO();
+        System.out.println(        dao.getProductById("1").toString());
+    }
     public ArrayList getCheckout() {
         CheckOut c = new CheckOut();
         ArrayList<CheckOut> cl = new ArrayList<>();
