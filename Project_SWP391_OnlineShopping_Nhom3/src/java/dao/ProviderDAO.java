@@ -5,6 +5,7 @@
 package dao;
 
 import entity.Provider;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,51 +19,96 @@ import java.util.logging.Logger;
  *
  * @author apc
  */
-public class ProviderDAO extends DBContext {
+public class ProviderDAO implements ProviderDAOInterface {
 
-    public ArrayList<Provider> getAllProvider(Integer pageindex, Integer pagesize) {
+    private Connection connection = null;
+    private PreparedStatement ps = null;
+    private ResultSet rs = null;
+
+    @Override
+    public ArrayList<Provider> getAllProvider() {
         ArrayList<Provider> list = new ArrayList<>();
-        String sql = "SELECT [provider_id]\n"
-                + "      ,[provider_name]\n"
-                + "      ,[provider_email]\n"
-                + "      ,[provider_address]\n"
-                + "      ,[provider_status]\n"
-                + "  FROM [dbo].[Provider]\n"
-                + "  order by [provider_id]\n"
-                + "  OFFSET (?-1) * ? ROWS\n"
-                + "  FETCH NEXT ? ROWS ONLY";
+        String sql = "SELECT [provider_id]"
+                + "      ,[provider_name]"
+                + "      ,[provider_email]"
+                + "      ,[provider_address]"
+                + "      ,[provider_status]"
+                + "  FROM [dbo].[Provider]";
         try {
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, pageindex);
-            stm.setInt(2, pagesize);
-            stm.setInt(3, pagesize);
-            ResultSet rs = stm.executeQuery();
+            connection = (new DBContext().connection);
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 Provider p = new Provider();
                 p.setProvider_id(rs.getInt("provider_id"));
                 p.setProvider_name(rs.getString("provider_name"));
                 p.setProvider_email(rs.getString("provider_email"));
-                p.setProvider_address("provider_address");
+                p.setProvider_address(rs.getString("provider_address"));
                 p.setStatus(rs.getBoolean("provider_status"));
                 list.add(p);
             }
-            rs.close();
-            stm.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return list;
     }
 
+    @Override
+    public ArrayList<Provider> getAllProvider(Integer pageindex, Integer pagesize) {
+        ArrayList<Provider> list = new ArrayList<>();
+        String sql = "SELECT [provider_id]"
+                + "      ,[provider_name]"
+                + "      ,[provider_email]"
+                + "      ,[provider_address]"
+                + "      ,[provider_status]"
+                + "  FROM [dbo].[Provider]"
+                + "  order by [provider_id]"
+                + "  OFFSET (?-1) * ? ROWS"
+                + "  FETCH NEXT ? ROWS ONLY";
+        try {
+            connection = (new DBContext().connection);
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, pageindex);
+            ps.setInt(2, pagesize);
+            ps.setInt(3, pagesize);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Provider p = new Provider();
+                p.setProvider_id(rs.getInt("provider_id"));
+                p.setProvider_name(rs.getString("provider_name"));
+                p.setProvider_email(rs.getString("provider_email"));
+                p.setProvider_address(rs.getString("provider_address"));
+                p.setStatus(rs.getBoolean("provider_status"));
+                list.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return list;
+    }
+
+    @Override
     public ArrayList<Provider> getAllProvider(String sort, Boolean status, String search, Integer pageindex, Integer pagesize) {
         ArrayList<Provider> list = new ArrayList<>();
         HashMap<Integer, Object> params = new HashMap<>();
         int index = 0;
-        String sql = "SELECT [provider_id]\n"
-                + "      ,[provider_name]\n"
-                + "      ,[provider_email]\n"
-                + "      ,[provider_address]\n"
-                + "      ,[provider_status]\n"
+        String sql = "SELECT [provider_id]"
+                + "      ,[provider_name]"
+                + "      ,[provider_email]"
+                + "      ,[provider_address]"
+                + "      ,[provider_status]"
                 + "  FROM [dbo].[Provider] where 1=1 ";
         if (status != null) {
             sql += " and [provider_status] = ? ";
@@ -78,8 +124,8 @@ public class ProviderDAO extends DBContext {
             params.put(index, search);
         }
         if (1 == 1) {
-            sql += " ORDER BY " + sort + " \n"
-                    + "OFFSET (?-1) * ? ROWS \n"
+            sql += " ORDER BY " + sort + " "
+                    + "OFFSET (?-1) * ? ROWS "
                     + "FETCH NEXT ? ROWS ONLY";
             index++;
             params.put(index, pageindex);
@@ -89,110 +135,143 @@ public class ProviderDAO extends DBContext {
             params.put(index, pagesize);
         }
         try {
-            PreparedStatement stm = connection.prepareStatement(sql);
+            connection = (new DBContext().connection);
+            ps = connection.prepareStatement(sql);
             for (Map.Entry<Integer, Object> entry : params.entrySet()) {
                 Integer position = entry.getKey();
                 Object value = entry.getValue();
-                stm.setObject(position, value);
+                ps.setObject(position, value);
             }
-            ResultSet rs = stm.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 Provider p = new Provider();
                 p.setProvider_id(rs.getInt("provider_id"));
                 p.setProvider_name(rs.getString("provider_name"));
                 p.setProvider_email(rs.getString("provider_email"));
-                p.setProvider_address("provider_address");
+                p.setProvider_address(rs.getString("provider_address"));
                 p.setStatus(rs.getBoolean("provider_status"));
                 list.add(p);
             }
-            rs.close();
-            stm.close();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        System.out.println(sql);
         return list;
     }
 
+    @Override
     public int count() {
         try {
+            connection = (new DBContext().connection);
             String sql = "SELECT COUNT(*) as total FROM [Provider];";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
             if (rs.next()) {
                 return rs.getInt("total");
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return -1;
     }
 
+    @Override
     public void insert(String pname, String email, String address, boolean status) {
         try {
-            String sql = "INSERT INTO [Provider]\n"
-                    + "           ([provider_name]\n"
-                    + "           ,[provider_email]\n"
-                    + "           ,[provider_address]\n"
-                    + "           ,[provider_status])\n"
+            connection = (new DBContext().connection);
+            String sql = "INSERT INTO [Provider]"
+                    + "           ([provider_name]"
+                    + "           ,[provider_email]"
+                    + "           ,[provider_address]"
+                    + "           ,[provider_status])"
                     + "     VALUES (?,?,?,?)";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, pname);
-            stm.setString(2, email);
-            stm.setString(3, address);
-            stm.setBoolean(4, status);
-            stm.executeUpdate();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, pname);
+            ps.setString(2, email);
+            ps.setString(3, address);
+            ps.setBoolean(4, status);
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
+    @Override
     public void update(int pid, String pname, String email, String address, boolean status) {
         try {
-            String sql = "UPDATE [Provider]\n"
-                    + "   SET [provider_name] = ?\n"
-                    + "      ,[provider_email] = ?\n"
-                    + "      ,[provider_address] = ?\n"
-                    + "      ,[provider_status] = ?\n"
+            connection = (new DBContext().connection);
+            String sql = "UPDATE [Provider]"
+                    + "   SET [provider_name] = ?"
+                    + "      ,[provider_email] = ?"
+                    + "      ,[provider_address] = ?"
+                    + "      ,[provider_status] = ?"
                     + " WHERE [provider_id] = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, pname);
-            stm.setString(2, email);
-            stm.setString(3, address);
-            stm.setBoolean(4, status);
-            stm.setInt(5, pid);
-            stm.executeUpdate();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, pname);
+            ps.setString(2, email);
+            ps.setString(3, address);
+            ps.setBoolean(4, status);
+            ps.setInt(5, pid);
+            ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-    
+
+    @Override
     public Provider getProvider(Integer pid) {
         Provider p = new Provider();
-        String sql = "SELECT [provider_id]\n"
-                + "      ,[provider_name]\n"
-                + "      ,[provider_email]\n"
-                + "      ,[provider_address]\n"
-                + "      ,[provider_status]\n"
-                + "  FROM [Provider]\n"
+        String sql = "SELECT [provider_id]"
+                + "      ,[provider_name]"
+                + "      ,[provider_email]"
+                + "      ,[provider_address]"
+                + "      ,[provider_status]"
+                + "  FROM [Provider]"
                 + "  WHERE [provider_id] = ?";
         try {
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setObject(1, pid);
-            ResultSet rs = stm.executeQuery();
+            connection = (new DBContext().connection);
+            ps = connection.prepareStatement(sql);
+            ps.setObject(1, pid);
+            rs = ps.executeQuery();
             while (rs.next()) {
                 p.setProvider_id(rs.getInt("provider_id"));
                 p.setProvider_name(rs.getString("provider_name"));
                 p.setProvider_email(rs.getString("provider_email"));
-                p.setProvider_address("provider_address");
-                p.setStatus(rs.getBoolean("status"));
+                p.setProvider_address(rs.getString("provider_address"));
+                p.setStatus(rs.getBoolean("provider_status"));
             }
-            rs.close();
-            stm.close();
-            return p;
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        return null;
+        return p;
     }
 }

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Provider List</title>
+        <title>Import List</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
@@ -25,29 +25,40 @@
             <jsp:include page="HeaderCustom.jsp"></jsp:include>
 
                 <div class="container">
-                    <form method="POST" action="/Provider/list">
+                    <form method="POST" action="list">
                         <div class="row" style="margin: 16px 0;">
                             <div style="display: flex; flex-direction: row; align-items: center">
                                 <div style="margin-right: 8px">Sort</div>
                                 <select class="form-select" name="sort">
-                                    <option value="provider_id" <c:if test="${requestScope.sort eq 'provider_id'}">selected="selected"</c:if>>id</option> 
-                                <option value="provider_name" <c:if test="${requestScope.sort eq 'provider_name'}">selected="selected"</c:if>>name</option>
+                                    <option value="a.importid" <c:if test="${requestScope.sort eq 'a.importid'}">selected="selected"</c:if>>Import ID</option> 
+                                <option value="a.date" <c:if test="${requestScope.sort eq 'a.date'}">selected="selected"</c:if>>Date</option>
                                 </select>
                             </div>
 
-                            <div style="display: flex; flex-direction: row; align-items: center; margin-left: 10%;">
+                            <div style="display: flex; flex-direction: row; align-items: center; margin-left: 5%;">
                                 <div style="margin-right: 8px">Filter</div>
-                                <select class="form-select" name="status">
-                                    <option value="-1" <c:if test="${requestScope.status eq -1}">selected="selected"</c:if> >---Status---</option>
-                                    <option value="1"<c:if test="${requestScope.status eq 1}">selected="selected"</c:if>>Enable</option>
-                                    <option value="0"<c:if test="${requestScope.status eq 0}">selected="selected"</c:if>>Disable</option>
-                                </select>
-                            </div>
-                            <div style="display: flex; flex-direction: row; align-items: right; margin-left: 10%;">
-                                <input style="margin-left: 5%" type="text" name="search" placeholder="Search" <c:if test="${requestScope.search ne null}">value="${requestScope.search}"</c:if>>
+                                <select class="form-select" name="provider">
+                                    <option value="" selected>---Provider---</option>
+                                <c:forEach items="${requestScope.providers}" var="pr">
+                                    <option value="${pr.provider_id}" <c:if test="${requestScope.provider eq pr.provider_id}">selected="selected"</c:if>>${pr.provider_name}</option>
+                                </c:forEach>
+                            </select>
+
+                        </div>
+
+                        <div style="display: flex; flex-direction: row; align-items: right; margin-left: 5%;">
+                            <div style="margin-right: 8px">From</div>
+                            <input type="date" name="from" value="${requestScope.from}">
+                        </div>
+                        <div style="display: flex; flex-direction: row; align-items: right; margin-left: 1%;">
+                            <div style="margin-right: 8px">To</div>
+                            <input type="date" name="to" value="${requestScope.to}">
+                        </div>
+                        <div style="display: flex; flex-direction: row; align-items: right; margin-left: 3%;">
+                            <input style="margin-left: 5%" type="text" name="search" placeholder="Search" <c:if test="${requestScope.search ne null}">value="${requestScope.search}"</c:if>>
                             </div>
 
-                            <button style="margin-left: 5%;" type="submit" class="btn btn-primary">Search</button>
+                            <button style="margin-left: 2%;" type="submit" class="btn btn-primary">Search</button>
 
                         </div>
                     </form>
@@ -55,36 +66,29 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">ProviderID</th>
-                                    <th scope="col">ProviderName</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Import ID</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Provider Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Date</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="p" items="${providers}">
+                            <c:forEach var="imp" items="${imports}">
                                 <tr>
-                                    <th scope="row">${p.provider_id}</td>
-                                    <td>${p.provider_name}</td>
-                                    <td>${p.provider_email}</td>
-                                    <td>${p.provider_address}</td>
-                                    <td>
-                                        <c:if test="${p.status eq true}">Enable</c:if>
-                                        <c:if test="${p.status eq false}">Disable</c:if>
-                                    </td> 
-                                    <td style="display: flex; flex-direction: row;">
-                                        <a href="${pageContext.request.contextPath}/Provider/detail?pid=${p.provider_id}"> <input type="button" value="Update"> </a>
-                                    </td>
+                                    <th scope="row">${imp.importId}</td>
+                                    <td>${imp.product.pname}</td>
+                                    <td>${imp.provider.provider_name}</td> 
+                                    <td>$${imp.quantity}</td>
+                                    <td>${imp.date}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
                 </div>
-                                <div style="text-align: right;"><a href="${pageContext.request.contextPath}/Provider/detail"> <input type="button" value="Add new"> </a></div>
+                <div style="text-align: right"><a href="${pageContext.request.contextPath}/Import/detail"><input type="button" value="Add new"></a></div>
+
                 <div id="bot_pagger" class="pagger"></div>
-                
                 <script>
                     render('bot_pagger',${requestScope.pageindex}, ${requestScope.totalpage}, 1);
                 </script>

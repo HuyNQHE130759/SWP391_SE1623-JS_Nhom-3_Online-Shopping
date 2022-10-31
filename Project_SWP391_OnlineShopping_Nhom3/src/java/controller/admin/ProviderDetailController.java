@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.Admin;
+package controller.admin;
 
 import dao.ProviderDAO;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author apc
  */
-public class ProviderDetail extends HttpServlet {
+public class ProviderDetailController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,7 +40,7 @@ public class ProviderDetail extends HttpServlet {
     throws ServletException, IOException {
         String raw_pid = request.getParameter("pid");
         Integer pid = (raw_pid !=null && raw_pid.length()>0)?new Integer(raw_pid):null;
-        request.setAttribute("category", providerDAO.getProvider(pid));
+        request.setAttribute("provider", providerDAO.getProvider(pid));
         request.setAttribute("pid", pid);
         request.getRequestDispatcher("../ProviderDetail.jsp").forward(request,response);
     } 
@@ -60,9 +60,9 @@ public class ProviderDetail extends HttpServlet {
         String raw_email = request.getParameter("email");
         String raw_address = request.getParameter("address");
         String raw_status = request.getParameter("status");
-        boolean status = Boolean.parseBoolean(raw_status);
+        boolean status = raw_status.equals("1")?true:false;
         Integer pid = (raw_pid !=null && raw_pid.length()>0)?new Integer(raw_pid):null;
-        if (pid != null) {
+        if (pid == null) {
             providerDAO.insert(raw_pname, raw_email, raw_address, status);
         }else{
             providerDAO.update(pid, raw_pname, raw_email, raw_address, status);

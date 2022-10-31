@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Provider Detail</title>
+        <title>Import Product</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="Colo Shop Template">
@@ -25,34 +25,23 @@
             <div class="container" style="margin-top: 16px;">
                 <form method="post" action="/Provider/detail" style="margin: auto; width: 50%">
                     <div class="form-group">
-                        <label for="pid">Provider ID:</label>
-                        <input type="text" class="form-control" name="pid" placeholder="Provider ID" readonly="readonly" value="${requestScope.pid}">
-                    </div>
-                    <div class="form-group">
-                        <label for="pname">Provider Name:</label>
-                        <input type="text" class="form-control" name="pname" placeholder="Provider Name" required="true" value="${requestScope.provider.provider_name}">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="text" class="form-control" name="email" placeholder="Email" required="true" value="${requestScope.provider.provider_email}">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address:</label>
-                        <input type="text" class="form-control" name="address" placeholder="Address" required="true" value="${requestScope.provider.provider_address}">
-                    </div>
-                    <div class="form-group">
-                        <label for="status">Status</label>
-                         <select class="form-control" name="status">
-                             <option value="1" <c:if test="${requestScope.provider.status eq true}">selected="selected"</c:if>>Enable</option>
-                            <option value="0" <c:if test="${requestScope.provider.status eq false}">selected="selected"</c:if>>Disable</option>
+                        <label for="pname">Product:</label>
+                        <select class="form-control" name="product">
+                            <c:forEach items="${requestScope.products}" var="p">
+                                <option value="${p.pid}" <c:if test="${requestScope.pid eq p.pid}">selected="selected"</c:if>>${p.pname}</option>
+                            </c:forEach>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Quantity:</label>
+                        <input type="number" class="form-control" name="quantity" placeholder="Quantitry" value="${requestScope.quantity}">
                     </div>
                     <c:if test="${flag == false}">
                         <small id="error" class="form-text" style="color: red">${msg}</small>
                     </c:if>
                     
                     <button type="submit" class="btn btn-primary" style="margin: 0 auto">Save</button>
-                    <a href="${pageContext.request.contextPath}/Category/list"><input type="button" class="btn" value="Cancel"></a>
+                    <a href="${pageContext.request.contextPath}/Import/list"><input type="button" class="btn" value="Cancel"></a>
                 </form>
 
             </div>

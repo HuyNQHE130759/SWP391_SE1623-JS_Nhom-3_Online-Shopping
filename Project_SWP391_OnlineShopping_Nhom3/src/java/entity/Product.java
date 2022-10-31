@@ -39,6 +39,17 @@ public class Product {
     public void setProvider(Provider provider) {
         this.provider = provider;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+
+
     public int getPid() {
         return pid;
     }
@@ -101,11 +112,6 @@ public class Product {
 
     public void setCateId(String cateId) {
         this.cateId = cateId;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" + "pid=" + pid + ", pname=" + pname + ", quantity=" + quantity + ", price=" + price + ", image=" + image + ", description=" + description + ", status=" + status + ", cateId=" + cateId + ", category=" + category + ", provider=" + provider + '}';
     }
     
 }
