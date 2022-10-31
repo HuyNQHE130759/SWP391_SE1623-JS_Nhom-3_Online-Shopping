@@ -23,7 +23,7 @@
             <jsp:include page="HeaderCustom.jsp"></jsp:include>
 
             <div class="container" style="margin-top: 16px;">
-                <form method="post" action="/Provider/detail" style="margin: auto; width: 50%">
+                <form method="post" action="/Import/detail" style="margin: auto; width: 50%">
                     <div class="form-group">
                         <label for="pname">Product:</label>
                         <select class="form-control" name="product">
