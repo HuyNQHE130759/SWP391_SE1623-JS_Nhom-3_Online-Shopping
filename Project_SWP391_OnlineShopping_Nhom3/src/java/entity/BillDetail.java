@@ -5,12 +5,12 @@
  */
 package entity;
 
-
 public class BillDetail {
     private int bid;
     private String pid;
     private int quantity;
     private double price;
+    private String status;
 
     public BillDetail() {
     }
@@ -52,6 +52,14 @@ public class BillDetail {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
 }
