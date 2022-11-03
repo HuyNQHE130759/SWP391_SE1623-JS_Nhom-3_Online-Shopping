@@ -35,7 +35,7 @@
                 <div class="breadcrumbs">
                     <ol class="breadcrumb">
                         <li><a href="#">Home</a></li>
-                        <li class="active">Shopping Cart${sessionScope.cart.getItems().size()}</li>
+                        <li class="active">Shopping Cart/${sessionScope.cart.getItems().size()}</li>
                     </ol>
                 </div>
                 <div class="table-responsive cart_info">
