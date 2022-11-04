@@ -17,15 +17,6 @@
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
     </head>
     <body>
-        <script>
-            function onClickEdit(e) {
-                $('.status-value-' + $(e).attr('billId')).hide();
-                $('.status-update-' + $(e).attr('billId')).show();
-                $(e).hide();
-                $('#submit-' + $(e).attr('billId')).show();
-            }
-        </script>
-
         <div class="super_container">
             <!-- Header -->
 
@@ -66,17 +57,9 @@
                                         <td>${i.quantity}</td> 
                                         <td>${i.price}</td>
                                         <td>${i.total}</td>
-                                        <td class="status-value-${i.billId}">${i.statusShipping}</td> 
-                                        <td class="status-update-${i.billId}" style="display: none">
-                                            <select class="form-select" name="selectStatusUpdate${i.billId}">
-                                                <option value="inprogress">In Progress</option>
-                                                <option value="done">Done</option>
-                                                <option value="canceled">Canceled</option>
-                                            </select>
-                                        </td>
+                                        <td>${i.statusShipping}</td> 
                                         <td style="display: flex; flex-direction: row;">
-                                            <a billId="${i.billId}" style="margin-right: 5px" onclick="onClickEdit(this)" href="#">Edit</a>
-                                            <a id="submit-${i.billId}" style="margin-right: 5px; display: none" href="/UpdateShipping?billId=${i.billId}">Submit</a>
+                                            <a href="UpdateShipping?id=${i.billId}">Edit</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

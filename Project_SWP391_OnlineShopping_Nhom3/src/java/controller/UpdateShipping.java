@@ -25,7 +25,7 @@ public class UpdateShipping extends HttpServlet {
             throws ServletException, IOException {
         try {
             String billId = request.getParameter("billId");
-            String value = request.getParameter("selectStatusUpdate".concat(billId));
+            String value = request.getParameter("selectStatusShipping");
             ShippingDAO shippingDAO = new ShippingDAO();
             if(billId != null) {
                 shippingDAO.updateShippingStatus(Integer.parseInt(billId), value);
@@ -50,7 +50,8 @@ public class UpdateShipping extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setAttribute("id", request.getParameter("id"));
+        request.getRequestDispatcher("UpdateShipping.jsp").forward(request, response);
     }
 
     /**
@@ -64,7 +65,21 @@ public class UpdateShipping extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String billId = request.getParameter("id");
+            String value = request.getParameter("selectStatusShipping");
+            ShippingDAO shippingDAO = new ShippingDAO();
+            if(billId != null) {
+                int result = shippingDAO.updateShippingStatus(Integer.parseInt(billId), value);
+                if(result == 1 && value.equals("done")) {
+                    shippingDAO.updateQuantity(shippingDAO.getProductIdByBillId(Integer.parseInt(billId)), Integer.parseInt(billId));
+                }
+            }
+            response.sendRedirect("ShippingList?page=1");
+        } catch (Exception e) {
+            request.setAttribute("message", e.getMessage());
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+        }
     }
 
     /**

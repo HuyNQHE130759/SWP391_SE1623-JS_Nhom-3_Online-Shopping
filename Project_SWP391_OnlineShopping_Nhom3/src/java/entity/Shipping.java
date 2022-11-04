@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Shipping {
     private int billId;
+    private int pid;
     private String productName;
     private int quantity;
     private double price;
@@ -70,6 +71,14 @@ public class Shipping {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
     
     

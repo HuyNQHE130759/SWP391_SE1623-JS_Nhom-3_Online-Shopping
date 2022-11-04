@@ -63,7 +63,6 @@ public class EditUser extends HttpServlet {
             throws ServletException, IOException {
         UserDAO userDAO = new UserDAO();
         User u = userDAO.getUserById(Integer.parseInt(request.getParameter("cid")));
-        System.out.println(u.getUsername());
         request.setAttribute("user", u);
         request.getRequestDispatcher("EditUser.jsp").forward(request, response);
     }
