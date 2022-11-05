@@ -67,10 +67,6 @@ public class CartController extends HttpServlet {
 //        cl = dao.getCartbyUser(us.getCid());
 //        request.setAttribute("CartList", cl);
         HttpSession session = request.getSession();
-        Cart c = (Cart) session.getAttribute("cart");
-        for (CartItem item : c.getItems()) {
-            response.getWriter().println(item.getProduct().toString());
-        }
         request.getRequestDispatcher("Cart.jsp").forward(request, response);
     }
 

@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Bill;
+import entity.Cart;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -14,8 +15,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import entity.CartDB;
+import entity.CartItem;
 import entity.Category;
 import entity.CheckOut;
+import entity.Coupon;
 import entity.Product;
 import entity.Provider;
 import entity.Review;
@@ -102,6 +105,20 @@ public class DAO extends DBContext {
         }
 
         return cl;
+    }
+
+    public Coupon getCoupon(String code) {
+        try {
+            String strSelect = " select * from [Coupon] where Code = '" + code + "'";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                return new Coupon(rs.getString(1), rs.getDouble(2));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+
+        return null;
     }
 
     public ArrayList getProvider() {
@@ -364,23 +381,29 @@ public class DAO extends DBContext {
 
     }
 
-    public void insertCheckout(int cid, Date createDate, double totalPrice) {
+    public void insertCheckout(Cart cart, String name, String address, String phone) {
 
         //System.out.println(p_pid);
         try {
-            rs = state.executeQuery("INSERT INTO [dbo].[CheckOut]\n"
-                    + "           ([Cid]\n"
-                    + "           ,[CreateDate]\n"
-                    + "           ,[TotalPrice])\n"
-                    + "     VALUES\n"
-                    + "           ('" + cid + "'\n"
-                    + "           ,'" + createDate + "'\n"
-                    + "           ,'" + totalPrice + "')");
+            state.executeUpdate("  insert into Bill ([dateCreate] ,[total],[recName],[recAddress],[recPhone] ,[status],[cid])\n"
+                    + "  values (getdate(),'" + cart.getTotalBill() + "','" + name + "','" + address + "','" + phone + "',1,1)");
         } catch (Exception e) {
-            System.out.println("Error Customer " + e.getMessage());
+            System.out.println("Error insert bill " + e.getMessage());
         }
         try {
-            rs = state.executeQuery("DELETE FROM [dbo].[Cart] CustomerID = '" + cid + "'");
+
+            rs = state.executeQuery("select top 1 * from Bill order by [bid] desc");
+            if (rs.next()) {
+                int bid = rs.getInt(1);
+                for (CartItem item : cart.getItems()) {
+                    System.out.println("insert [BillDetail] ([bid],[pid] ,[quantity],[price]) values ('"+bid+"','"+item.getProduct().getPid()+"','"+item.getQuantity()+"','"+item.getProduct().getPrice()+"')");
+                    state.executeUpdate("insert [BillDetail] ([bid],[pid] ,[quantity],[price]) values ('"+bid+"','"+item.getProduct().getPid()+"','"+item.getQuantity()+"','"+item.getProduct().getPrice()+"')");
+                
+                }
+            }
+             for (CartItem item : cart.getItems()) {
+                state.executeUpdate("  update [Product] set [quantity] = [quantity] - "+item.getQuantity()+" where [pid] = " + item.getProduct().getPid());
+            }
         } catch (Exception e) {
             System.out.println("Error Product " + e.getMessage());
         }
@@ -470,10 +493,12 @@ public class DAO extends DBContext {
 
         return p;
     }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-        System.out.println(        dao.getProductById("1").toString());
+        System.out.println(dao.getProductById("1").toString());
     }
+
     public ArrayList getCheckout() {
         CheckOut c = new CheckOut();
         ArrayList<CheckOut> cl = new ArrayList<>();

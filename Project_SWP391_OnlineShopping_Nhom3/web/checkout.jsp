@@ -5,6 +5,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="entity.Cart"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<--<!-- Check Hehehe -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,31 +26,37 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
+        <% ArrayList<Cart> cl = (ArrayList<Cart>) request.getAttribute("CartList"); %>
+        <% ArrayList<Product> pl = (ArrayList<Product>) request.getAttribute("ProductList"); %>
+        <%User us = (User) request.getSession().getAttribute("user"); %>
+        <% DAO dao = new DAO(); double all = 0;  %>
 
-
-            <section id="cart_items">
-                <div class="container">
-                    <div class="breadcrumbs">
-                        <ol class="breadcrumb">
-                            <li><a href="#">Home</a></li>
-                            <li class="active">Shopping Cart/${sessionScope.cart.getItems().size()}</li>
+        <section id="cart_items">
+            <div class="container">
+                <div class="breadcrumbs">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Home</a></li>
+                        <li class="active">Checkout</li>
                     </ol>
                 </div>
                 <div class="table-responsive cart_info">
                     <table class="table table-condensed">
                         <thead>
                             <tr class="cart_menu">
+                                <th > Id</th>
                                 <th >Product Name</th>
                                 <th class="product-name">Product Image</th>
                                 <th class="product-price">Price</th>
                                 <th class="product-quantity">Quantity</th>
                                 <th class="product-subtotal">Total</th>
-                                <th class="product-subtotal">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach var="cart" items="${sessionScope.cart.getItems()}">
                                 <tr>
+                                    <td >
+                                        <a href="#">${cart.getProduct().getPid()}</a>
+                                    </td>
                                     <td >
                                         <a href="#">${cart.getProduct().getPname()}</a>
                                     </td>
@@ -68,7 +75,7 @@
                                     <td class="product-quantity" data-title="Quantity">
                                         <div class="quantity-box type1">
                                             <div class="qty-input">
-                                                <input type="text" name="qty12554" value="${cart.getQuantity()}">
+                                                ${cart.getQuantity()}
                                             </div>
                                         </div>
                                     </td>
@@ -77,26 +84,28 @@
                                             <ins><span class="price-amount"><span class="currencySymbol">$</span>${cart.getProduct().getPrice()*cart.getQuantity()}</span></ins>
                                         </div>
                                     </td>
-                                    <td class="product-subtotal" data-title="Total">
-                                        <div class="action">
-                                            <a href="./DeleteCartItem?pid=${cart.getProduct().getPid()}"style="color: red; font-size: 40px;" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
                 </div>
-                <c:if test="${sessionScope.cart.getItems().size()!=0}">
-                    <p class="cart_total_price clearfix "> Total price : $${sessionScope.cart.getTotalBill()}</p>
-                    <form action="${pageContext.request.contextPath}/CheckOut"  method="get">
-                        <!--<input type="hidden" name="total" value="${sessionScope.cart.getTotalBill()}">-->
-                        <button class="btn btn-default check_out clearfix pull-right">Check Out </button>
-                    </form>
-                </c:if>
+                <p class="cart_total_price clearfix "> Total price : $${sessionScope.cart.getTotalBill()}</p> 
+                <div class="row">
+                    <div class="col-md-3">                <a class="btn btn-default check_out " href="Cart">Change</a>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <h2>Enter Information of receiver</h2>
+                        <form action="${pageContext.request.contextPath}/CheckOut"  method="POST">
+                            <input class="form-control" type="text" name="Name" placeholder="Name" ><br>
+                            <input class="form-control" type="text" name="Address" placeholder="Address"><br>
+                            <input class="form-control" type="text" name="Phone" placeholder="Phone"><br>
+                            <button class="btn btn-default check_out " type="submit">Check Out</button>
+                        </form>
+                    </div>
+                </div>
 
-
-                <br><br><br><br><br><br><br><br>
+                <br><br><br><br><br><br>
             </div>
         </section> <!--/#cart_items-->
 
