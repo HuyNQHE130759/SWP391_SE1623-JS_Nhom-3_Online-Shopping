@@ -1,6 +1,8 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="entity.User"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,8 +36,11 @@
                             <nav class="navbar">
                                 <ul class="navbar_menu">
                                     <li><a href="#">home</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/Product?index=1"">shop</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/OrderList">order list</a></li>
+                                    <li><a href="#">shop</a></li>
+                                    <c:if test="${sessionScope.user != null}">
+                                        <li><a href="${pageContext.request.contextPath}/OrderList?page=1">order list</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/OrderHistory">order history</a></li>
+                                        </c:if>
                                     <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
                                     <li><a href="ListUser">list user</a></li>
                                 </ul>

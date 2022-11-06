@@ -50,7 +50,7 @@ public class AddToCart extends HttpServlet {
             if (object != null) {
                 cart = (Cart) object;
             } else {
-                //cart = new Cart(items);
+                cart = new Cart(items);
             }
             String productId =  request.getParameter("pid");
             int quantity = Integer.parseInt(request.getParameter("quantity"));
@@ -58,7 +58,7 @@ public class AddToCart extends HttpServlet {
             System.out.println(product.toString());
             CartItem item = new CartItem(product, quantity);
 
-            //cart.addItem(item);
+            cart.addItem(item);
             session.setAttribute("cart", cart);
             response.sendRedirect("./Product");
 
