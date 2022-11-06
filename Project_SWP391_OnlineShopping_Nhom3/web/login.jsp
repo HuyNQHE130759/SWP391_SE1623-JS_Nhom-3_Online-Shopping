@@ -44,7 +44,9 @@
                                 <button type="submit" class="btn btn-default">Login</button>
                             </form>
                             <a href="Register">Not Registered? Create An Account Here</a> <p/>
-                            <a style="text-decoration: none;" href="ResetPassword">Forgot Password</a>
+                            <a style="text-decoration: none;" href="ResetPassword">Forgot Password</a><br>
+                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/login-google&response_type=code
+                               &client_id=813191694295-kb43r1eaqpgkmfv5am1jhd64vhdka9eb.apps.googleusercontent.com&approval_prompt=force">Login With Google</a>
                         </div><!--/login form-->
                     </div>
 

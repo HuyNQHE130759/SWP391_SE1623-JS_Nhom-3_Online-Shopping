@@ -152,6 +152,18 @@
         <servlet-name>ChangeCartQuantity</servlet-name>
         <servlet-class>controller.ChangeCartQuantity</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderHistory</servlet-name>
+        <servlet-class>controller.OrderHistory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderHistoryInformation</servlet-name>
+        <servlet-class>controller.OrderHistoryInformation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderListInformationController</servlet-name>
+        <servlet-class>controller.Admin.OrderListInformationController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -299,6 +311,18 @@
     <servlet-mapping>
         <servlet-name>ChangeCartQuantity</servlet-name>
         <url-pattern>/ChangeCartQuantity</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistory</servlet-name>
+        <url-pattern>/OrderHistory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryInformation</servlet-name>
+        <url-pattern>/OrderHistoryInformation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderListInformationController</servlet-name>
+        <url-pattern>/OrderListInformationController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,7 +5,9 @@
 package controller.admin;
 
 import dao.DAO;
+import dao.OrderDAO;
 import entity.Bill;
+import entity.BillDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -32,10 +34,23 @@ public class OrderList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        DAO dao = new DAO();
-       ArrayList<Bill> bill = dao.getBillList();
-       request.setAttribute("listBill", bill);
+        try {
+            OrderDAO dao = new OrderDAO();
+        int page = Integer.parseInt(request.getParameter("page"));
+        System.out.println(page);
+        int count = dao.countNumberPagingByOrderList();
+//       only 3 orders per page
+        int size=3; 
+       int endPage = count/size;
+       if(count % size !=0){
+           endPage++;
+       }
+       ArrayList<BillDetail> bdetail = dao.getAllBillDetailByPage(page);
+        request.setAttribute("endPage", endPage);
+       request.setAttribute("listBill", bdetail);
        request.getRequestDispatcher("OrderList.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
