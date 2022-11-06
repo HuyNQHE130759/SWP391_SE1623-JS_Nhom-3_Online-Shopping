@@ -12,6 +12,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import service.SendMail;
 
 public class RegisterController extends HttpServlet {
@@ -109,7 +111,7 @@ public class RegisterController extends HttpServlet {
                     out.println("location='" + request.getContextPath() + "/Register';");
                     out.println("</script>");
                 }
-            } finally {
+            }   finally {
                 try ( PrintWriter out = response.getWriter()) {
                     out.println("<script type=\"text/javascript\">");
                     out.println("alert('Create new account successfully!Please check your email');");

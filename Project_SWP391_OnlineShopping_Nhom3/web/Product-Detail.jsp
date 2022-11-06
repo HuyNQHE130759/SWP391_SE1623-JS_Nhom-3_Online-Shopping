@@ -1,3 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!--
+ Recordofchange:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 1/10/2022      2.0                LinhNT           First Implement
+ 
+-->
+
 <%@page import="entity.Review"%>
 <%@page import="entity.User"%>
 <%@page import="entity.Product"%>
@@ -17,19 +25,20 @@
         <link href="css/animate.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link href="css/responsive.css" rel="stylesheet">
-        
+
     </head>
 
     <body>
-        <jsp:include page="header.jsp"></jsp:include>
-
-        <section>
-            <div class="container">
-                <div class="row">
+     
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <a href="ProductbyCate.jsp"></a>
                     <%@include file="category.jsp" %>
                     <% ArrayList<Product> pl = (ArrayList<Product>) request.getAttribute("ProductList"); %>
-                     <% ArrayList<Review> rl = (ArrayList<Review>) request.getAttribute("ReviewList"); %>
-                     <%User us = (User) request.getSession().getAttribute("user"); %>
+                    <% ArrayList<Review> rl = (ArrayList<Review>) request.getAttribute("ReviewList"); %>
+                    <%User us = (User) request.getSession().getAttribute("user"); %>
+                    <%boolean isUserCanReview = (boolean) request.getAttribute("isUserCanReview");%>
                     <% for (int i = 0; i < pl.size(); i++) {%>
 
 
@@ -49,7 +58,7 @@
 
                                     </div>
 
-                                    
+
                                 </div>
 
                             </div>
@@ -61,29 +70,29 @@
                                     <img src="images/product-details/rating.png" alt="" />
                                     <span>
                                         <span>US $<%=pl.get(i).getPrice()%></span>
-                                        
+
                                         <%if (us != null) { %>
                                         <form action="${pageContext.request.contextPath}/AddToCart"  method="POST">
                                             <label>Quantity:</label>
                                             <input type="number" name="quantity" min="1"  value="0" />
-                                            
+
                                             <input type="hidden" name="pid" value="<%=pl.get(i).getPid()%>">
                                             <input type="hidden" name="cid" value="<%=us.getCid()%>">
                                             <button type="submit" class="btn btn-fefault cart">
-                                            <i class="fa fa-shopping-cart"></i>
-                                            Add to cart
-                                        </button>
+                                                <i class="fa fa-shopping-cart"></i>
+                                                Add to cart
+                                            </button>
                                         </form>
-                                            
-                                        
+
+
                                         <% }else{ %>
-                                            You have to log in in order to purchase this item
+                                        You have to log in in order to purchase this item
                                         <% } %>
-                                        
+
                                     </span>
                                     <p><b>Availability:</b> In Stock</p>
                                     <p><b>Condition:</b> New</p>
-                                    
+
                                     <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
                                 </div><!--/product-information-->
                             </div>
@@ -92,133 +101,22 @@
                         <div class="category-tab shop-details-tab"><!--category-tab-->
                             <div class="col-sm-12">
                                 <ul class="nav nav-tabs">
-                                    <li><a href="#details" data-toggle="tab">Details</a></li>
-                                    <li class="active"><a href="#reviews" data-toggle="tab">Reviews (<%= rl.size() %>)</a></li>
+                                    <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
+                                    <li><a href="#other-review" data-toggle="tab">Other Reviews (<%= rl.size() %>)</a></li>
+                                    <li style="<c:if test="${!isUserCanReview}">display: none;</c:if>"><a href="#reviews" data-toggle="tab">Reviews</a></li>
                                 </ul>
                             </div>
                             <div class="tab-content">
-                                <div class="tab-pane fade" id="details" >
+                                <div class="tab-pane fade fade active in" id="details" >
                                     <%=pl.get(i).getDescription()%>
                                 </div>
 
-                                <div class="tab-pane fade" id="companyprofile" >
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery1.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery3.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery2.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery4.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="tag" >
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery1.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery2.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery3.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    <img src="images/home/gallery4.jpg" alt="" />
-                                                    <h2>$56</h2>
-                                                    <p>Easy Polo Black Edition</p>
-                                                    <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade active in" id="reviews" >
+                                <div class="tab-pane fade" id="reviews" >
                                     <div class="col-sm-12">
-                                        <% for (int y = 0; y < rl.size(); y++) {%>
-                                        <%  User u = new User();
-                                            u = dao.getSingleUser(rl.get(y).getCid()); %>
-                                                <ul>
-                                                    <li><a href=""><i class="fa fa-user"></i><%=u.getUsername() %></a></li>
-                                                    <li><a href=""><i class="fa fa-calendar-o"></i><%=rl.get(y).getUsertime_comment()  %></a></li>
-                                        </ul>
-                                                    <p><%=rl.get(y).getUser_comment() %></p>
-                                                    -------------------------------------------------------------------------
-                                            <%}
-                                        %>
-                                        
+
+
                                         <p><b>Write Your Review</b></p>
-                                        
+
                                         <%if (us == null) {%>
                                         <p>You have to Log In in order to post comment!!</p>
                                         <% } else { %>
@@ -230,32 +128,44 @@
                                             </span>
                                             <textarea name="comment" ></textarea>
                                             <label for="Rating">Rating: </label>
-                                        <select name="rating" id="rating">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
-                                        </select>
-                                        <br>
-                                        <input type="submit" name="Save" value="PostComment">
+                                            <select name="rating" id="rating">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                            <br>
+                                            <input type="submit" name="Save" value="PostComment">
                                         </form>
                                         <% } %>
-
-
                                     </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="other-review">
+                                    <% for (int y = 0; y < rl.size(); y++) {%>
+                                    <%  User u = new User();
+                                            u = dao.getSingleUser(rl.get(y).getCid()); %>
+                                    <ul>
+                                        <li><a href=""><i class="fa fa-user"></i><%=u.getUsername() %></a></li>
+                                        <li><a href=""><i class="fa fa-calendar-o"></i><%=rl.get(y).getUsertime_comment()  %></a></li>
+                                    </ul>
+                                    <p><%=rl.get(y).getUser_comment() %></p>
+                                    -------------------------------------------------------------------------
+                                    <%}
+                                    %>
                                 </div>
 
                             </div>
                         </div><!--/category-tab-->
 
                         <div class="recommended_items"><!--recommended_items-->
-                            
+
                         </div><!--/recommended_items-->
 
                     </div>
@@ -264,7 +174,8 @@
             </div>
         </section>
 
-        <jsp:include page="footer.jsp"></jsp:include>
+          <jsp:include page="FooterCustom.jsp"></jsp:include>
+
 
 
 

@@ -58,10 +58,17 @@ public class Product extends HttpServlet {
             throws ServletException, IOException {
         DAO dao = new DAO();
         ArrayList<Product> pl = new ArrayList<>();
-        
-        pl = dao.getAllProduct();
-        
-        request.setAttribute("ProductList", pl);
+        ArrayList<Product> allProduct = new ArrayList<>();
+        //phan trang
+        int index = Integer.parseInt(request.getParameter("index"));
+        allProduct = dao.getAllProduct();
+        //lay danh sach sp theo index
+        pl = dao.getAllProductPaging(index);
+        double  listSizePaging = Math.round(allProduct.size() / 6);
+         
+        request.setAttribute("ProductListPaging", pl);
+        request.setAttribute("listSizePaging", listSizePaging);
+       
         request.getRequestDispatcher("Shop.jsp").forward(request, response);
     }
 

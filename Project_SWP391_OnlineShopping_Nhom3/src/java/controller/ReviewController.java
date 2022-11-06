@@ -6,6 +6,7 @@
 package controller;
 
 import dao.DAO;
+import entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,8 +19,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 
 public class ReviewController extends HttpServlet {
 
@@ -35,12 +34,12 @@ public class ReviewController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ReviewController</title>");            
+            out.println("<title>Servlet ReviewController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ReviewController at " + request.getContextPath() + "</h1>");
@@ -76,24 +75,25 @@ public class ReviewController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String user_name = request.getParameter("username");
-        int cid = Integer.parseInt(user_name);
+        User us = (User) request.getSession().getAttribute("user");
+        int cid = us.getCid();
         String pid = request.getParameter("pid");
         String us_commnent = request.getParameter("comment");
         int rating = Integer.valueOf(request.getParameter("rating"));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDateTime now = LocalDateTime.now();
         String curDateString = now.format(dtf);
-        
+
         java.util.Date uDate = null;
         try {
             uDate = new SimpleDateFormat("yyyy/MM/dd").parse(curDateString);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
-        java.sql.Date curDate= new java.sql.Date(uDate.getTime()) ;  
+        java.sql.Date curDate = new java.sql.Date(uDate.getTime());
         DAO dao = new DAO();
         dao.addCommentOfficial(cid, pid, us_commnent, rating, curDate);
-        response.sendRedirect(request.getContextPath() + "/ProductDetail?pid="+pid);
+        response.sendRedirect(request.getContextPath() + "/ProductDetail?pid=" + pid);
     }
 
     /**
