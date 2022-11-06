@@ -94,6 +94,7 @@
                                         <c:if test="${p.status eq false}">Disable</c:if>
                                         </td> 
                                         <td style="display: flex; flex-direction: row;">
+                                            <a href="${pageContext.request.contextPath}/Import/detail?pid=${p.pid}"> <input type="button" value="Import"> </a>
                                             <a href="${pageContext.request.contextPath}/AdminProduct/detail?pid=${p.pid}"> <input type="button" value="Update"> </a>
                                         <a href="${pageContext.request.contextPath}/RemoveProduct?pid=${p.pid}"> <input type="button" value="Delete"> </a>
                                     </td>

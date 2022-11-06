@@ -69,8 +69,8 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String pass = request.getParameter("password");
+        String username = request.getParameter("username").trim();
+        String pass = request.getParameter("password").trim();
         DAO dao = new DAO();
         ArrayList<User> ul = new ArrayList<>();
         ul = dao.checkLogin(username, pass);
@@ -91,13 +91,14 @@ public class LoginController extends HttpServlet {
         if (ul.size() <= 0) {
             request.getSession().setAttribute("user", null);
             //request.getSession().setAttribute("error", "Username or password didn't matched !!");
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<script type=\"text/javascript\">");
-                out.println("alert('Username or password is invalid!');");
-                out.println("location='" + request.getContextPath() + "/Login';");
-                out.println("</script>");
-            }
-            //response.sendRedirect(request.getContextPath() + "/Status");
+//            try (PrintWriter out = response.getWriter()) {
+//                out.println("<script type=\"text/javascript\">");
+//                out.println("alert('Username or password is invalid!');");
+//                out.println("location='" + request.getContextPath() + "/Login';");
+//                out.println("</script>");
+//            }
+
+            response.sendRedirect(request.getContextPath() + "/Product");
             //request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
     }

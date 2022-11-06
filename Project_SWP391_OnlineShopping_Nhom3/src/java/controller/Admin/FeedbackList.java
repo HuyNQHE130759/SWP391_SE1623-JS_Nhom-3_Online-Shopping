@@ -28,6 +28,7 @@ public class FeedbackList extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      * Use to process get feedback list and filter
+     * Each product have status, id, rating so we have to set attribute all of them to show them on the list
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs

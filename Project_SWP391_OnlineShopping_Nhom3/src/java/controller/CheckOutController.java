@@ -6,6 +6,9 @@
 package controller;
 
 import dao.DAO;
+import entity.Cart;
+import entity.Coupon;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -16,7 +19,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpSession;
 
 public class CheckOutController extends HttpServlet {
 
@@ -32,12 +35,12 @@ public class CheckOutController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CheckOutController</title>");            
+            out.println("<title>Servlet CheckOutController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CheckOutController at " + request.getContextPath() + "</h1>");
@@ -58,7 +61,33 @@ public class CheckOutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        if (session.getAttribute("user") == null) {
+            response.sendRedirect("Login");
+        } else {
+            String code = request.getParameter("code");
+            DAO dao = new DAO();
+            Coupon coupon = dao.getCoupon(code);
+            Object object = session.getAttribute("user");
+            Object object1 = session.getAttribute("cart");
+            User user = (User) object;
+            Cart cart = (Cart) object1;
+            if (coupon == null) {
+                float discountTotal = cart.getTotalBill();
+                request.setAttribute("discountTotal", discountTotal);
+                request.setAttribute("discount", 0);
+
+            } else {
+                float discountTotal = cart.getTotalBill() * (100 - Float.valueOf(coupon.getDiscount())) / 100;
+                request.setAttribute("discount", coupon.getDiscount());
+
+                request.setAttribute("discountTotal", discountTotal);
+            }
+
+            request.getRequestDispatcher("checkout.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -72,27 +101,25 @@ public class CheckOutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        Object object = session.getAttribute("user");
+        Object object1 = session.getAttribute("cart");
+        User user = (User) object;
+        Cart cart = (Cart) object1;
         DAO dao = new DAO();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDateTime now = LocalDateTime.now();
-        String curDateString = now.format(dtf);
-        
-        java.util.Date uDate = null;
-        try {
-            uDate = new SimpleDateFormat("yyyy/MM/dd").parse(curDateString);
-        } catch (ParseException ex) {
-            ex.printStackTrace();
+        String discountTotal = request.getParameter("discountTotal");
+        String Name = request.getParameter("Name").trim();
+        String Address = request.getParameter("Address").trim();
+        String Phone = request.getParameter("Phone").trim();
+        dao.insertCheckout(cart, Name, Address, Phone, user, discountTotal);
+        try ( PrintWriter out = response.getWriter()) {
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('Your purchase has been submited!!');");
+            out.println("location='" + request.getContextPath() + "/HomePage';");
+            out.println("</script>");
         }
-        java.sql.Date curDate= new java.sql.Date(uDate.getTime()) ; 
-        int cid = Integer.parseInt(request.getParameter("cid"));
-        double totalPrice = Double.parseDouble(request.getParameter("total"));
-        dao.insertCheckout(cid, curDate, totalPrice);
-        try (PrintWriter out = response.getWriter()) {
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("alert('Your purchase has been submited!!');");
-                    out.println("location='" + request.getContextPath() + "/HomePage';");
-                    out.println("</script>");
-                }
     }
 
     /**
