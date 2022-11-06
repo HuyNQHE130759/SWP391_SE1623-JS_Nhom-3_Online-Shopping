@@ -26,12 +26,10 @@
     </head>
 
     <body>
-        <jsp:include page="headerlinhbe.jsp"></jsp:include>
+      
 
             <section id="advertisement">
-                <div class="container">
-                    <img src="images/shop/advertisement.PNG" alt="" />
-                </div>
+               
             </section>
 
             <section>
@@ -83,6 +81,8 @@
                             <%}
                             %>
                             <!--phan trang-->
+                            
+                            
                             <div class="justify-content-center" style="text-align: center">
                                 <ul class="pagination pagination-sm">
                                     <%for (int i = 1; i <= totalPage; i++) {
@@ -99,7 +99,7 @@
             </div>
         </section>
 
-        <jsp:include page="footer.jsp"></jsp:include>
+                                    <jsp:include page="footer.jsp"></jsp:include>
 
 
         <script src="js/jquery.js"></script>

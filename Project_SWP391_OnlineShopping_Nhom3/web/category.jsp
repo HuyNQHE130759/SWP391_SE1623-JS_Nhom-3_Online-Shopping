@@ -19,6 +19,7 @@
                 background-color: #d4d4d4;
             }
         </style>
+         <jsp:include page="HeaderCustom.jsp"></jsp:include>
     </head> 
     <body>
         <div class="col-sm-3">

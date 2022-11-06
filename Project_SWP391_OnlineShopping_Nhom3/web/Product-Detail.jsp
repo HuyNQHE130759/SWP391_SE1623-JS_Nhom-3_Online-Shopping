@@ -29,11 +29,11 @@
     </head>
 
     <body>
-        <jsp:include page="headerlinhbe.jsp"></jsp:include>
-
+     
             <section>
                 <div class="container">
                     <div class="row">
+                        <a href="ProductbyCate.jsp"></a>
                     <%@include file="category.jsp" %>
                     <% ArrayList<Product> pl = (ArrayList<Product>) request.getAttribute("ProductList"); %>
                     <% ArrayList<Review> rl = (ArrayList<Review>) request.getAttribute("ReviewList"); %>
@@ -174,7 +174,8 @@
             </div>
         </section>
 
-        <jsp:include page="footer.jsp"></jsp:include>
+          <jsp:include page="FooterCustom.jsp"></jsp:include>
+
 
 
 

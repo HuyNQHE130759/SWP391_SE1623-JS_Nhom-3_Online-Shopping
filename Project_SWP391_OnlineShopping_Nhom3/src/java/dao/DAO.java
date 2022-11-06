@@ -150,7 +150,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product]";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString("pid"));
+                p.setPid(rs.getInt("pid"));
                 p.setPname(rs.getString("pname"));
                 p.setQuantity(rs.getInt("quantity"));
                 p.setPrice(rs.getDouble("price"));
@@ -191,7 +191,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product order by pid offset " + (index - 1) * 6 + " rows fetch next 6 rows only";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString("pid"));
+                p.setPid(rs.getInt("pid"));
                 p.setPname(rs.getString("pname"));
                 p.setQuantity(rs.getInt("quantity"));
                 p.setPrice(rs.getDouble("price"));
@@ -217,7 +217,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where cateId= '" + cid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString("pid"));
+                p.setPid(rs.getInt("pid"));
                 p.setPname(rs.getString("pname"));
                 p.setQuantity(rs.getInt("quantity"));
                 p.setPrice(rs.getDouble("price"));
@@ -243,7 +243,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product where cateId = '" + cid + "' order by pid offset " + (index - 1) * 6 + " rows fetch next 6 rows only";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString("pid"));
+                p.setPid(rs.getInt("pid"));
                 p.setPname(rs.getString("pname"));
                 p.setQuantity(rs.getInt("quantity"));
                 p.setPrice(rs.getDouble("price"));
@@ -269,7 +269,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where pid= '" + pid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getDouble(4));
@@ -549,7 +549,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getInt(4));
@@ -610,7 +610,7 @@ public class DAO extends DBContext {
             String strSelect = "select * from Product WHERE pid = '" + pid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getString(1));
+                p.setPid(rs.getInt(1));
                 p.setPname(rs.getString(2));
                 p.setQuantity(rs.getInt(3));
                 p.setPrice(rs.getInt(4));

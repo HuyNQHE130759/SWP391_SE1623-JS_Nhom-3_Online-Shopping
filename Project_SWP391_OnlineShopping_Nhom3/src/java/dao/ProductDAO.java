@@ -55,7 +55,7 @@ public class ProductDAO implements ProductDAOInterface {
                 p.setDescription(rs.getString("description"));
                 p.setStatus(rs.getBoolean("status"));
                 Category c = new Category();
-                c.setCateId(rs.getInt("cateId"));
+                c.setCateId(rs.getString("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 p.setCategory(c);
                 Provider pr = new Provider();
@@ -139,7 +139,7 @@ public class ProductDAO implements ProductDAOInterface {
                 p.setDescription(rs.getString("description"));
                 p.setStatus(rs.getBoolean("status"));
                 Category c = new Category();
-                c.setCateId(rs.getInt("cateId"));
+                c.setCateId(rs.getString("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 p.setCategory(c);
                 Provider pr = new Provider();
@@ -267,7 +267,7 @@ public class ProductDAO implements ProductDAOInterface {
                 p.setDescription(rs.getString("description"));
                 p.setStatus(rs.getBoolean("status"));
                 Category c = new Category();
-                c.setCateId(rs.getInt("cateId"));
+                c.setCateId(rs.getString("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 p.setCategory(c);
                 Provider pr = new Provider();
@@ -305,7 +305,7 @@ public class ProductDAO implements ProductDAOInterface {
                 p.setDescription(rs.getString("description"));
                 p.setStatus(rs.getBoolean("status"));
                 Category c = new Category();
-                c.setCateId(rs.getInt("cateId"));
+                c.setCateId(rs.getString("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 p.setCategory(c);
                 Provider pr = new Provider();

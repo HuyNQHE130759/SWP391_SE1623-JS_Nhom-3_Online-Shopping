@@ -43,7 +43,8 @@
     </style>
 
     <body>
-        <jsp:include page="headerlinhbe.jsp"></jsp:include>
+                   <jsp:include page="HeaderCustom.jsp"></jsp:include>
+
         <!--<form action="" method="POST" class="form" id="form-1"><!--/#contact-page-->
         <%User us = (User) request.getSession().getAttribute("user");
           String isEditSuccess = (String) request.getAttribute("errmsg");
@@ -107,7 +108,7 @@
         </div>	
     </div><!--/#contact-page-->
 
-    <jsp:include page="footer.jsp"></jsp:include>
+     <jsp:include page="FooterCustom.jsp"></jsp:include>
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>

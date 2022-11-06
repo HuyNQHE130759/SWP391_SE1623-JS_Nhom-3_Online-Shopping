@@ -39,7 +39,7 @@ public class CategoryDAO implements CategoryDAOInterface {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Category c = new Category();
-                c.setCateId(rs.getInt("cateId"));
+                c.setCateId(rs.getString("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 c.setImage(rs.getString("image"));
                 c.setStatus(rs.getBoolean("status"));
@@ -77,7 +77,7 @@ public class CategoryDAO implements CategoryDAOInterface {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Category c = new Category();
-                c.setCateId(rs.getInt("cateId"));
+                c.setCateId(rs.getString("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 c.setImage(rs.getString("image"));
                 c.setStatus(rs.getBoolean("status"));
@@ -138,7 +138,7 @@ public class CategoryDAO implements CategoryDAOInterface {
             rs = ps.executeQuery();
             while (rs.next()) {
                 Category c = new Category();
-                c.setCateId(rs.getInt("cateId"));
+                c.setCateId(rs.getString("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 c.setImage(rs.getString("image"));
                 c.setStatus(rs.getBoolean("status"));
@@ -248,7 +248,7 @@ public class CategoryDAO implements CategoryDAOInterface {
             ps.setObject(1, cid);
             rs = ps.executeQuery();
             while (rs.next()) {
-                c.setCateId(rs.getInt("cateId"));
+                c.setCateId(rs.getString("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 c.setImage(rs.getString("image"));
                 c.setStatus(rs.getBoolean("status"));

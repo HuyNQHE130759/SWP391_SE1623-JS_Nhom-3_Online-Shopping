@@ -21,12 +21,10 @@
     </head>
 
     <body>
-        <jsp:include page="headerlinhbe.jsp"></jsp:include>
+      
 
             <section id="advertisement">
-                <div class="container">
-                    <img src="images/shop/advertisement.PNG" alt="" />
-                </div>
+                
             </section>
 
             <section>
@@ -95,7 +93,8 @@
             </div>
         </section>
 
-        <jsp:include page="footer.jsp"></jsp:include>
+      <!-- Footer -->
+          <jsp:include page="footer.jsp"></jsp:include>
 
 
 
