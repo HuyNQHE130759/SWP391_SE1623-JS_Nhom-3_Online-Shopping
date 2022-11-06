@@ -294,5 +294,58 @@ public class UserDAO extends DBContext {
         }
         return -1;
     }
+    //funtion check login with account google
+    public ArrayList checkLogin(String userIDGoogle) {
+        ArrayList<User> ul = new ArrayList<>();
+        try {
+            String strSelect = "select * from dbo.[User] where user_id_google = ?";
+            PreparedStatement stm = connection.prepareStatement(strSelect);
+            stm.setString(1, userIDGoogle);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setCid(rs.getInt("cid"));
+                u.setFullName(rs.getString("fullName"));
+                u.setAddress(rs.getString("address"));
+                u.setPhone(rs.getString("phone"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password"));
+                u.setStatus(rs.getBoolean("status"));
+                u.setEmail(rs.getString("email"));
+                ul.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+
+        return ul;
+    }
+    
+     //funtion add user with account google
+    public void insertWithIDGoogle(User u) {
+        String sql = "INSERT INTO [User]\n"
+                + "           ([fullName]\n"
+                + "           ,[email]\n"
+                + "           ,[user_id_google],[roleid])\n"
+                + "           VALUES (?,?,?,?);";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, u.getFullName());
+            stm.setString(2, u.getEmail());
+            stm.setString(3, u.getUserIDGoogle());
+            stm.setInt(4, 1);
+       
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
 
 }

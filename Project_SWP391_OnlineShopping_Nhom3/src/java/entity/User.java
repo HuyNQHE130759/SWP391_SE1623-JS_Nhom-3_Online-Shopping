@@ -19,6 +19,7 @@ public class User {
     private String email;
     private String role;
     private boolean gender;
+    private String userIDGoogle;
 
     public boolean isGender() {
         return gender;
@@ -139,6 +140,15 @@ public class User {
     public String getStringStatus() {
         return isStatus() ? "Enable" : "Disable";
     }
+
+    public String getUserIDGoogle() {
+        return userIDGoogle;
+    }
+
+    public void setUserIDGoogle(String userIDGoogle) {
+        this.userIDGoogle = userIDGoogle;
+    }
+    
 }
 
    

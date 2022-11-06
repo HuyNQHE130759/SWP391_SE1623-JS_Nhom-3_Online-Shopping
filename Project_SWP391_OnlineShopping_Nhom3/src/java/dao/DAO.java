@@ -48,12 +48,13 @@ public class DAO extends DBContext {
     }
 
     public ArrayList checkLogin(String username, String pass) {
-        User u = new User();
+        
         ArrayList<User> ul = new ArrayList<>();
         try {
             String strSelect = "select * from dbo.[User] where status = 1";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
+                User u = new User();
                 u.setCid(rs.getInt("cid"));
                 u.setFullName(rs.getString("fullName"));
                 u.setAddress(rs.getString("address"));

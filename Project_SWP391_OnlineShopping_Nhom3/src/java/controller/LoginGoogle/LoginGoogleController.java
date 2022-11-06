@@ -2,25 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin;
+package controller.LoginGoogle;
 
-import dao.DAO;
-import dao.OrderDAO;
-import entity.Bill;
-import entity.BillDetail;
+import dao.UserDAO;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
  * @author Huynq
  */
-public class OrderList extends HttpServlet {
+@WebServlet(name = "LoginGoogleController", urlPatterns = {"/login-google"})
+public class LoginGoogleController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,22 +34,17 @@ public class OrderList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            OrderDAO dao = new OrderDAO();
-        int page = Integer.parseInt(request.getParameter("page"));
-        System.out.println(page);
-        int count = dao.countNumberPagingByOrderList();
-//       only 3 orders per page
-        int size=3; 
-       int endPage = count/size;
-       if(count % size !=0){
-           endPage++;
-       }
-       ArrayList<BillDetail> bdetail = dao.getAllBillDetailByPage(page);
-        request.setAttribute("endPage", endPage);
-       request.setAttribute("listBill", bdetail);
-       request.getRequestDispatcher("OrderList.jsp").forward(request, response);
-        } catch (Exception e) {
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LoginGoogleController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet LoginGoogleController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -65,7 +60,33 @@ public class OrderList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String code = request.getParameter("code");
+        System.out.println("code ne"+code);
+
+        if (code == null || code.isEmpty()) {
+            response.sendRedirect(request.getContextPath() + "/Login");
+        } else {
+            String accessToken = GoogleUtils.getToken(code);
+            GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
+            User user = new User();
+            UserDAO userDao = new UserDAO();
+            String userIDGoogle = googlePojo.getId();
+
+            ArrayList<User> ul = userDao.checkLogin(userIDGoogle);
+            
+            if (ul.isEmpty()) {
+                user.setFullName(googlePojo.getEmail());
+                user.setEmail(googlePojo.getEmail());
+                user.setUserIDGoogle(googlePojo.getId());
+                userDao.insertWithIDGoogle(user);
+ 
+            } else {
+                user = ul.get(0);
+            }
+            request.getSession().setAttribute("user", user);
+
+        }
+         response.sendRedirect(request.getContextPath() + "/HomePage");
     }
 
     /**

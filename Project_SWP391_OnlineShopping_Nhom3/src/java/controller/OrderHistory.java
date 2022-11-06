@@ -2,25 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin;
+package controller;
 
-import dao.DAO;
 import dao.OrderDAO;
 import entity.Bill;
-import entity.BillDetail;
+import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Collections;
+import utility.Support;
 
 /**
  *
  * @author Huynq
  */
-public class OrderList extends HttpServlet {
+public class OrderHistory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,19 +38,37 @@ public class OrderList extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             OrderDAO dao = new OrderDAO();
-        int page = Integer.parseInt(request.getParameter("page"));
-        System.out.println(page);
-        int count = dao.countNumberPagingByOrderList();
-//       only 3 orders per page
-        int size=3; 
-       int endPage = count/size;
-       if(count % size !=0){
-           endPage++;
-       }
-       ArrayList<BillDetail> bdetail = dao.getAllBillDetailByPage(page);
-        request.setAttribute("endPage", endPage);
-       request.setAttribute("listBill", bdetail);
-       request.getRequestDispatcher("OrderList.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
+            int cid = user.getCid();
+            int page;
+            if (request.getParameter("page") == null) {
+                page = 1;
+            } else {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            ArrayList<Bill> list = dao.getOrderHistory(cid);
+            String sort = request.getParameter("sort");
+            if (sort != null) {
+                request.setAttribute("sort",sort);
+                if(sort.equals("1")){
+                    Collections.sort(list,(o1, o2) -> {
+                        return (int)(o1.getTotal() - o2.getTotal()); 
+                    });
+                }
+                else {
+                    Collections.sort(list,(o1, o2) -> {
+                        return Support.ConvertStringToDate(o1.getDateCreate()).compareTo(Support.ConvertStringToDate(o2.getDateCreate())); 
+                    });
+                }
+            }
+            int numOfBills = 3;
+            int numOfPages = (list.size() % 3 == 0) ? list.size() / 3 : (list.size() / 3 + 1);
+            ArrayList<Bill> list_bill = Support.paging(page, numOfBills, list);
+            request.setAttribute("page", page);
+            request.setAttribute("list", list_bill);
+            request.setAttribute("numPage", numOfPages);
+            request.getRequestDispatcher("OrderHistory.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }
