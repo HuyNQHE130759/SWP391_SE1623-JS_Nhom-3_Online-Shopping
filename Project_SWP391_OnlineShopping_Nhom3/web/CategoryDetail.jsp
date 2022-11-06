@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label for="cname">Category Name:</label>
-                        <input type="text" class="form-control" name="cname" placeholder="Category Name" required="true" value="${requestScope.category.cateName}">
+                        <input type="text" class="form-control" name="cname" placeholder="Category Name" required="true" maxlength="50" value="${requestScope.category.cateName}">
                     </div>
                     <div class="form-group">
                         <label for="image">Image:</label>

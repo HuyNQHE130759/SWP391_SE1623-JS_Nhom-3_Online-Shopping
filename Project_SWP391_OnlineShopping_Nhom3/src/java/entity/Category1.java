@@ -6,16 +6,16 @@
 package entity;
 
 
-public class Category {
+public class Category1 {
     private int cateId;
     private String cateName;
     private String image;
     private boolean status;
 
-    public Category() {
+    public Category1() {
     }
 
-    public Category(int cateId, String cateName, String image, boolean status) {
+    public Category1(int cateId, String cateName, String image, boolean status) {
         this.cateId = cateId;
         this.cateName = cateName;
         this.image = image;

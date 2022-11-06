@@ -5,7 +5,7 @@
 package dao;
 
 import entity.Import;
-import entity.Product;
+import entity.Product1;
 import entity.Provider;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public interface ImportDAOInterface {
     
     public int count();
     
-    public void insert(Product product, Provider provider, Integer quantity, Date date);
+    public void insert(Product1 product, Provider provider, Integer quantity, Date date);
     
     public Import getImportById(int importID);
 }

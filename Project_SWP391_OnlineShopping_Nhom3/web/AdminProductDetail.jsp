@@ -30,11 +30,11 @@
                     </div>
                     <div class="form-group">
                         <label for="pname">Product Name:</label>
-                        <input type="text" class="form-control" name="pname" placeholder="Product Name" required="true" value="${requestScope.product.pname}">
+                        <input type="text" class="form-control" name="pname" placeholder="Product Name" required="true" maxlength="100" value="${requestScope.product.pname}">
                     </div>
                     <div class="form-group">
                         <label for="Price">Price</label>
-                        <input type="number" class="form-control" pattern="[1-9][0-9]*" name="price" placeholder="Price" required="true" value="${requestScope.product.price}">$
+                        <input type="number" class="form-control" pattern="[1-9][0-9]*" name="price" placeholder="Price" min="0" required="true" value="${requestScope.product.price}">$
                     </div>
                     <div class="form-group">
                         <label for="image">Image:</label>
@@ -59,6 +59,14 @@
                             </c:forEach>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="category">Provider</label>
+                        <select class="form-control" name="provider">
+                            <c:forEach items="${requestScope.providers}" var="pv">
+                                <option value="${pv.provider_id}" <c:if test="${requestScope.product.provider.provider_id eq pv.provider_id}">selected="selected"</c:if>>${pv.provider_name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>    
                     <c:if test="${flag == false}">
                         <small id="error" class="form-text" style="color: red">${msg}</small>
                     </c:if>

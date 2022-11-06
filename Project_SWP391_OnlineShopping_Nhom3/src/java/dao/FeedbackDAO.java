@@ -4,9 +4,9 @@
  */
 package dao;
 
-import entity.Category;
+import entity.Category1;
 import entity.Feedback;
-import entity.Product;
+import entity.Product1;
 import entity.Provider;
 import entity.Role;
 import entity.User;
@@ -66,7 +66,7 @@ public class FeedbackDAO extends DBContext {
                 u.setEmail(rs.getString(14));
                 u.setPhone(rs.getString("phone"));
                 f.setUser(u);
-                Product p = new Product();
+                Product1 p = new Product1();
                 p.setPname(rs.getString("pname"));
                 f.setProduct(p);
                 list.add(f);
@@ -106,7 +106,7 @@ public class FeedbackDAO extends DBContext {
                 u.setEmail(rs.getString(14));
                 u.setPhone(rs.getString("phone"));
                 f.setUser(u);
-                Product p = new Product();
+                Product1 p = new Product1();
                 p.setPname(rs.getString("pname"));
                 f.setProduct(p);
                 return f;

@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Bill;
+import entity.User;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -14,9 +15,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import entity.Cart;
-import entity.Category;
+import entity.Category1;
+import entity.Category1;
 import entity.CheckOut;
-import entity.Product;
+import entity.Product1;
 import entity.Provider;
 import entity.Review;
 import entity.User;
@@ -84,8 +86,8 @@ public class DAO extends DBContext {
     }
 
     public ArrayList getCategory() {
-        Category c = new Category();
-        ArrayList<Category> cl = new ArrayList<>();
+        Category1 c = new Category1();
+        ArrayList<Category1> cl = new ArrayList<>();
         try {
             String strSelect = "select * from Category";
             rs = state.executeQuery(strSelect);
@@ -95,7 +97,7 @@ public class DAO extends DBContext {
                 c.setImage(rs.getString(3));
                 c.setStatus(rs.getBoolean(4));
 
-                cl.add(new Category(c.getCateId(), c.getCateName(), c.getImage(), c.isStatus()));
+                cl.add(new Category1(c.getCateId(), c.getCateName(), c.getImage(), c.isStatus()));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
@@ -125,8 +127,8 @@ public class DAO extends DBContext {
     }
 
     public ArrayList getAllProduct() {
-        Product p = new Product();
-        ArrayList<Product> pl = new ArrayList<>();
+        Product1 p = new Product1();
+        ArrayList<Product1> pl = new ArrayList<>();
         try {
             String strSelect = "select * from [dbo].[Product]";
             rs = state.executeQuery(strSelect);
@@ -140,7 +142,7 @@ public class DAO extends DBContext {
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
 
-                pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
+                pl.add(new Product1(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
         } catch (SQLException e) {
@@ -151,8 +153,8 @@ public class DAO extends DBContext {
     }
 
     public ArrayList getProductbyCate(String cid) {
-        Product p = new Product();
-        ArrayList<Product> pl = new ArrayList<>();
+        Product1 p = new Product1();
+        ArrayList<Product1> pl = new ArrayList<>();
         try {
             String strSelect = "select * from [dbo].[Product] where cateId= '" + cid + "'";
             rs = state.executeQuery(strSelect);
@@ -166,7 +168,7 @@ public class DAO extends DBContext {
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
 
-                pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
+                pl.add(new Product1(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
         } catch (Exception e) {
@@ -177,8 +179,8 @@ public class DAO extends DBContext {
     }
 
     public ArrayList getSingleProduct(String pid) {
-        Product p = new Product();
-        ArrayList<Product> pl = new ArrayList<>();
+        Product1 p = new Product1();
+        ArrayList<Product1> pl = new ArrayList<>();
         try {
             String strSelect = "select * from [dbo].[Product] where pid= '" + pid + "'";
             rs = state.executeQuery(strSelect);
@@ -192,7 +194,7 @@ public class DAO extends DBContext {
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
 
-                pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
+                pl.add(new Product1(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
         } catch (Exception e) {
@@ -387,8 +389,8 @@ public class DAO extends DBContext {
     }
 
     public ArrayList getProduct() {
-        Product p = new Product();
-        ArrayList<Product> pl = new ArrayList<>();
+        Product1 p = new Product1();
+        ArrayList<Product1> pl = new ArrayList<>();
         try {
             String strSelect = "select * from Product";
             rs = state.executeQuery(strSelect);
@@ -402,7 +404,7 @@ public class DAO extends DBContext {
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
 
-                pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(), p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
+                pl.add(new Product1(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(), p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
@@ -448,8 +450,8 @@ public class DAO extends DBContext {
 
     }
 
-    public Product getProductById(String pid) {
-        Product p = new Product();
+    public Product1 getProductById(String pid) {
+        Product1 p = new Product1();
         try {
             String strSelect = "select * from Product WHERE pid = '" + pid + "'";
             rs = state.executeQuery(strSelect);

@@ -4,7 +4,7 @@
  */
 package dao;
 
-import entity.Category;
+import entity.Category1;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +26,8 @@ public class CategoryDAO implements CategoryDAOInterface {
     private ResultSet rs = null;
 
     @Override
-    public ArrayList<Category> getAllCategory() {
-        ArrayList<Category> list = new ArrayList<>();
+    public ArrayList<Category1> getAllCategory() {
+        ArrayList<Category1> list = new ArrayList<>();
         String sql = "SELECT [cateId]"
                 + "      ,[cateName]"
                 + "      ,[image]"
@@ -38,7 +38,7 @@ public class CategoryDAO implements CategoryDAOInterface {
             ps = connection.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Category c = new Category();
+                Category1 c = new Category1();
                 c.setCateId(rs.getInt("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 c.setImage(rs.getString("image"));
@@ -58,8 +58,8 @@ public class CategoryDAO implements CategoryDAOInterface {
     }
 
     @Override
-    public ArrayList<Category> getAllCategory(Integer pageindex, Integer pagesize) {
-        ArrayList<Category> list = new ArrayList<>();
+    public ArrayList<Category1> getAllCategory(Integer pageindex, Integer pagesize) {
+        ArrayList<Category1> list = new ArrayList<>();
         String sql = "SELECT [cateId]"
                 + "      ,[cateName]"
                 + "      ,[image]"
@@ -76,7 +76,7 @@ public class CategoryDAO implements CategoryDAOInterface {
             ps.setInt(3, pagesize);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Category c = new Category();
+                Category1 c = new Category1();
                 c.setCateId(rs.getInt("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 c.setImage(rs.getString("image"));
@@ -96,8 +96,8 @@ public class CategoryDAO implements CategoryDAOInterface {
     }
 
     @Override
-    public ArrayList<Category> getAllCategory(String sort, Boolean status, String search, Integer pageindex, Integer pagesize) {
-        ArrayList<Category> list = new ArrayList<>();
+    public ArrayList<Category1> getAllCategory(String sort, Boolean status, String search, Integer pageindex, Integer pagesize) {
+        ArrayList<Category1> list = new ArrayList<>();
         HashMap<Integer, Object> params = new HashMap<>();
         int index = 0;
         String sql = "SELECT [cateId]"
@@ -137,7 +137,7 @@ public class CategoryDAO implements CategoryDAOInterface {
             }
             rs = ps.executeQuery();
             while (rs.next()) {
-                Category c = new Category();
+                Category1 c = new Category1();
                 c.setCateId(rs.getInt("cateId"));
                 c.setCateName(rs.getString("cateName"));
                 c.setImage(rs.getString("image"));
@@ -234,8 +234,8 @@ public class CategoryDAO implements CategoryDAOInterface {
     }
 
     @Override
-    public Category getCategory(Integer cid) {
-        Category c = new Category();
+    public Category1 getCategory(Integer cid) {
+        Category1 c = new Category1();
         String sql = "SELECT [cateId]"
                 + "      ,[cateName]"
                 + "      ,[image]"
@@ -263,5 +263,23 @@ public class CategoryDAO implements CategoryDAOInterface {
             }
         }
         return c;
+    }
+
+    @Override
+    public boolean isExisted(String cname) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        connection = (new DBContext().connection);
+        try {
+            String query = "select count(*) as num from [Category] where cateName = ?";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, cname);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return Integer.parseInt(rs.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
     }
 }

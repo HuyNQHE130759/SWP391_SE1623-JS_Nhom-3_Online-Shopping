@@ -79,7 +79,7 @@
                                     <th scope="row">${imp.importId}</td>
                                     <td>${imp.product.pname}</td>
                                     <td>${imp.provider.provider_name}</td> 
-                                    <td>$${imp.quantity}</td>
+                                    <td>${imp.quantity}</td>
                                     <td>${imp.date}</td>
                                 </tr>
                             </c:forEach>

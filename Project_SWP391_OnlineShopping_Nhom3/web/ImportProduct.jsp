@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label for="address">Quantity:</label>
-                        <input type="number" class="form-control" name="quantity" placeholder="Quantitry" value="${requestScope.quantity}">
+                        <input type="number" class="form-control" name="quantity" placeholder="Quantity" min="1" value="${requestScope.quantity}">
                     </div>
                     <c:if test="${flag == false}">
                         <small id="error" class="form-text" style="color: red">${msg}</small>

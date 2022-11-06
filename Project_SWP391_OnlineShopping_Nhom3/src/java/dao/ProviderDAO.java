@@ -274,4 +274,22 @@ public class ProviderDAO implements ProviderDAOInterface {
         }
         return p;
     }
+
+    @Override
+    public boolean isExisted(String pvname) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        connection = (new DBContext().connection);
+        try {
+            String query = "select count(*) as num from [Provider] where provider_name = ?";
+            ps = connection.prepareStatement(query);
+            ps.setString(1, pvname);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return Integer.parseInt(rs.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
 }

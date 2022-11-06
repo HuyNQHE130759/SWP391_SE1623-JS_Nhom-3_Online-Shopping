@@ -62,9 +62,9 @@ public class CategoryListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String sort = request.getParameter("sort");
-        String raw_status = request.getParameter("status");
-        String raw_search = request.getParameter("search");
+        String sort = request.getParameter("sort").trim();
+        String raw_status = request.getParameter("status").trim();
+        String raw_search = request.getParameter("search").trim();
         int pagesize = Integer.parseInt(getServletContext().getInitParameter("PAGE_SIZE"));
         String raw_page = request.getParameter("page");
         if(raw_page ==null)

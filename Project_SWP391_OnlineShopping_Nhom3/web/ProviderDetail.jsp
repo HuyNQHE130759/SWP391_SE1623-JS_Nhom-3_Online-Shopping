@@ -30,15 +30,15 @@
                     </div>
                     <div class="form-group">
                         <label for="pname">Provider Name:</label>
-                        <input type="text" class="form-control" name="pname" placeholder="Provider Name" required="true" value="${requestScope.provider.provider_name}">
+                        <input type="text" class="form-control" name="pname" placeholder="Provider Name" required="true" maxlength="50" value="${requestScope.provider.provider_name}">
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="text" class="form-control" name="email" placeholder="Email" required="true" value="${requestScope.provider.provider_email}">
+                        <input type="text" class="form-control" name="email" placeholder="Email" required="true" maxlength="50" value="${requestScope.provider.provider_email}">
                     </div>
                     <div class="form-group">
                         <label for="address">Address:</label>
-                        <input type="text" class="form-control" name="address" placeholder="Address" required="true" value="${requestScope.provider.provider_address}">
+                        <input type="text" class="form-control" name="address" placeholder="Address" required="true" maxlength="50" value="${requestScope.provider.provider_address}">
                     </div>
                     <div class="form-group">
                         <label for="status">Status</label>
