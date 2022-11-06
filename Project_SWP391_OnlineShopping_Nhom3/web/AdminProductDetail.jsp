@@ -29,15 +29,15 @@
                         <input type="text" class="form-control" name="pid" placeholder="Product ID" readonly="readonly" value="${requestScope.pid}">
                     </div>
                     <div class="form-group">
-                        <label for="pname">Product Name:</label>
+                        <label for="pname">Product Name:<i style="color: red;">*</i></label>
                         <input type="text" class="form-control" name="pname" placeholder="Product Name" required="true" maxlength="100" value="${requestScope.product.pname}">
                     </div>
                     <div class="form-group">
-                        <label for="Price">Price</label>
+                        <label for="Price">Price:<i style="color: red;">*</i></label>
                         <input type="number" class="form-control" pattern="[1-9][0-9]*" name="price" placeholder="Price" min="0" required="true" value="${requestScope.product.price}">$
                     </div>
                     <div class="form-group">
-                        <label for="image">Image:</label>
+                        <label for="image">Image:<i style="color: red;">*</i></label>
                         <input type="text" class="form-control" name="image" placeholder="Image" required="true" value="${requestScope.product.image}">
                     </div>
                     <div class="form-group">
@@ -45,14 +45,14 @@
                         <textarea class="form-control" name="description" placeholder="Description">${requestScope.product.description}</textarea>
                     </div>
                     <div class="form-group">
-                        <label for="status">Status</label>
+                        <label for="status">Status:<i style="color: red;">*</i></label>
                          <select class="form-control" name="status">
                              <option value="1" <c:if test="${requestScope.product.status eq true}">selected="selected"</c:if>>Enable</option>
                             <option value="0" <c:if test="${requestScope.product.status ne true}">selected="selected"</c:if>>Disable</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="category">Category</label>
+                        <label for="category">Category:<i style="color: red;">*</i></label>
                         <select class="form-control" name="category">
                             <c:forEach items="${requestScope.categoryList}" var="c">
                                 <option value="${c.cateId}" <c:if test="${requestScope.product.cateId eq c.cateId}">selected="selected"</c:if>>${c.cateName}</option>
@@ -60,7 +60,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="category">Provider</label>
+                        <label for="category">Provider:<i style="color: red;">*</i></label>
                         <select class="form-control" name="provider">
                             <c:forEach items="${requestScope.providers}" var="pv">
                                 <option value="${pv.provider_id}" <c:if test="${requestScope.product.provider.provider_id eq pv.provider_id}">selected="selected"</c:if>>${pv.provider_name}</option>
