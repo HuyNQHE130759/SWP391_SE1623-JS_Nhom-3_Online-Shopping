@@ -78,6 +78,7 @@
 
                             <%}
                             %>
+                            <!--phan trang-->
                             <div class="justify-content-center" style="text-align: center">
                                 <ul class="pagination pagination-sm">
                                     <%for (int i = 1; i <= listSizePaging; i++) {
@@ -88,8 +89,6 @@
                                     <%}%>
                                 </ul>
                             </div>
-
-
                         </div><!--features_items-->
                     </div>
                 </div>

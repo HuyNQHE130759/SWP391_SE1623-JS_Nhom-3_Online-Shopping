@@ -1,4 +1,10 @@
 /* 
+ 
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 1/10/2022      2.0                LinhNT           First Implement
+ 
+
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
@@ -57,12 +63,13 @@ function Validator(options) {
     }
 }
 
-
+// validate cho trường Full name
 Validator.isRequired = function (selector) {
     return {
         selector: selector,
         test: function (value) {
-            var regex = /^[a-zA-Z ]*$/;
+            //chi chứa chữ cái và 5 từ
+            var regex = /^([a-z]{1,10})((\s{1}[a-z]{1,10}){1,4} )*$/;
             if (regex.test(value) && value.toString().length > 0) {
                 return undefined;
             } else
@@ -72,12 +79,13 @@ Validator.isRequired = function (selector) {
         }
     };
 
-};
+};//validate email
 Validator.isEmail = function (selector) {
     return {
         selector: selector,
         test: function (value) {
-            var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            //phải có .com mới là email hợp lệ
+            var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})*$/;
             if (regex.test(value)) {
                 return undefined;
             } else
@@ -87,12 +95,13 @@ Validator.isEmail = function (selector) {
         }
     };
 
-};
+};// validate số điện thoại
 Validator.isPhone = function (selector) {
     return{
         selector: selector,
         test: function (value) {
-            var regex = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+            //phải có 0 hoặc +84 sau 2 số đó sẽ là 9 số
+            var regex = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})*$/;
             if (regex.test(value)) {
                 return undefined;
             } else
@@ -102,17 +111,20 @@ Validator.isPhone = function (selector) {
         }
     };
 };
-
+// validate địa chỉ
 Validator.addressMaxLength = function (selector) {
     return{
         selector: selector,
         test: function (value) {
+            // chữ cái và số chỉ chứa 30 kí tự
             var regex = /^[a-zA-Z0-9 ]*$/;
-            if (value.toString().length < 30 && regex.test(value) && value.toString().length > 0) {
+            //không vượt 30 kí tự và k đúng validate hoặc chỉ nhập dấu cách ở dâud sẽ trả về đúng
+            if (true) {
                 return undefined;
             } else
             {
-                return "Địa chỉ không được chứa kí tự đăc biệt và chỉ được 40 kí tự";
+                //sai sẽ trả ra thông báo
+                return "Địa chỉ không được chứa kí tự đăc biệt và chỉ được 40 kí tự1?";
             }
         }
     };

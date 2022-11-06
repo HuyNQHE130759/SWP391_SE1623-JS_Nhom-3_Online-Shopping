@@ -74,68 +74,49 @@ public class editUserInfo extends HttpServlet {
             throws ServletException, IOException {
         User us = (User) request.getSession().getAttribute("user");
         DAO dao = new DAO();
-//        boolean isOk = true;
+        String isEditSucess = "";
+        boolean isOk = true;
 //        //validate cho truong email
-//        Pattern patternEmail = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-//        Matcher matcherEmail = patternEmail.matcher(request.getParameter("email"));
-//        if (!matcherEmail.find()) {
-//            isOk = false;
-//            try ( PrintWriter out = response.getWriter()) {
-//                out.println("<script type=\"text/javascript\">");
-//                out.println("alert('Invalid Email format');");
-//                out.println("location='" + request.getContextPath() + "/AccountInfo';");
-//                out.println("</script>");
-//            }
-//        }
+        Pattern patternEmail = Pattern.compile("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})*$", Pattern.CASE_INSENSITIVE);
+        Matcher matcherEmail = patternEmail.matcher(request.getParameter("email"));
+        if (!matcherEmail.find()) {
+            isOk = false;
+            isEditSucess += "Invalid email vd:abc@gmail.com\n";
+        }
         //validate cho truong iphone chi dc nhap vaof so
-//        Pattern patternPhone = Pattern.compile("^\\d{10}$", Pattern.CASE_INSENSITIVE);
-//        Matcher matcherPhone = patternPhone.matcher(request.getParameter("phone"));
-//        if (!matcherPhone.find()) {
-//            isOk = false;
-//            try ( PrintWriter out = response.getWriter()) {
-//                out.println("<script type=\"text/javascript\">");
-//                out.println("alert('Phone must have 10 character');");
-//                out.println("location='" + request.getContextPath() + "/AccountInfo';");
-//                out.println("</script>");
-//            }
-//
-//        }
+        Pattern patternPhone = Pattern.compile("^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})*$", Pattern.CASE_INSENSITIVE);
+        Matcher matcherPhone = patternPhone.matcher(request.getParameter("phone"));
+        if (!matcherPhone.find()) {
+            isOk = false;
+            isEditSucess += "Số điện thoại phải bắt đầu số 0 hoặc 84, và 10 chũ số\n";
+        }
         //validate cho truong full name chi dc nhap vaof chu
-        //  Pattern patternFullName = Pattern.compile("^[a-zA-Z ]*$", Pattern.CASE_INSENSITIVE);
-        //  Matcher matcherFullName = patternFullName.matcher(request.getParameter("fullname"));
-        //   if (!matcherFullName.find()) {
-        //      isOk = false;
-        // try ( PrintWriter out = response.getWriter()) {
-        // out.println("<script type=\"text/javascript\">");
-        //  out.println("alert('Full name without special numbers and characters');");
-        // out.println("location='" + request.getContextPath() + "/AccountInfo';");
-        //   out.println("</script>");
-        //  }
-
-        //  }
+        Pattern patternFullName = Pattern.compile("^(?![\\s.]+$)[a-zA-Z\\s.]*$", Pattern.CASE_INSENSITIVE);
+        Matcher matcherFullName = patternFullName.matcher(request.getParameter("fullname").trim());
+        if (!matcherFullName.find()) {
+            isOk = false;
+            isEditSucess += "Full name không chứa kí tự đặc biệt, tối đa là 5 từ\n";
+        }
         //validate cho truong addrerr chi dc nhap chu va so
-//        Pattern patternAddress = Pattern.compile("^[a-zA-Z0-9 ]*$", Pattern.CASE_INSENSITIVE);
-//        Matcher matcherAddress = patternAddress.matcher(request.getParameter("address"));
-//        if (!matcherAddress.find()) {
-//            isOk = false;
-//            try ( PrintWriter out = response.getWriter()) {
-//                out.println("<script type=\"text/javascript\">");
-//                out.println("alert('Must not contain special characters');");
-//                out.println("location='" + request.getContextPath() + "/AccountInfo';");
-//                out.println("</script>");
-//            }
-//
-//        }
-        us.setEmail(request.getParameter("email"));
-        us.setFullName(request.getParameter("fullname"));
-        us.setPhone(request.getParameter("phone"));
-        us.setAddress(request.getParameter("address"));
-        us.setGender(Boolean.parseBoolean(request.getParameter("gender")));
-        System.out.println(request.getParameter("gender") + " " + us.isGender());
-        request.getSession().setAttribute("user", us);
-        dao.updateUserInfo(us);
-        request.setAttribute("isEditSuccess", "Cập nhật thành công");
-
+        Pattern patternAddress = Pattern.compile("^[a-zA-Z0-9 ]*$", Pattern.CASE_INSENSITIVE);
+        Matcher matcherAddress = patternAddress.matcher(request.getParameter("address"));
+        if (!matcherAddress.find()) {
+            isOk = false;
+            isEditSucess += "Địa chỉ không được chứa kí tự đăc biệt và chỉ được 40 kí tự\n";
+        }
+        if (isOk) {
+            us.setEmail(request.getParameter("email").trim());
+            us.setFullName(request.getParameter("fullname").trim());
+            us.setPhone(request.getParameter("phone").trim());
+            us.setAddress(request.getParameter("address").trim());
+            us.setGender(Boolean.parseBoolean(request.getParameter("gender").trim()));
+            System.out.println(request.getParameter("gender") + " " + us.isGender());
+            request.getSession().setAttribute("user", us);
+            dao.updateUserInfo(us);
+            isEditSucess = "Cập nhật thành công";
+        }
+        request.setAttribute("errmsg", isEditSucess);
+        request.setAttribute("isOk", isOk);
         request.getRequestDispatcher("AccountInfo.jsp").forward(request, response);
     }
 

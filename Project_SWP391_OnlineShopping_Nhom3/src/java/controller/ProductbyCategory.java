@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
 public class ProductbyCategory extends HttpServlet {
 
     /**
@@ -30,12 +29,12 @@ public class ProductbyCategory extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductbyCategory</title>");            
+            out.println("<title>Servlet ProductbyCategory</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ProductbyCategory at " + request.getContextPath() + "</h1>");
@@ -57,12 +56,26 @@ public class ProductbyCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String cid = request.getParameter("cid");
+        String strIndex = request.getParameter("index");
+        int index = 1;
+        try {
+            index = Integer.parseInt(strIndex);
+        } catch (NumberFormatException e) {
+            index = 1;
+        }
         DAO dao = new DAO();
+        ArrayList<Product> allProductByCate = new ArrayList<>();
         ArrayList<Product> pl = new ArrayList<>();
         User us = (User) request.getSession().getAttribute("user");
-        pl = dao.getProductbyCate(cid);
+        pl = dao.getProductbyCatePaging(cid,index);
+        allProductByCate = dao.getProductbyCate(cid);
+        double  listSizePaging = Math.round(allProductByCate.size() / 6);
         request.setAttribute("userr", us);
+        request.setAttribute("cid", cid);
+        request.setAttribute("totalPage", listSizePaging);
         request.setAttribute("ProductList", pl);
+        System.out.println("pl: "+pl.size());
+        System.out.println("totalPage: "+listSizePaging);
         request.getRequestDispatcher("ProductbyCate.jsp").forward(request, response);
     }
 

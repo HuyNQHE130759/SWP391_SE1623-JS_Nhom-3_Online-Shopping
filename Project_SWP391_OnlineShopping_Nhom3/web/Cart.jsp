@@ -1,3 +1,10 @@
+<!--
+ Recordofchange:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 1/10/2022      2.0                LinhNT           First Implement
+ 
+-->
+
 <%@page import="entity.User"%>
 <%@page import="dao.DAO"%>
 <%@page import="entity.Product"%>
@@ -23,6 +30,7 @@
     </head>
 
     <body>
+        <!-- kế thư lại header -->
         <jsp:include page="headerlinhbe.jsp"></jsp:include>
         <% ArrayList<Cart> cl = (ArrayList<Cart>) request.getAttribute("CartList"); %>
         <% ArrayList<Product> pl = (ArrayList<Product>) request.getAttribute("ProductList"); %>

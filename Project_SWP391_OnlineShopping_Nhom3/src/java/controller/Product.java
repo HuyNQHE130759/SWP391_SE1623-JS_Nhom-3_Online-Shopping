@@ -62,8 +62,9 @@ public class Product extends HttpServlet {
         //phan trang
         int index = Integer.parseInt(request.getParameter("index"));
         allProduct = dao.getAllProduct();
+        //lay danh sach sp theo index
         pl = dao.getAllProductPaging(index);
-         double  listSizePaging = Math.round(allProduct.size() / 6);
+        double  listSizePaging = Math.round(allProduct.size() / 6);
          
         request.setAttribute("ProductListPaging", pl);
         request.setAttribute("listSizePaging", listSizePaging);
