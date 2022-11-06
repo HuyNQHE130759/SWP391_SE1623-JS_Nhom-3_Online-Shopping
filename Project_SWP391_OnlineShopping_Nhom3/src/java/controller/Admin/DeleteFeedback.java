@@ -32,6 +32,7 @@ public class DeleteFeedback extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String fid = request.getParameter("fid");
         FeedbackDAO fdao = new FeedbackDAO();
+        //call method to delete feedback
         fdao.deleteFeedback(fid);
         response.sendRedirect("./FeedbackList");
     }

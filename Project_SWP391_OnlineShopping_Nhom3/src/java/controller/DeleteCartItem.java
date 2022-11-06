@@ -39,6 +39,7 @@ public class DeleteCartItem extends HttpServlet {
             int productId = Integer.parseInt(request.getParameter("pid"));
             Cart cart = (Cart) object;
             cart.removeItem(productId);
+            session.setAttribute("cart",cart);
             response.sendRedirect("./Cart");
         } catch (Exception e) {
             response.getWriter().println(e);

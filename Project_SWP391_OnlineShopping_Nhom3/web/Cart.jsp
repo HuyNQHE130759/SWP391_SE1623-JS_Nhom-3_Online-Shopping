@@ -68,7 +68,10 @@
                                     <td class="product-quantity" data-title="Quantity">
                                         <div class="quantity-box type1">
                                             <div class="qty-input">
-                                                <input type="text" name="qty12554" value="${cart.getQuantity()}">
+                                                <a href="ChangeCartQuantity?pid=${cart.getProduct().getPid()}&quantity=${cart.getQuantity()-1}">-</a>
+                                                ${cart.getQuantity()}
+                                                <a href="ChangeCartQuantity?pid=${cart.getProduct().getPid()}&quantity=${cart.getQuantity()+1}">+</a>
+
                                             </div>
                                         </div>
                                     </td>

@@ -8,20 +8,32 @@ package service;
 import dao.DAO;
 import java.util.Random;
 
-
 public class CustomerServices {
 
+    /**
+     * this method allow to create random new password and update to database
+     *
+     * @param email email of user
+     * @return
+     */
     public String resetCustomerPassword(String email) {
         DAO dao = new DAO();
+        //check existe of email user
         int uid = dao.findIdByEmail(email);
-        if(uid ==-1){
+        if (uid == -1) {
             return "EmailNotFound";
         }
         String randomPassword = new CustomerServices().randomPassword();
+        //update password
         dao.changePassword(uid, randomPassword);
         return randomPassword;
     }
 
+    /**
+     * this method to random new string have length is 10 character
+     *
+     * @return generatedString
+     */
     public String randomPassword() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'

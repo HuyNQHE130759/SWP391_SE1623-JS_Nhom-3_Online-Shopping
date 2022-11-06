@@ -31,6 +31,7 @@ public class FeedbackDetail extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        //Use this to access to feedback detail up to Feedback id
         String fid = request.getParameter("fid");
         FeedbackDAO fdao = new FeedbackDAO();
         Feedback f = fdao.getFeedback(fid);

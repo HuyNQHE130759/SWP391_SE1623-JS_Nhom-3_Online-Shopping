@@ -10,9 +10,9 @@ package entity;
  */
 public class Coupon {
     String code;
-    double discount;
+    float discount;
 
-    public Coupon(String code, double discount) {
+    public Coupon(String code, float discount) {
         this.code = code;
         this.discount = discount;
     }
@@ -25,11 +25,11 @@ public class Coupon {
         this.code = code;
     }
 
-    public double getDiscount() {
+    public float getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(float discount) {
         this.discount = discount;
     }
     

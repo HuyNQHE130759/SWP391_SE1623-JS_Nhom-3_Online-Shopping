@@ -37,9 +37,9 @@
                             <div class="login-form"><!--login form-->
                                 <h2>Login to your account</h2>
                                 <form action="${pageContext.request.contextPath}/Login" method="POST">
-                                <label>Name*</label>
+                                <label>Name(*)</label>
                                 <input type="text" required placeholder="Name" name="username"  pattern="\S(.*\S)?" />
-                                <label>Password*</label>
+                                <label>Password(*)</label>
                                 <input type="password" required placeholder="Password" name="password" />
                                 <button type="submit" class="btn btn-default">Login</button>
                             </form>

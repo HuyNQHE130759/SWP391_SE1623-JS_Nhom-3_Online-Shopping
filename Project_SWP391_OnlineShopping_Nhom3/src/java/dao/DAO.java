@@ -60,12 +60,18 @@ public class DAO extends DBContext {
                 u.setPassword(rs.getString("password"));
                 u.setStatus(rs.getBoolean("status"));
                 u.setEmail(rs.getString("email"));
-                if (username.equals(rs.getString("username")) && pass.equals(rs.getString("password"))) {
+                if (username.equalsIgnoreCase(rs.getString("username")) && pass.equals(rs.getString("password"))) {
                     ul.add(u);
                 }
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Close connection error " + e.getMessage());
+            }
         }
 
         return ul;
@@ -112,7 +118,7 @@ public class DAO extends DBContext {
             String strSelect = " select * from [Coupon] where Code = '" + code + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                return new Coupon(rs.getString(1), rs.getDouble(2));
+                return new Coupon(rs.getString(1), rs.getFloat(2));
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
@@ -223,9 +229,15 @@ public class DAO extends DBContext {
 
         //System.out.println(p_pid);
         try {
-            rs = state.executeQuery("INSERT INTO [dbo].[User]([fullName],[address] ,[phone] ,[username],[password],[status],[email],[gender],[roleid]) VALUES ('" + cname + "' ,'" + caddress + "' ,'" + cphone + "','" + cusname + "','" + cpassword + "','" + cstatus + "','" + email + "','" + gender + "','" + 1 + "')");
+            rs = state.executeQuery("INSERT INTO [dbo].[User]([fullName],[address] ,[phone] ,[username],[password],[status],[email],[gender],[roleid]) VALUES (N'" + cname + "' ,N'" + caddress + "' ,'" + cphone + "',N'" + cusname + "','" + cpassword + "','" + cstatus + "','" + email + "','" + gender + "','" + 1 + "')");
         } catch (Exception e) {
             System.out.println("Error Customer " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Close connection error " + e.getMessage());
+            }
         }
 
     }
@@ -381,12 +393,12 @@ public class DAO extends DBContext {
 
     }
 
-    public void insertCheckout(Cart cart, String name, String address, String phone) {
+    public void insertCheckout(Cart cart, String name, String address, String phone,User user,String discountTotal) {
 
         //System.out.println(p_pid);
         try {
             state.executeUpdate("  insert into Bill ([dateCreate] ,[total],[recName],[recAddress],[recPhone] ,[status],[cid])\n"
-                    + "  values (getdate(),'" + cart.getTotalBill() + "','" + name + "','" + address + "','" + phone + "',1,1)");
+                    + "  values (getdate(),'" + discountTotal + "',N'" + name + "',N'" + address + "','" + phone + "',1,"+user.getCid()+")");
         } catch (Exception e) {
             System.out.println("Error insert bill " + e.getMessage());
         }
@@ -396,16 +408,22 @@ public class DAO extends DBContext {
             if (rs.next()) {
                 int bid = rs.getInt(1);
                 for (CartItem item : cart.getItems()) {
-                    System.out.println("insert [BillDetail] ([bid],[pid] ,[quantity],[price]) values ('"+bid+"','"+item.getProduct().getPid()+"','"+item.getQuantity()+"','"+item.getProduct().getPrice()+"')");
-                    state.executeUpdate("insert [BillDetail] ([bid],[pid] ,[quantity],[price]) values ('"+bid+"','"+item.getProduct().getPid()+"','"+item.getQuantity()+"','"+item.getProduct().getPrice()+"')");
-                
+                    System.out.println("insert [BillDetail] ([bid],[pid] ,[quantity],[price]) values ('" + bid + "','" + item.getProduct().getPid() + "','" + item.getQuantity() + "','" + item.getProduct().getPrice() + "')");
+                    state.executeUpdate("insert [BillDetail] ([bid],[pid] ,[quantity],[price]) values ('" + bid + "','" + item.getProduct().getPid() + "','" + item.getQuantity() + "','" + item.getProduct().getPrice() + "')");
+
                 }
             }
-             for (CartItem item : cart.getItems()) {
-                state.executeUpdate("  update [Product] set [quantity] = [quantity] - "+item.getQuantity()+" where [pid] = " + item.getProduct().getPid());
+            for (CartItem item : cart.getItems()) {
+                state.executeUpdate("  update [Product] set [quantity] = [quantity] - " + item.getQuantity() + " where [pid] = " + item.getProduct().getPid());
             }
         } catch (Exception e) {
             System.out.println("Error Product " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Close connection error " + e.getMessage());
+            }
         }
     }
 
@@ -528,6 +546,12 @@ public class DAO extends DBContext {
                     + " WHERE cid = '" + cid + "'");
         } catch (SQLException e) {
             System.out.println("Error ProductUp " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Close connection error " + e.getMessage());
+            }
         }
     }
 

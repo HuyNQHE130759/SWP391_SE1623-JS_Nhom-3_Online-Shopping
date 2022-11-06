@@ -7,6 +7,7 @@ package controller;
 
 import dao.DAO;
 import entity.Cart;
+import entity.Coupon;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,12 +61,31 @@ public class CheckOutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         if (session.getAttribute("user") == null) {
             response.sendRedirect("Login");
         } else {
+            String code = request.getParameter("code");
             DAO dao = new DAO();
-//            request.setAttribute("plist", plist);
+            Coupon coupon = dao.getCoupon(code);
+            Object object = session.getAttribute("user");
+            Object object1 = session.getAttribute("cart");
+            User user = (User) object;
+            Cart cart = (Cart) object1;
+            if (coupon == null) {
+                float discountTotal = cart.getTotalBill();
+                request.setAttribute("discountTotal", discountTotal);
+                request.setAttribute("discount", 0);
+
+            } else {
+                float discountTotal = cart.getTotalBill() * (100 - Float.valueOf(coupon.getDiscount())) / 100;
+                request.setAttribute("discount", coupon.getDiscount());
+
+                request.setAttribute("discountTotal", discountTotal);
+            }
+
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
     }
@@ -84,16 +104,16 @@ public class CheckOutController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        Object object = session.getAttribute("account");
+        Object object = session.getAttribute("user");
         Object object1 = session.getAttribute("cart");
-        String notes = request.getParameter("notes");
-        User u = (User) object;
+        User user = (User) object;
         Cart cart = (Cart) object1;
         DAO dao = new DAO();
-        String Name = request.getParameter("Name");
-        String Address = request.getParameter("Address");
-        String Phone = request.getParameter("Phone");
-        dao.insertCheckout(cart, Name, Address, Phone);
+        String discountTotal = request.getParameter("discountTotal");
+        String Name = request.getParameter("Name").trim();
+        String Address = request.getParameter("Address").trim();
+        String Phone = request.getParameter("Phone").trim();
+        dao.insertCheckout(cart, Name, Address, Phone, user, discountTotal);
         try ( PrintWriter out = response.getWriter()) {
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Your purchase has been submited!!');");
