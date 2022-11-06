@@ -79,13 +79,13 @@ public class LoginController extends HttpServlet {
                 //request.getSession().setAttribute("error", "Login Successfully!!");
                 request.getSession().setAttribute("user", ul.get(i));
                 //request.getSession().setAttribute("error", "Login successful!");
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<script type=\"text/javascript\">");
-                    out.println("alert('Login successful!');");
-                    out.println("location='" + request.getContextPath() + "/HomePage';");
-                    out.println("</script>");
-                }
-                //response.sendRedirect(request.getContextPath() + "/Status");
+//                try (PrintWriter out = response.getWriter()) {
+//                    out.println("<script type=\"text/javascript\">");
+//                    out.println("alert('Login successful!');");
+//                    out.println("location='" + request.getContextPath() + "/HomePage';");
+//                    out.println("</script>");
+//                }
+                response.sendRedirect(request.getContextPath() + "/HomePage");
             }
         }
         if (ul.size() <= 0) {

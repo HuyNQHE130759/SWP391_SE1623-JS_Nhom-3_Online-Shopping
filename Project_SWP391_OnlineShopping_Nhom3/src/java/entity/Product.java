@@ -7,7 +7,7 @@ package entity;
 
 
 public class Product {
-    private String pid;
+    private int pid;
     private String pname;
     private int quantity;
     private double price;
@@ -15,12 +15,13 @@ public class Product {
     private String description;
     private boolean status;
     private String cateId;
-
+    private Category category;
+    private Provider provider;
     
     public Product() {
     }
 
-    public Product(String pid, String pname, int quantity, double price, String image, String description, boolean status, String cateId) {
+    public Product(int pid, String pname, int quantity, double price, String image, String description, boolean status, String cateId) {
         this.pid = pid;
         this.pname = pname;
         this.quantity = quantity;
@@ -31,13 +32,29 @@ public class Product {
         this.cateId = cateId;
     }
 
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
 
-    public String getPid() {
+
+    public int getPid() {
         return pid;
     }
 
-    public void setPid(String pid) {
+    public void setPid(int pid) {
         this.pid = pid;
     }
 

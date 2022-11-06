@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.Admin;
+package controller.admin;
 
 import controller.BasedRequiredAuthenticationController1;
 import dao.DAO;
@@ -58,7 +58,7 @@ public class RemoveProduct extends BasedRequiredAuthenticationController1 {
         String pid = request.getParameter("pid");
         DAO dao = new DAO();
         dao.removeProduct(pid);
-        response.sendRedirect(request.getContextPath() + "/AdminConsole");
+        response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
     }
 
     /**

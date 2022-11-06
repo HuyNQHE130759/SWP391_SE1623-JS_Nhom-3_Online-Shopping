@@ -72,7 +72,7 @@
                                         <span>US $<%=pl.get(i).getPrice()%></span>
 
                                         <%if (us != null) { %>
-                                        <form action="${pageContext.request.contextPath}/Cart"  method="POST">
+                                        <form action="${pageContext.request.contextPath}/AddToCart"  method="POST">
                                             <label>Quantity:</label>
                                             <input type="number" name="quantity" min="1"  value="0" />
 

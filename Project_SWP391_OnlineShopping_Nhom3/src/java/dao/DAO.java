@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Bill;
+import entity.Cart;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -13,17 +14,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-import entity.Cart;
+import entity.CartDB;
+import entity.CartItem;
 import entity.Category;
 import entity.CheckOut;
+import entity.Coupon;
 import entity.Product;
 import entity.Provider;
 import entity.Review;
 import entity.User;
+import entity.Voucher;
+import java.util.List;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 public class DAO extends DBContext {
 
     private Connection con;
@@ -33,7 +36,7 @@ public class DAO extends DBContext {
     public DAO() {
         connect();
     }
-
+    
     public void connect() {
         try {
             con = (new DBContext().connection);
@@ -48,7 +51,7 @@ public class DAO extends DBContext {
         User u = new User();
         ArrayList<User> ul = new ArrayList<>();
         try {
-            String strSelect = "select * from dbo.[User] where username = '" + username + "' and password='" + pass + "' and status = 1";
+            String strSelect = "select * from dbo.[User] where status = 1";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
                 u.setCid(rs.getInt("cid"));
@@ -59,7 +62,9 @@ public class DAO extends DBContext {
                 u.setPassword(rs.getString("password"));
                 u.setStatus(rs.getBoolean("status"));
                 u.setEmail(rs.getString("email"));
-                ul.add(u);
+                if (username.equals(rs.getString("username")) && pass.equals(rs.getString("password"))) {
+                    ul.add(u);
+                }
             }
         } catch (Exception e) {
             System.out.println("Error user: " + e.getMessage());
@@ -102,6 +107,20 @@ public class DAO extends DBContext {
         }
 
         return cl;
+    }
+
+    public Coupon getCoupon(String code) {
+        try {
+            String strSelect = " select * from [Coupon] where Code = '" + code + "'";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                return new Coupon(rs.getString(1), rs.getDouble(2));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+
+        return null;
     }
 
     public ArrayList getProvider() {
@@ -319,23 +338,6 @@ public class DAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        String sql = "INSERT INTO [dbo].[Review]\n"
-                + "           ([reviewid]\n"
-                + "           ,[cid]\n"
-                + "           ,[pid]\n"
-                + "           ,[user_comment]\n"
-                + "           ,[user_rating]\n"
-                + "           ,[user_timecomment])\n"
-                + "     VALUES\n"
-                + "           (" + 1 + ""
-                + "           ," + 1 + ""
-                + "           ,'" + 1 + "'"
-                + "           ,'" + 1 + "'"
-                + "           ,'" + 1 + "')";
-        System.out.println(sql);
-    }
-
     public ArrayList<Review> getListReview(String pid) {
         ArrayList<Review> rl = new ArrayList();
         try {
@@ -413,18 +415,18 @@ public class DAO extends DBContext {
     }
 
     public ArrayList getCartbyUser(int cid) {
-        Cart c = new Cart();
-        ArrayList<Cart> cl = new ArrayList<>();
+        CartDB c = new CartDB();
+        ArrayList<CartDB> cl = new ArrayList<>();
         try {
             String strSelect = "select * from Cart where cid = '" + cid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                c.setcID(rs.getInt("CartId"));
-                c.setCuID(rs.getInt("cid"));
-                c.setpID(rs.getString("pid"));
-                c.setpQuantity(rs.getInt("pQuantity"));
+                c.setcID(rs.getInt(1));
+                c.setCuID(rs.getInt(2));
+                c.setpID(rs.getString(3));
+                c.setpQuantity(rs.getInt(4));
 
-                cl.add(new Cart(c.getcID(), c.getCuID(), c.getpID(), c.getpQuantity()));
+                cl.add(new CartDB(c.getcID(), c.getCuID(), c.getpID(), c.getpQuantity()));
 
             }
         } catch (Exception e) {
@@ -512,23 +514,29 @@ public class DAO extends DBContext {
 
     }
 
-    public void insertCheckout(int cid, Date createDate, double totalPrice) {
+    public void insertCheckout(Cart cart, String name, String address, String phone) {
 
         //System.out.println(p_pid);
         try {
-            rs = state.executeQuery("INSERT INTO [dbo].[CheckOut]\n"
-                    + "           ([Cid]\n"
-                    + "           ,[CreateDate]\n"
-                    + "           ,[TotalPrice])\n"
-                    + "     VALUES\n"
-                    + "           ('" + cid + "'\n"
-                    + "           ,'" + createDate + "'\n"
-                    + "           ,'" + totalPrice + "')");
+            state.executeUpdate("  insert into Bill ([dateCreate] ,[total],[recName],[recAddress],[recPhone] ,[status],[cid])\n"
+                    + "  values (getdate(),'" + cart.getTotalBill() + "','" + name + "','" + address + "','" + phone + "',1,1)");
         } catch (Exception e) {
-            System.out.println("Error Customer " + e.getMessage());
+            System.out.println("Error insert bill " + e.getMessage());
         }
         try {
-            rs = state.executeQuery("DELETE FROM [dbo].[Cart] CustomerID = '" + cid + "'");
+
+            rs = state.executeQuery("select top 1 * from Bill order by [bid] desc");
+            if (rs.next()) {
+                int bid = rs.getInt(1);
+                for (CartItem item : cart.getItems()) {
+                    System.out.println("insert [BillDetail] ([bid],[pid] ,[quantity],[price]) values ('"+bid+"','"+item.getProduct().getPid()+"','"+item.getQuantity()+"','"+item.getProduct().getPrice()+"')");
+                    state.executeUpdate("insert [BillDetail] ([bid],[pid] ,[quantity],[price]) values ('"+bid+"','"+item.getProduct().getPid()+"','"+item.getQuantity()+"','"+item.getProduct().getPrice()+"')");
+                
+                }
+            }
+             for (CartItem item : cart.getItems()) {
+                state.executeUpdate("  update [Product] set [quantity] = [quantity] - "+item.getQuantity()+" where [pid] = " + item.getProduct().getPid());
+            }
         } catch (Exception e) {
             System.out.println("Error Product " + e.getMessage());
         }
@@ -619,6 +627,11 @@ public class DAO extends DBContext {
         return p;
     }
 
+    public static void main(String[] args) {
+        DAO dao = new DAO();
+        System.out.println(dao.getProductById("1").toString());
+    }
+
     public ArrayList getCheckout() {
         CheckOut c = new CheckOut();
         ArrayList<CheckOut> cl = new ArrayList<>();
@@ -674,6 +687,7 @@ public class DAO extends DBContext {
     }
 
     public ArrayList<User> getListUser(String role, String status, String sort) {
+
         ArrayList<User> list = new ArrayList<>();
         try {
             // query to get all User from DB
@@ -901,4 +915,54 @@ public class DAO extends DBContext {
         }
     }
 
+    public ArrayList<Voucher> getVoucherList() {
+        try {
+            ArrayList<Voucher> list = new ArrayList<>();
+            String query = "select * from Voucher";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rslt = ps.executeQuery();
+            while (rslt.next()) {
+                Voucher v = new Voucher();
+                v.setId(rslt.getInt("id"));
+                v.setCode(rslt.getString("code"));
+                v.setDiscount(rslt.getInt("discount"));
+                v.setDescription(rslt.getString("description"));
+                v.setTimeEnd(rslt.getDate("time_end"));
+                list.add(v);
+            }
+            return list;
+        } catch (SQLException e) {
+
+        }
+        return null;
+    }
+
+    public void addNewVoucher(Voucher v) throws SQLException {
+        try {
+            String query = "Insert into [Voucher] values (?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, v.getCode());
+            ps.setInt(2, v.getDiscount());
+            ps.setString(3, v.getDescription());
+            ps.setDate(4, v.getTimeEnd());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    public boolean voucherCodeIsExist(String voucher) throws SQLException {
+        try {
+            String query = "Select count(*) as num from Voucher where code = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, voucher);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString("num")) > 0;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        return false;
+    }
 }

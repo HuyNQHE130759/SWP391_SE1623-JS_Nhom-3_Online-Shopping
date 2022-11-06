@@ -10,7 +10,7 @@
     </head>
     <body>
         <%ArrayList<Category> cal = (ArrayList<Category>) request.getAttribute("categoryList");%>
-        
+        <jsp:include page="header.jsp"></jsp:include>
 
         <form action="${pageContext.request.contextPath}/UpdateProduct" method="POST">
             Product Name: <input type="text" name="name" value="<%= ((Product) request.getAttribute("product")).getPname()%>"><br/>
@@ -19,7 +19,7 @@
             Price: <input type="number" name="money" value="<%= (int) ((Product)request.getAttribute("product")).getPrice()%>">><br/>
             Image: <input type="text" name="Image" value="<%= ((Product) request.getAttribute("product")).getImage()%>"><br/>
             Description: <input type="text" name="description" value="<%= ((Product) request.getAttribute("product")).getDescription()%>"><br/>
-            Status: <input type="checkbox" name="status" <%if (((Product) request.getAttribute("product")).isStatus()== true) {%> checked="checked" <%}%> > <br/>
+            Status: <input type="checkbox" value="1" name="status" <%if (((Product) request.getAttribute("product")).isStatus()== true) {%> checked="checked" <%}%> > <br/>
             CateID: <select name ="cateID">                
                 <%for (int i = 0; i < cal.size(); i++) {%>          
                 <option value="<%=cal.get(i).getCateId()%>"><%=cal.get(i).getCateId()%>-<%=cal.get(i).getCateName() %></option> 
@@ -29,5 +29,6 @@
             <input type="hidden" name="pid" value="<%=request.getParameter("pid")%>">
             <input type="submit" name="save" value="save"> 
         </form>
+        <jsp:include page="footer.jsp"></jsp:include>    
     </body>
 </html>
