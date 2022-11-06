@@ -62,7 +62,8 @@ public class ResetPasswordController extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * Get parameter email and call method resetCustomerPassword then send an
+     * email to alter to user new password.
      *
      * @param request servlet request
      * @param response servlet response
@@ -72,7 +73,8 @@ public class ResetPasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String recipient = request.getParameter("email");
+
+        String recipient = request.getParameter("email").trim();
         String subject = "Your Password has been reset";
         CustomerServices customerServices = new CustomerServices();
         String newPassword = customerServices.resetCustomerPassword(recipient);
@@ -92,7 +94,7 @@ public class ResetPasswordController extends HttpServlet {
             } catch (Exception ex) {
                 ex.printStackTrace();
                 message = "There were an error: " + ex.getMessage();
-            }  finally {
+            } finally {
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("ResetPassword.jsp").forward(request, response);
             }

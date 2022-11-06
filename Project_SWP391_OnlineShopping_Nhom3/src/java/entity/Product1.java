@@ -6,7 +6,7 @@
 package entity;
 
 
-public class Product {
+public class Product1 {
     private int pid;
     private String pname;
     private int quantity;
@@ -18,10 +18,10 @@ public class Product {
     private Category1 category;
     private Provider provider;
     
-    public Product() {
+    public Product1() {
     }
 
-    public Product(int pid, String pname, int quantity, double price, String image, String description, boolean status, String cateId) {
+    public Product1(int pid, String pname, int quantity, double price, String image, String description, boolean status, String cateId) {
         this.pid = pid;
         this.pname = pname;
         this.quantity = quantity;

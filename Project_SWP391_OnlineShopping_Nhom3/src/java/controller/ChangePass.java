@@ -29,7 +29,7 @@ public class ChangePass extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -59,7 +59,8 @@ public class ChangePass extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * this method allow to get parameter form user and update new pass to
+     * database
      *
      * @param request servlet request
      * @param response servlet response
@@ -73,20 +74,21 @@ public class ChangePass extends HttpServlet {
         DAO dao = new DAO();
 
         HttpSession session = request.getSession();
-        String oldpass = request.getParameter("oldpass");
-        String newpass = request.getParameter("newpass");
-        String renewpass = request.getParameter("renewpass");
+        String oldpass = request.getParameter("oldpass").trim();
+        String newpass = request.getParameter("newpass").trim();
+        String renewpass = request.getParameter("renewpass").trim();
         User u = (User) session.getAttribute("user");
+        //check old password match or not
         if (!oldpass.equals(u.getPassword())) {
             request.setAttribute("mess", "Old Password not match!");
             request.getRequestDispatcher("Changepassword.jsp").forward(request, response);
-        } else if (!newpass.equals(renewpass)) {
+        } else if (!newpass.equals(renewpass)) {//check confirm password ok or not
             request.setAttribute("mess", "New password not match wwith re password");
             request.getRequestDispatcher("Changepassword.jsp").forward(request, response);
         } else {
             dao.changePassword(u.getCid(), newpass);
             us.setPassword(newpass);
-            try (PrintWriter out = response.getWriter()) {
+            try ( PrintWriter out = response.getWriter()) {
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Password change successful!');");
                 out.println("location='" + request.getContextPath() + "/HomePage';");

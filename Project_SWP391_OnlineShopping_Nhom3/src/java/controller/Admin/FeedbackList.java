@@ -8,7 +8,7 @@ import dao.FeedbackDAO;
 import dao.ProductDAO;
 import dao.UserDAO;
 import entity.Feedback;
-import entity.Product;
+import entity.Product1;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,6 +28,7 @@ public class FeedbackList extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      * Use to process get feedback list and filter
+     * Each product have status, id, rating so we have to set attribute all of them to show them on the list
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -41,7 +42,7 @@ public class FeedbackList extends HttpServlet {
         String rating = request.getParameter("rating")==null?"":request.getParameter("rating");
         String pageindex = request.getParameter("pageindex")==null||"".equals(request.getParameter("pageindex"))?"1":request.getParameter("pageindex");
         ProductDAO pdao = new ProductDAO();
-        ArrayList<Product> pl = pdao.getAllProduct(1, 999999);
+        ArrayList<Product1> pl = pdao.getAllProduct(1, 999999);
         FeedbackDAO fdao = new FeedbackDAO();
         ArrayList<User> ul = fdao.getAllUser(1, 999999);
         ArrayList<Feedback> fl = fdao.getAllFeedback(status, pid, rating, Integer.valueOf(pageindex), 9);

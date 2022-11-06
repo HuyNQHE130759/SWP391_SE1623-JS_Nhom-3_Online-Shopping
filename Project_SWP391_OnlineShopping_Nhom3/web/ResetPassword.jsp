@@ -45,7 +45,7 @@
                                 <!-- .form-header-->
                                 <div class="form-body">
                                     <div class="mv-form-group">
-                                        <div class="mv-label"> Email</div>
+                                        <div class="mv-label"> Email(*)</div>
                                         <div class="mv-field">
                                             <input type="email" name="email" class="mv-inputbox mv-inputbox-style-1"/>
                                         </div>

@@ -4,7 +4,7 @@
  */
 package dao;
 
-import entity.Product;
+import entity.Product1;
 import java.util.ArrayList;
 
 /**
@@ -13,18 +13,20 @@ import java.util.ArrayList;
  */
 public interface ProductDAOInterface {
     
-    public ArrayList<Product> getAllProduct();
+    public ArrayList<Product1> getAllProduct();
 
-    public ArrayList<Product> getAllProduct(Integer pageindex, Integer pagesize);
+    public ArrayList<Product1> getAllProduct(Integer pageindex, Integer pagesize);
 
-    public ArrayList<Product> getAllProduct(String sort, Integer cateId, Integer provider_id, Boolean status, String search, Integer pageindex, Integer pagesize);
+    public ArrayList<Product1> getAllProduct(String sort, Integer cateId, Integer provider_id, Boolean status, String search, Integer pageindex, Integer pagesize);
 
     public int count();
     
-    public void insert(String pname, String img, float price, String description, boolean status, int cateID);
+    public void insert(String pname, String img, float price, String description, boolean status, int cateID, int pvid);
     
-    public void update(Integer pid, String pname, String img, float price, String description, boolean status, int cateID);
+    public void update(Integer pid, String pname, String img, float price, String description, boolean status, int cateID, int pvid);
     
-    public Product getProductById(int pid);
+    public Product1 getProductById(Integer pid);
+    
+    public boolean isExisted(String pname);
     
 }

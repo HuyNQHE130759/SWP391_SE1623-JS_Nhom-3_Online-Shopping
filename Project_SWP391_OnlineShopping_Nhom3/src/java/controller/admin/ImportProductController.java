@@ -8,7 +8,7 @@ import dao.ImportDAO;
 import dao.ImportDAOInterface;
 import dao.ProductDAO;
 import dao.ProductDAOInterface;
-import entity.Product;
+import entity.Product1;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -46,7 +46,7 @@ public class ImportProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String raw_pid = request.getParameter("did");
+        String raw_pid = request.getParameter("did").trim();
         request.setAttribute("pid", raw_pid);
         request.setAttribute("products", productDAO.getAllProduct());
         request.getRequestDispatcher("../ImportProduct.jsp").forward(request, response);
@@ -63,11 +63,11 @@ public class ImportProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String raw_pid = request.getParameter("pid");
-        String raw_quantity = request.getParameter("quantity");
+        String raw_pid = request.getParameter("product").trim();
+        String raw_quantity = request.getParameter("quantity").trim();
         int quantity = Integer.parseInt(raw_quantity);
         Integer pid = (raw_pid != null && raw_pid.length() > 0) ? new Integer(raw_pid) : null;
-        Product pd = productDAO.getProductById(pid);
+        Product1 pd = productDAO.getProductById(pid);
         Date date = Date.valueOf(LocalDate.now());
         importDAO.insert(pd, pd.getProvider(), quantity, date);
         response.sendRedirect(request.getContextPath() + "/Import/list");

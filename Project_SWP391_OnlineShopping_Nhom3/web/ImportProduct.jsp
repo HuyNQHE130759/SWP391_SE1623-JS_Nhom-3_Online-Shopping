@@ -25,7 +25,7 @@
             <div class="container" style="margin-top: 16px;">
                 <form method="post" action="/Import/detail" style="margin: auto; width: 50%">
                     <div class="form-group">
-                        <label for="pname">Product:</label>
+                        <label for="pname">Product:<i style="color: red;">*</i></label>
                         <select class="form-control" name="product">
                             <c:forEach items="${requestScope.products}" var="p">
                                 <option value="${p.pid}" <c:if test="${requestScope.pid eq p.pid}">selected="selected"</c:if>>${p.pname}</option>
@@ -33,8 +33,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="address">Quantity:</label>
-                        <input type="number" class="form-control" name="quantity" placeholder="Quantitry" value="${requestScope.quantity}">
+                        <label for="address">Quantity:<i style="color: red;">*</i></label>
+                        <input type="number" class="form-control" name="quantity" placeholder="Quantity" min="1" required="true" value="${requestScope.quantity}">
                     </div>
                     <c:if test="${flag == false}">
                         <small id="error" class="form-text" style="color: red">${msg}</small>

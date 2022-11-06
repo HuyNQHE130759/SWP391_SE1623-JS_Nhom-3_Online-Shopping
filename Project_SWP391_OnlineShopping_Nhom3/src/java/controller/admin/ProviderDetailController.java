@@ -6,6 +6,7 @@
 package controller.admin;
 
 import dao.ProviderDAO;
+import entity.Provider;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -55,14 +56,31 @@ public class ProviderDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String raw_pid = request.getParameter("pid");
-        String raw_pname = request.getParameter("pname");
-        String raw_email = request.getParameter("email");
-        String raw_address = request.getParameter("address");
-        String raw_status = request.getParameter("status");
+        String raw_pid = request.getParameter("pid").trim();
+        String raw_pname = request.getParameter("pname").trim();
+        String raw_email = request.getParameter("email").trim();
+        String raw_address = request.getParameter("address").trim();
+        String raw_status = request.getParameter("status").trim();
         boolean status = raw_status.equals("1")?true:false;
+        String msg = "";
+        boolean flag = true;
         Integer pid = (raw_pid !=null && raw_pid.length()>0)?new Integer(raw_pid):null;
         if (pid == null) {
+            if (providerDAO.isExisted(raw_pname)) {
+                msg = "This category name has already existed!!!";
+                flag = false;
+            }
+            if (!flag) {
+                Provider pv = new Provider();
+                pv.setProvider_id(pid);
+                pv.setProvider_name(raw_pname);
+                pv.setProvider_email(raw_email);
+                pv.setStatus(status);
+                request.setAttribute("provider", pv);
+                request.setAttribute("flag", flag);
+                request.setAttribute("msg", msg);
+                request.getRequestDispatcher("../ProviderDetail.jsp").forward(request, response);
+            }
             providerDAO.insert(raw_pname, raw_email, raw_address, status);
         }else{
             providerDAO.update(pid, raw_pname, raw_email, raw_address, status);

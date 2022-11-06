@@ -4,7 +4,7 @@
  */
 package dao;
 
-import entity.Category;
+import entity.Category1;
 import java.util.ArrayList;
 
 /**
@@ -12,11 +12,11 @@ import java.util.ArrayList;
  * @author apc
  */
 public interface CategoryDAOInterface {
-    public ArrayList<Category> getAllCategory();
+    public ArrayList<Category1> getAllCategory();
     
-    public ArrayList<Category> getAllCategory(Integer pageindex, Integer pagesize);
+    public ArrayList<Category1> getAllCategory(Integer pageindex, Integer pagesize);
     
-    public ArrayList<Category> getAllCategory(String sort, Boolean status, String search, Integer pageindex, Integer pagesize);
+    public ArrayList<Category1> getAllCategory(String sort, Boolean status, String search, Integer pageindex, Integer pagesize);
     
     public int count();
     
@@ -24,5 +24,7 @@ public interface CategoryDAOInterface {
     
     public void update(int cid, String cname, String img, boolean status);
     
-    public Category getCategory(Integer cid);
+    public Category1 getCategory(Integer cid);
+    
+    public boolean isExisted(String cname);
 }

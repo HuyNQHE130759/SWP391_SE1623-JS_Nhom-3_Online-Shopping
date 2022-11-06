@@ -148,6 +148,10 @@
         <servlet-name>ImportProductController</servlet-name>
         <servlet-class>controller.admin.ImportProductController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangeCartQuantity</servlet-name>
+        <servlet-class>controller.ChangeCartQuantity</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -291,6 +295,10 @@
     <servlet-mapping>
         <servlet-name>ImportProductController</servlet-name>
         <url-pattern>/Import/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeCartQuantity</servlet-name>
+        <url-pattern>/ChangeCartQuantity</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

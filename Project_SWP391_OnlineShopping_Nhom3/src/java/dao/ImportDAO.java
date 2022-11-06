@@ -5,7 +5,7 @@
 package dao;
 
 import entity.Import;
-import entity.Product;
+import entity.Product1;
 import entity.Provider;
 import java.sql.Connection;
 import java.sql.Date;
@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +44,7 @@ public class ImportDAO implements ImportDAOInterface {
             while (rs.next()) {
                 Import imp = new Import();
                 imp.setImportId(rs.getInt("importid"));
-                Product pd = new Product();
+                Product1 pd = new Product1();
                 pd.setPid(rs.getInt("pid"));
                 imp.setProduct(pd);
                 Provider pv = new Provider();
@@ -84,7 +85,7 @@ public class ImportDAO implements ImportDAOInterface {
             while (rs.next()) {
                 Import imp = new Import();
                 imp.setImportId(rs.getInt("importid"));
-                Product pd = new Product();
+                Product1 pd = new Product1();
                 pd.setPid(rs.getInt("pid"));
                 pd.setPname(rs.getString("pname"));
                 imp.setProduct(pd);
@@ -117,23 +118,23 @@ public class ImportDAO implements ImportDAOInterface {
                 + "  left join [Product] b on b.pid = a.pid"
                 + "  left join [Provider] c on a.provider_id = c.provider_id where 1=1 ";
         if (provider_id != null) {
-            sql += " and c.provider_id = ? ";
+            sql += " and c.[provider_id] = ? ";
             index++;
             params.put(index, provider_id);
         }
         if (from != null) {
-            sql += " and a.date >= ? ";
+            sql += " and a.[date]] >= ? ";
             index++;
             params.put(index, from);
         }
         if (to != null) {
-            sql += " and a.date <= ? ";
+            sql += " and a.[date] <= ? ";
             index++;
             params.put(index, to);
         }
         if (search != null) {
             search = "%" + search + "%";
-            sql += " and (b.pname like ? or c.provider_name like ?) ";
+            sql += " and (b.[pname] like ? or c.[provider_name] like ?) ";
             index++;
             params.put(index, search);
             index++;
@@ -153,14 +154,17 @@ public class ImportDAO implements ImportDAOInterface {
         try {
             connection = (new DBContext().connection);
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, pageindex);
-            ps.setInt(2, pagesize);
-            ps.setInt(3, pagesize);
+            System.out.println(sql);
+            for (Map.Entry<Integer, Object> entry : params.entrySet()) {
+                Integer position = entry.getKey();
+                Object value = entry.getValue();
+                ps.setObject(position, value);
+            }
             rs = ps.executeQuery();
             while (rs.next()) {
                 Import imp = new Import();
                 imp.setImportId(rs.getInt("importid"));
-                Product pd = new Product();
+                Product1 pd = new Product1();
                 pd.setPid(rs.getInt("pid"));
                 pd.setPname(rs.getString("pname"));
                 imp.setProduct(pd);
@@ -181,6 +185,7 @@ public class ImportDAO implements ImportDAOInterface {
                 Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        System.out.println("Import size: " +list.size());
         return list;
     }
 
@@ -208,21 +213,21 @@ public class ImportDAO implements ImportDAOInterface {
     }
 
     @Override
-    public void insert(Product product, Provider provider, Integer quantity, Date date) {
+    public void insert(Product1 product, Provider provider, Integer quantity, Date date) {
         try {
             connection = (new DBContext().connection);
             connection.setAutoCommit(false);
             String sql = "INSERT INTO [Import History]([pid],[provider_id],[quantity],[date])"
-                    + "     VALUES(?,?,?,?,?)";
+                    + "     VALUES(?,?,?,?)";
             ps = connection.prepareStatement(sql);
             ps.setInt(1, product.getPid());
             ps.setInt(2, provider.getProvider_id());
             ps.setInt(3, quantity);
             ps.setDate(4, date);
             ps.executeUpdate();
-            String add_quantity_sql = "UPDATE Product"
-                    + "SET quantity = quantity + ?"
-                    + "WHERE pid = ?";
+            String add_quantity_sql = "UPDATE [Product] "
+                    + "SET [quantity] = [quantity] + ? "
+                    + "WHERE [pid] = ? ";
             PreparedStatement ps_quantity = connection.prepareStatement(add_quantity_sql);
             ps_quantity.setInt(1, quantity);
             ps_quantity.setInt(2, product.getPid());
@@ -262,7 +267,7 @@ public class ImportDAO implements ImportDAOInterface {
             rs = ps.executeQuery();
             while (rs.next()) {
                 imp.setImportId(rs.getInt("importid"));
-                Product pd = new Product();
+                Product1 pd = new Product1();
                 pd.setPid(rs.getInt("pid"));
                 imp.setProduct(pd);
                 Provider pv = new Provider();

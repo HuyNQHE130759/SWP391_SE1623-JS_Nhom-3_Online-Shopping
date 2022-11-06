@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -68,22 +69,22 @@ public class ImportHistoryController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String sort = request.getParameter("sort");
-        String raw_provider = request.getParameter("provider");
-        String raw_from = request.getParameter("from");
-        String raw_to = request.getParameter("to");
-        String raw_search = request.getParameter("search");
+        String sort = request.getParameter("sort").trim();
+        String raw_provider = request.getParameter("provider").trim();
+        String raw_from = request.getParameter("from").trim();
+        String raw_to = request.getParameter("to".trim());
+        String raw_search = request.getParameter("search").trim();
         int pagesize = Integer.parseInt(getServletContext().getInitParameter("PAGE_SIZE"));
         String raw_page = request.getParameter("page");
         if(raw_page ==null)
             raw_page = "1";
         int pageindex = Integer.parseInt(raw_page);
         Integer provider = (raw_provider !=null && raw_provider.length()>0)?new Integer(raw_provider):null;
+        System.out.println(raw_provider);
         String search = (raw_search !=null && raw_search.length()>0)?raw_search:null;
-        Date from = Date.valueOf(raw_from);
-        Date to = Date.valueOf(raw_to);
-        ProductDAO productDAO = new ProductDAO();
-        int count = productDAO.count();
+        Date from = (raw_from !=null && raw_from.length()>0)?Date.valueOf(raw_from):null;
+        Date to = (raw_to !=null && raw_to.length()>0)?Date.valueOf(raw_to):null;
+        int count = importDAO.count();
         int totalpage = (count%pagesize ==0)?count/pagesize:count/pagesize + 1;
         request.setAttribute("sort", sort);
         request.setAttribute("provider", raw_provider);
@@ -93,7 +94,7 @@ public class ImportHistoryController extends HttpServlet {
         request.setAttribute("pageindex", pageindex);
         request.setAttribute("totalpage", totalpage);
         request.setAttribute("providers", providerDAO.getAllProvider());
-        request.setAttribute("products", importDAO.getAllImport(sort, provider, from, to, search, pageindex, pagesize));
+        request.setAttribute("imports", importDAO.getAllImport(sort, provider, from, to, search, pageindex, pagesize));
         request.getRequestDispatcher("../ImportHistory.jsp").forward(request, response);
     }
 

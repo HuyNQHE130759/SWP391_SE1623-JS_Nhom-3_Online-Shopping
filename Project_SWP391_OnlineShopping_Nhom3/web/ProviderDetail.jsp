@@ -29,19 +29,19 @@
                         <input type="text" class="form-control" name="pid" placeholder="Provider ID" readonly="readonly" value="${requestScope.pid}">
                     </div>
                     <div class="form-group">
-                        <label for="pname">Provider Name:</label>
-                        <input type="text" class="form-control" name="pname" placeholder="Provider Name" required="true" value="${requestScope.provider.provider_name}">
+                        <label for="pname">Provider Name:<i style="color: red;">*</i></label>
+                        <input type="text" class="form-control" name="pname" placeholder="Provider Name" required="true" maxlength="50" value="${requestScope.provider.provider_name}">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="text" class="form-control" name="email" placeholder="Email" required="true" value="${requestScope.provider.provider_email}">
+                        <label for="email">Email:<i style="color: red;">*</i></label>
+                        <input type="text" class="form-control" name="email" placeholder="Email" required="true" maxlength="50" value="${requestScope.provider.provider_email}">
                     </div>
                     <div class="form-group">
-                        <label for="address">Address:</label>
-                        <input type="text" class="form-control" name="address" placeholder="Address" required="true" value="${requestScope.provider.provider_address}">
+                        <label for="address">Address:<i style="color: red;">*</i></label>
+                        <input type="text" class="form-control" name="address" placeholder="Address" required="true" maxlength="50" value="${requestScope.provider.provider_address}">
                     </div>
                     <div class="form-group">
-                        <label for="status">Status</label>
+                        <label for="status">Status<i style="color: red;">*</i></label>
                          <select class="form-control" name="status">
                              <option value="1" <c:if test="${requestScope.provider.status eq true}">selected="selected"</c:if>>Enable</option>
                             <option value="0" <c:if test="${requestScope.provider.status eq false}">selected="selected"</c:if>>Disable</option>

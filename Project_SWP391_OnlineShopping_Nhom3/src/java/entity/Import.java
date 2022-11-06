@@ -12,7 +12,7 @@ import java.sql.Date;
  */
 public class Import {
     private int importId;
-    private Product product;
+    private Product1 product;
     private Provider provider;
     private int quantity;
     private Date date;
@@ -28,11 +28,11 @@ public class Import {
         this.importId = importId;
     }
 
-    public Product getProduct() {
+    public Product1 getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(Product1 product) {
         this.product = product;
     }
 

@@ -56,6 +56,8 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+            response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         request.getRequestDispatcher("register.jsp").forward(request, response);
         processRequest(request, response);
     }
@@ -71,13 +73,22 @@ public class RegisterController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String fname = request.getParameter("name");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String usname = request.getParameter("usname");
-        String password = request.getParameter("password");
-        String gender = request.getParameter("gender");
+            response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        String fname = request.getParameter("name").trim();
+        String address = request.getParameter("address").trim();
+        String phone = request.getParameter("phone").trim();
+        String email = request.getParameter("email").trim();
+        String usname = request.getParameter("usname").trim();
+        String password = request.getParameter("password").trim();
+        String gender = request.getParameter("gender").trim();
+        request.setAttribute("fname", fname);
+        request.setAttribute("address", address);
+        request.setAttribute("phone", phone);
+        request.setAttribute("email", email);
+        request.setAttribute("usname", usname);
+        request.setAttribute("password", password);
+        request.setAttribute("gender", gender);
         DAO dao = new DAO();
         String resultMessage = "";
         if (dao.checkEmailExist(email)) {

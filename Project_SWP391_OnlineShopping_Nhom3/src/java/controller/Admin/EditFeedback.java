@@ -50,6 +50,7 @@ public class EditFeedback extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String fid = request.getParameter("fid");
         FeedbackDAO fdao = new FeedbackDAO();
+        //call method to get feedback detail
         Feedback f = fdao.getFeedback(fid);
         request.setAttribute("f", f);
         request.getRequestDispatcher("EditFeedback.jsp").forward(request, response);

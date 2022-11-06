@@ -29,15 +29,15 @@
                         <input type="text" class="form-control" name="cid" placeholder="Category ID" readonly="readonly" value="${requestScope.cid}">
                     </div>
                     <div class="form-group">
-                        <label for="cname">Category Name:</label>
-                        <input type="text" class="form-control" name="cname" placeholder="Category Name" required="true" value="${requestScope.category.cateName}">
+                        <label for="cname">Category Name:<i style="color: red;">*</i></label>
+                        <input type="text" class="form-control" name="cname" placeholder="Category Name" required="true" maxlength="50" value="${requestScope.category.cateName}">
                     </div>
                     <div class="form-group">
-                        <label for="image">Image:</label>
+                        <label for="image">Image:<i style="color: red;">*</i></label>
                         <input type="text" class="form-control" name="image" placeholder="Image" required="true" value="${requestScope.category.image}">
                     </div>
                     <div class="form-group">
-                        <label for="status">Status</label>
+                        <label for="status">Status<i style="color: red;">*</i></label>
                          <select class="form-control" name="status">
                              <option value="1" <c:if test="${requestScope.category.status eq true}">selected="selected"</c:if>>Enable</option>
                             <option value="0" <c:if test="${requestScope.category.status ne true}">selected="selected"</c:if>>Disable</option>

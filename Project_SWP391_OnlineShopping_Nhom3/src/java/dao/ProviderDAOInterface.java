@@ -25,4 +25,6 @@ public interface ProviderDAOInterface {
     public void update(int pid, String pname, String email, String address, boolean status);
     
     public Provider getProvider(Integer pid);
+    
+    public boolean isExisted(String pvname);
 }

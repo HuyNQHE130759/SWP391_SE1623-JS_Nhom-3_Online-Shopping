@@ -20,10 +20,10 @@ public class Feedback {
     int user_rating;
     Date user_timecomment;
     boolean status;
-    Product product;
+    Product1 product;
     User user;
 
-    public Feedback(int reviewid, int cid, int pid, String img, String user_comment, int user_rating, Date user_timecomment, boolean status, Product product, User user) {
+    public Feedback(int reviewid, int cid, int pid, String img, String user_comment, int user_rating, Date user_timecomment, boolean status, Product1 product, User user) {
         this.reviewid = reviewid;
         this.cid = cid;
         this.pid = pid;
@@ -103,11 +103,11 @@ public class Feedback {
         this.status = status;
     }
 
-    public Product getProduct() {
+    public Product1 getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(Product1 product) {
         this.product = product;
     }
 
