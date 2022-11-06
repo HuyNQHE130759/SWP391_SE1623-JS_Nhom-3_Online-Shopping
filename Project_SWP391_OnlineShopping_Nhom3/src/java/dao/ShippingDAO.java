@@ -8,18 +8,19 @@ import java.util.ArrayList;
 
 public class ShippingDAO extends DBContext {
 
-    public ArrayList<Shipping> getShippingList(String status, int itemPerPage, int pageCurrent) throws SQLException {
+    public ArrayList<Shipping> getShippingList(String status, int itemPerPage, int pageCurrent, int userId) throws SQLException {
         try {
             ArrayList<Shipping> list = new ArrayList<>();
             int from = itemPerPage * (pageCurrent - 1) + 1;
             int to = from + itemPerPage - 1;
-            String query = "SELECT bid, pname, price, total, quantity, statusShipping "
+            String query = "SELECT bid, pname, price, total, quantity, statusShipping, userId "
                     + "FROM (SELECT ROW_NUMBER() OVER (ORDER BY b.bid) AS Number, \n"
-                    + "                           b.bid as bid, p.pname as pname, b.total as total, bd.quantity as quantity, p.price as price, bd.status_shipping as statusShipping\n"
+                    + "                           b.bid as bid, b.cid as userId, p.pname as pname, b.total as total, bd.quantity as quantity, p.price as price, bd.status_shipping as statusShipping\n"
                     + "                           FROM Bill b \n"
                     + "                           JOIN BillDetail bd on b.bid = bd.bid \n"
                     + "                           JOIN Product p on p.pid = bd.pid) AS data \n"
-                    + "                           WHERE Number BETWEEN " + from + " AND " + to + " \n";
+                    + "                           WHERE Number BETWEEN " + from + " AND " + to + " \n "
+                    + "AND userId = " + userId + "\n";
 
             if (!status.isEmpty()) {
                 query += "AND statusShipping = '" + status + "'";
@@ -92,7 +93,7 @@ public class ShippingDAO extends DBContext {
         } 
     }
 
-    public void updateQuantity(int productId, int billId) {
+    public void updateQuantity(int productId, int billId) throws Exception {
         try {
             String query = "UPDATE Product SET quantity = ? WHERE pid = ?";
             PreparedStatement prepareStatement = connection.prepareStatement(query);
@@ -101,6 +102,7 @@ public class ShippingDAO extends DBContext {
             prepareStatement.setInt(2, productId);
             prepareStatement.executeUpdate();
         } catch (Exception e) {
+            throw e;
         }
     }
 

@@ -40,6 +40,9 @@
                                     <c:if test="${sessionScope.roleName == 'Admin'}">
                                         <li><a href="ListUser?page=1">list user</a></li>
                                     </c:if>
+                                    <c:if test="${sessionScope.roleName == 'Shipper'}">
+                                        <li><a href="ShippingList?page=1">shipping list</a></li>
+                                    </c:if>
                                 </ul>
                                 <ul class="navbar_user">
                                     <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>

@@ -59,7 +59,9 @@
                                         <td>${i.total}</td>
                                         <td>${i.statusShipping}</td> 
                                         <td style="display: flex; flex-direction: row;">
-                                            <a href="UpdateShipping?id=${i.billId}">Edit</a>
+                                            <c:if test="${i.statusShipping != 'Done'}">
+                                                <a href="UpdateShipping?id=${i.billId}">Edit</a>
+                                            </c:if>
                                         </td>
                                     </tr>
                                 </c:forEach>

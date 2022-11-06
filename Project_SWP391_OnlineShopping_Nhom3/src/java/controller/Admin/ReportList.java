@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.Admin;
 
 import dao.CommonDAO;
-import dao.ShippingDAO;
-import entity.Shipping;
-import entity.User;
+import dao.ReportDAO;
+import entity.Report;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,8 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-@WebServlet(name = "ShippingList", urlPatterns = {"/ShippingList"})
-public class ShippingList extends HttpServlet {
+@WebServlet(name = "Report", urlPatterns = {"/ReportList"})
+public class ReportList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,7 +30,19 @@ public class ShippingList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Report</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Report at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -46,31 +58,32 @@ public class ShippingList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            ShippingDAO shippingDAO = new ShippingDAO();
+            ReportDAO reportDAO = new ReportDAO();
             CommonDAO commonDAO = new CommonDAO();
-            ArrayList<Shipping> listShipping;
-            String selectedStatus = (String) request.getSession().getAttribute("selectedStatus");
+            ArrayList<Report> listReport;
+            //String selectedStatus = (String) request.getSession().getAttribute("selectedStatus");
             int itemPerPage = 5;
             String pageCurrent = request.getParameter("page");
-            User u = (User) request.getSession().getAttribute("user");
+//            User u = (User) request.getSession().getAttribute("user");
             String roleName = (String) request.getSession().getAttribute("roleName");
-            if (u != null && roleName.equals("Shipper")) {
+            if (roleName != null && roleName.equals("Admin")) {
                 if (pageCurrent != null && !pageCurrent.isEmpty()) {
                     int intPageCurrent = Integer.parseInt(pageCurrent);
-                    if (selectedStatus == null) {
-                        listShipping = shippingDAO.getShippingList("", itemPerPage, intPageCurrent, u.getCid());
-
-                    } else {
-                        listShipping = shippingDAO.getShippingList(selectedStatus, itemPerPage, intPageCurrent, u.getCid());
-                        request.setAttribute("selectedStatus", selectedStatus);
-                    }
-                    request.setAttribute("listShipping", listShipping);
-                    int numberPage = commonDAO.getNumberPageShipping(itemPerPage);
+//                    if (selectedStatus == null) {
+//                        listShipping = shippingDAO.getShippingList("", itemPerPage, intPageCurrent, u.getCid());
+//
+//                    } else {
+//                        listShipping = shippingDAO.getShippingList(selectedStatus, itemPerPage, intPageCurrent, u.getCid());
+//                        request.setAttribute("selectedStatus", selectedStatus);
+//                    }
+                    listReport = reportDAO.getListReport(itemPerPage, intPageCurrent);
+                    request.setAttribute("listReport", listReport);
+                    int numberPage = commonDAO.getNumberPageReport(itemPerPage);
                     request.setAttribute("numberPage", numberPage);
                     request.setAttribute("pageCurrent", intPageCurrent);
-                    request.getRequestDispatcher("ShippingList.jsp").forward(request, response);
+                    request.getRequestDispatcher("ReportList.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("ShippingList?page=1");
+                    response.sendRedirect("ReportList?page=1");
                 }
             } else {
                 request.setAttribute("message", "You don't have permission to access this page");
@@ -80,7 +93,6 @@ public class ShippingList extends HttpServlet {
             request.setAttribute("message", e.getMessage());
             request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
-
     }
 
     /**
@@ -94,9 +106,7 @@ public class ShippingList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String selectedStatus = request.getParameter("selectStatus");
-        request.getSession().setAttribute("selectedStatus", selectedStatus);
-        response.sendRedirect("ShippingList?page=1");
+        processRequest(request, response);
     }
 
     /**
