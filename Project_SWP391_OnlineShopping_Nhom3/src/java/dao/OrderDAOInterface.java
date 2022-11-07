@@ -27,4 +27,6 @@ public interface OrderDAOInterface {
     public ArrayList getOrderListById(int bid);
 
     public ArrayList getOrderListByPageWithDateAsc();
+    
+     public ArrayList<Bill> getOrderList();
 }

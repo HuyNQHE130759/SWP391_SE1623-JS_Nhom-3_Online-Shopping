@@ -76,7 +76,7 @@
 
                 <ul class="pagination">
                     <c:forEach begin="1" end="${requestScope.numPage}" var="i">
-                        <li><a href="${pageContext.request.contextPath}/OrderHistory?page=${i}&&sort=${requestScope.sort}"></a></li>
+                        <li><a href="${pageContext.request.contextPath}/OrderHistory?page=${i}&&sort=${requestScope.sort}">${i}</a></li>
                         </c:forEach>
                 </ul>
 
