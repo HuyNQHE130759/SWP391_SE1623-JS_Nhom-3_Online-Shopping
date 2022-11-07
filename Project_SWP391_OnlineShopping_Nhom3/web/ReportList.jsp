@@ -22,35 +22,23 @@
 
             <jsp:include page="HeaderCustom.jsp"></jsp:include>
                 <div class="container">
-                    <div style="display: flex; align-items: center; flex-direction: row;margin-top: 16px">
-                        <div style="margin-right: 16px;">Status</div>
-                        <select class="form-select" name="selectStatus" style="margin-right: 16px;">
-                            <option value="" ${selectedStatusShipping == "" ? 'selected' : ''}>All</option>
-                        <option value="inprogress" ${sessionScope.selectedStatus == "inprogress" ? 'selected' : ''}>In Progress</option>
-                        <option value="done" ${sessionScope.selectedStatus == "done" ? 'selected' : ''}>Done</option>
-                        <option value="canceled" ${sessionScope.selectedStatus == "canceled" ? 'selected' : ''}>Canceled</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
-
-
-                <div class="row" style="margin-top: 16px">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Bill ID</th>
-                                <th scope="col">Product</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">Shipper account</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Phone</th> 
-                                <th scope="col">Date Created</th> 
-                                <th scope="col">Status Shipping</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="row" style="margin-top: 16px">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Shipper account</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Phone</th> 
+                                    <th scope="col">Date Created</th> 
+                                    <th scope="col">Status Shipping</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                             <c:forEach var="i" items="${listReport}">
                                 <tr>
                                     <th scope="col">${i.billId}</th>
@@ -81,6 +69,23 @@
                         </c:forEach>
                     </c:if>
                 </div>
+
+                <dl class="row">
+                    <dt class="col-sm-3">Tổng số đơn</dt>
+                    <dd class="col-sm-9">${totalBill}</dd>
+
+                    <dt class="col-sm-3">Tổng số đơn giao thành công</dt>
+                    <dd class="col-sm-9">${totalBillDone}</dd>
+
+                    <dt class="col-sm-3">Tổng số đơn đã hủy</dt>
+                    <dd class="col-sm-9">${totalBillCanceled}</dd>
+
+                    <dt class="col-sm-3">Tỉ lệ đơn giao thành công</dt>
+                    <dd class="col-sm-9">${doneRate}</dd>
+
+                    <dt class="col-sm-3">Tổng số tiền hàng</dt>
+                    <dd class="col-sm-9">${sumTotalPrice}</dd>
+                </dl>
 
             </div>
 

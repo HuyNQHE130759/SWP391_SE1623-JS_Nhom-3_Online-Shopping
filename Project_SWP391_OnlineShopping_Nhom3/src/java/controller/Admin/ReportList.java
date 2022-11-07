@@ -61,21 +61,24 @@ public class ReportList extends HttpServlet {
             ReportDAO reportDAO = new ReportDAO();
             CommonDAO commonDAO = new CommonDAO();
             ArrayList<Report> listReport;
-            //String selectedStatus = (String) request.getSession().getAttribute("selectedStatus");
             int itemPerPage = 5;
             String pageCurrent = request.getParameter("page");
-//            User u = (User) request.getSession().getAttribute("user");
             String roleName = (String) request.getSession().getAttribute("roleName");
             if (roleName != null && roleName.equals("Admin")) {
+                int totalBill = reportDAO.getTotalBill();
+                int totalBillDone = reportDAO.getTotalBill("done");
+                int totalBillCanceled = reportDAO.getTotalBill("canceled");
+                Long sumTotalPrice = reportDAO.getSumOfTotalPrice();
+                String doneRate = String.valueOf(totalBillDone / totalBill * 100).concat("%");
+                
+                request.setAttribute("totalBill", totalBill);
+                request.setAttribute("totalBillDone", totalBillDone);
+                request.setAttribute("totalBillCanceled", totalBillCanceled);
+                request.setAttribute("sumTotalPrice", sumTotalPrice);
+                request.setAttribute("doneRate", doneRate);
+                
                 if (pageCurrent != null && !pageCurrent.isEmpty()) {
                     int intPageCurrent = Integer.parseInt(pageCurrent);
-//                    if (selectedStatus == null) {
-//                        listShipping = shippingDAO.getShippingList("", itemPerPage, intPageCurrent, u.getCid());
-//
-//                    } else {
-//                        listShipping = shippingDAO.getShippingList(selectedStatus, itemPerPage, intPageCurrent, u.getCid());
-//                        request.setAttribute("selectedStatus", selectedStatus);
-//                    }
                     listReport = reportDAO.getListReport(itemPerPage, intPageCurrent);
                     request.setAttribute("listReport", listReport);
                     int numberPage = commonDAO.getNumberPageReport(itemPerPage);
