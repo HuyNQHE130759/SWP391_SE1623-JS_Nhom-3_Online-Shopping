@@ -58,17 +58,15 @@ public class ProductDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String pid = request.getParameter("pid");
-        User us = (User) request.getSession().getAttribute("user");
         DAO dao = new DAO();
         ArrayList<Review> rl = new ArrayList<>();
         ArrayList<Product> pl = new ArrayList<>();
         
         rl = dao.getListReview(pid);
-        boolean isUserCanReview = dao.IsUserCanReview(pid, us.getCid());
+        
         pl = dao.getSingleProduct(pid);
         request.setAttribute("ProductList", pl);
         request.setAttribute("ReviewList", rl);
-        request.setAttribute("isUserCanReview", isUserCanReview);
         request.getRequestDispatcher("Product-Detail.jsp").forward(request, response);
     }
 

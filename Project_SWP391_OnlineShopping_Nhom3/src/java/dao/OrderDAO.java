@@ -51,6 +51,29 @@ public class OrderDAO implements OrderDAOInterface {
         }
         return list_bill;
     }
+    
+    @Override
+    public ArrayList<Bill> getOrderList() {
+        connection = (new DBContext().connection);
+        ArrayList<Bill> list_bill = new ArrayList<>();
+        try {
+            String sql = "Select * from Bill";
+            ps = connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Bill b = new Bill();
+                b.setCid(rs.getInt("cid"));
+                b.setBid(rs.getInt("bid"));
+                b.setDateCreate(rs.getString("dateCreate"));
+                b.setRecName(rs.getString("recName"));
+                b.setTotal(rs.getDouble("total"));
+                list_bill.add(b);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list_bill;
+    }
 
     /**
      * get total paging by user

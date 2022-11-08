@@ -50,8 +50,6 @@ public class Bill {
         this.dateCreate = dateCreate;
     }
 
-   
-
     public double getTotal() {
         return total;
     }
