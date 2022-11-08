@@ -36,11 +36,17 @@
                         <div class="col-sm-4 col-sm-offset-1">
                             <div class="login-form"><!--login form-->
                                 <h2>Login to your account</h2>
+                                <h3 style="color: red" >${mess}</h3>
                                 <form action="${pageContext.request.contextPath}/Login" method="POST">
                                 <label>Name(*)</label>
                                 <input type="text" required placeholder="Name" name="username"  pattern="\S(.*\S)?" />
                                 <label>Password(*)</label>
                                 <input type="password" required placeholder="Password" name="password" />
+                                <label>role(*)</label>
+                                <p>admin</p> 
+                                <input style="margin-top:-30px" type="radio" required name="role" value="admin" />
+                                <p>user</p>
+                                <input style="margin-top:-30px" type="radio" required name="role" value="user"/>
                                 <button type="submit" class="btn btn-default">Login</button>
                             </form>
                             <a href="Register">Not Registered? Create An Account Here</a> <p/>

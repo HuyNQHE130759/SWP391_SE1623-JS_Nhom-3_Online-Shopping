@@ -34,7 +34,7 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");            
+            out.println("<title>Servlet LoginController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
@@ -71,13 +71,30 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username").trim();
         String pass = request.getParameter("password").trim();
+        String role = request.getParameter("role");
         DAO dao = new DAO();
+        //check user or admin
+        if (role.equals("admin")) {
+            String adminName = dao.checkLoginAdmin(username, pass);
+            if(adminName ==null){
+                request.getSession().setAttribute("mess", "admin acount not correct");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                 return;
+            }else{
+                request.getSession().setAttribute("role", "admin");
+                response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
+                return;
+            }
+
+        }
+
         ArrayList<User> ul = new ArrayList<>();
         ul = dao.checkLogin(username, pass);
         for (int i = 0; i < ul.size(); i++) {
             if (ul.size() > 0) {
                 //request.getSession().setAttribute("error", "Login Successfully!!");
                 request.getSession().setAttribute("user", ul.get(i));
+                request.getSession().setAttribute("role", "user");
                 //request.getSession().setAttribute("error", "Login successful!");
 //                try (PrintWriter out = response.getWriter()) {
 //                    out.println("<script type=\"text/javascript\">");
