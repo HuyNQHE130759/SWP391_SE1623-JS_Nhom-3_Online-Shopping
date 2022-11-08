@@ -1,3 +1,17 @@
+
+ 
+<!--
+ Recordofchange:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 1/10/2022      2.0                LinhNT           First Implement
+ 
+-->
+ 
+
+
+
+ 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="entity.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
@@ -16,6 +30,7 @@
         <link href="css/responsive.css" rel="stylesheet">
 
     </head>
+    
     <style>
         input[type=text] {
 
@@ -30,42 +45,52 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-        <%User us = (User) request.getSession().getAttribute("user");%>
+
+        <!--<form action="" method="POST" class="form" id="form-1"><!--/#contact-page-->
+        <%User us = (User) request.getSession().getAttribute("user");
+          String isEditSuccess = (String) request.getAttribute("errmsg");
+        %>
         <div id="contact-page" class="container">
             <div class="bg">
                 <div class="row">    		
                     <div class="col-sm-12">    			   			
-                        <h2 class="title text-center">Welcome <strong><%=us.getFullName()%></strong></h2>    			    				    				
-                        <div>
-                            <form action="${pageContext.request.contextPath}/editUserInfo" method="POST">
+                        <h2 class="title text-center">Welcome <strong><%=us.getFullName()%></strong></h2>
+                        <p class="text-center" style="color: <%= isEditSuccess == "Cập nhật thành công" ? "green" : "red"%>"> <strong><%=isEditSuccess == null ? "" : isEditSuccess%></strong></p>
+                            <form action="${pageContext.request.contextPath}/editUserInfo" method="POST" id="form-1">
                                 <table border="1" width=50%>
                                     <div class="row">
                                         <div class="row g-3">
                                             <div class="col-md-6">
-                                                <label for="inputEmail4" class="form-label">User name</label>
-                                                <input type="username" class="form-control" id="usename" name="username" value="<%=us.getUsername()%>">
+                                                <fieldset disabled>
+                                                    <label for="inputEmail4" class="form-label">User name<i style="color:red">*</i></label>
+                                                    <input type="username" class="form-control" id="usename" name="username" value="<%=us.getUsername()%>" >
+                                                </fieldset>
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="inputPassword4" class="form-label">Full name</label>
+                                                <label for="fullname" class="form-label">Full name<i style="color:red">*</i></label>
                                                 <input type="fullname" class="form-control" id="fullname" name="fullname" value="<%=us.getFullName()%>">
+                                                <span class="form-message" id="validateFullName" style="color: red"></span>
                                             </div>
                                             <div class="col-md-12" >
-                                                <label for="inputAddress" class="form-label">Address</label>
-                                                <input type="text" class="form-control" id="inputAddress" name="address" value="<%=us.getAddress()%>"> 
+                                                <label for="address" class="form-label">Address<i style="color:red">*</i></label>
+                                                <input type="text" class="form-control" id="address" name="address" value="<%=us.getAddress()%>"> 
+                                                <span class="form-message" id="validateAddress" style="color: red"></span>
                                             </div>
                                             <div class="col-md-12">
-                                                <label for="inputAddress2" class="form-label">Phone</label>
-                                                <input type="text" class="form-control" id="inputAddress2" name="phone" value="<%=us.getPhone()%>">
+                                                <label for="phone" class="form-label">Phone<i style="color:red">*</i></label>
+                                                <input type="text" class="form-control" id="phone" name="phone" value="<%=us.getPhone()%>">
+                                                <span class="form-message" id="validatePhone" style="color: red"></span>
                                             </div>
                                             <div class="col-md-12">
-                                                <label for="inputAddress2" class="form-label">Email</label>
+                                                <label for="email" class="form-label">Email<i style="color:red">*</i></label>
                                                 <input type="text" class="form-control" id="email" name="email" value="<%=us.getEmail()%>" >
+                                                <span class="form-message" id="validateEmail" style="color: red"></span>
                                             </div>
                                             <div class="col-md-12">
-                                                <label for="inputAddress2" class="form-label">Gender</label>
+                                                <label for="inputAddress2" class="form-label">Gender<i style="color:red">*</i></label>
                                                 <select class="form-select " aria-label="Default select example" name="gender">
-                                                    <option value="true" selected=${us.isGender() ? "true" : "false"}>Male</option>
-                                                    <option value="false" selected=${us.isGender() ? "true" : "false"}>Female</option>
+                                                    <option value="true" <c:if test="${us.isGender eq true}">selected="selected"</c:if>>Male</option>
+                                                    <option value="false" <c:if test="${us.isGender eq false}">selected="selected"</c:if>>Female</option>
                                                 </select>
                                             </div>
 
@@ -73,11 +98,10 @@
                                     </div>
                                 </table>
                                 <div class="col-md-12">
-                                    <input type="submit" class="btn btn-default btn-primary"  value="Change Profile">
+                                    <input type="submit" class="btn btn-default btn-primary" id="changeProfile"  value="Change Profile">
                                     <a href="${pageContext.request.contextPath}/ChangePass" class="btn btn-default btn-warning" style="margin-top: 18px;">Change Password</a>
                                 </div>    
                             </form>
-                        </div>
                     </div>
                 </div>			 		
             </div>    	
@@ -96,5 +120,23 @@
     <script src="js/jquery.scrollUp.min.js"></script>
     <script src="js/jquery.prettyPhoto.js"></script>
     <script src="js/main.js"></script>
+    
+    <script src="js/valication2.js" type="text/javascript"></script>
+    <script>
+        Validator({
+            form: '#form-1',
+            errorSelector: '.form-message',
+            rules:[
+                Validator.isRequired('#fullname'),
+                //Validator.isAddress('#address'),
+                Validator.isEmail('#email'),
+                Validator.isPhone('#phone'),
+                Validator.addressMaxLength('#address')
+                
+            ]
+        });
+        
+        </script>
+           
 </body>
 </html>
