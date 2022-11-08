@@ -5,7 +5,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="entity.Cart"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<--<!-- Check Hehehe -->
+<!-- Check Hehehe -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -108,7 +108,7 @@
                             <input class="form-control" type="hidden" name="discountTotal" value="${discountTotal}"  ><br>
                             <input class="form-control" type="text" name="Name" required="" placeholder="Name" maxlength="50" ><br>
                             <input class="form-control" type="text" name="Address" required placeholder="Address"  maxlength="50" ><br>
-                            <input class="form-control" type="text" required name="Phone" placeholder="Phone"  maxlength="50" ><br>
+                            <input class="form-control" type="text" required name="Phone" placeholder="Phone"  maxlength="10" ><br>
                             <button class="btn btn-default check_out " type="submit">Check Out</button>
                         </form>
                     </div>
