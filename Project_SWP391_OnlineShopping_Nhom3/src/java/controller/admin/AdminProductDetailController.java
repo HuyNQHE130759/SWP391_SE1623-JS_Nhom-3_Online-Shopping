@@ -50,7 +50,7 @@ public class AdminProductDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String raw_pid = request.getParameter("pid").trim();
+        String raw_pid = request.getParameter("pid");
         Integer pid = (raw_pid != null && raw_pid.length() > 0) ? new Integer(raw_pid) : null;
         request.setAttribute("categoryList", categoryDAO.getAllCategory());
         request.setAttribute("providers", providerDAO.getAllProvider());
