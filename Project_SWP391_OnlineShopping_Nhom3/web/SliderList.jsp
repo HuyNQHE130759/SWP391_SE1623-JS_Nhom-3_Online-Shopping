@@ -5,8 +5,8 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="dao.OrderDAO"%>
-<%@page import="entity.BillDetail"%>
+<%@page import="dao.FeedbackDAO"%>
+<%@page import="entity.Review"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,61 +28,69 @@
     </head>
 
     <body>
+        
         <jsp:include page="header.jsp"></jsp:include>
             <section id="cart_items">
                 <div class="container">
                     <div class="breadcrumbs">
                         <ol class="breadcrumb">
                             <li><a href="#">Home</a></li>
-                            <li >Order History</li>
+                            <li >Slider List</li>
                         </ol>
                     </div>
+                    
+                    
                     <div class="breadcrumbs" style="width: 300px;margin-bottom: 30px">                  
-                        <a href="${pageContext.request.contextPath}/OrderHistory?sort=1">Filter by Total Price ascend</a><br>
-                    <a href="${pageContext.request.contextPath}/OrderHistory?sort=2">Filter by Date ascend</a><br>                    
+<!--                        <a href="${pageContext.request.contextPath}/OrderHistory?sort=1">Filter by Total Price ascend</a><br>
+                    <a href="${pageContext.request.contextPath}/OrderHistory?sort=2">Filter by Date ascend</a><br>                    -->
                 </div>
 
-                <c:if test="${requestScope.list.size() != 0}">
+                <c:if test="${requestScope.listproduct.size() != 0}">
                     <div class="table-responsive cart_info">
                         <table class="table table-condensed">
                             <thead>
                                 <tr><th class="cart_menu">STT</th>
-                                    <th class="image">Date Created</th>
-                                    <th class="image">Total</th>
+                                    <th class="image">Product Name</th>
+                                    <th class="image">Image</th>
                                     <th class="description"></th>       
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${requestScope.list}" var="i" varStatus="loop">
+                                    <c:forEach items="${requestScope.listproduct}" var="i" varStatus="loop">
+                                        
                                     <tr>
-                                        <td>${loop.index + 1}</td>
+                                        <td>${(loop.index + 1)}</td>
+                                        
                                         <td class="cart_price">
-                                            <p>${i.dateCreate}</p>
+                                            <p>${i.pname}</p>
                                         </td>
-                                        <td class="cart_total">
-                                            <p class="cart_total_price">${i.total}</p>
+                                        <td class="cart_price">
+                                            <img src="${i.image}" width="200px" height="200px" alt="alt"/>
                                         </td>
-                                        <td class="view"><a href="${pageContext.request.contextPath}/OrderHistoryInformation?bid=${i.bid}">View</a></td>
+                                        <td class="view"><a href="${pageContext.request.contextPath}/SliderListInformation?pid=${i.pid}">View</a></td>
                                     </tr>
 
                                 </c:forEach>
+                                    
+                            
                             </tbody>
                         </table>
+                        
                     </div>
                 </c:if>
-                <c:if test="${requestScope.list.size() == 0}">
+                <c:if test="${requestScope.listproduct.size() == 0}">
                     <div>No data</div>
                 </c:if>
 
-                <ul class="pagination">
+               <ul class="pagination">
                     <c:forEach begin="1" end="${requestScope.numPage}" var="i">
-                        <li><a href="${pageContext.request.contextPath}/OrderHistory?page=${i}&&sort=${requestScope.sort}">${i}</a></li>
+                        <li><a href="${pageContext.request.contextPath}/SliderList?page=${i}">${i}</a></li>
                         </c:forEach>
                 </ul>
 
                 <br><br><br><br><br><br><br><br>
             </div>
-        </section> <!--/#cart_items-->
+        </section> 
 
         <jsp:include page="footer.jsp"></jsp:include>
 

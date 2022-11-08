@@ -73,7 +73,7 @@ public class CategoryDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String raw_cid = request.getParameter("cid").trim();
+        String raw_cid = request.getParameter("cid");
         String raw_cname = request.getParameter("cname").trim();
         String raw_img = request.getParameter("image").trim();
         String raw_status = request.getParameter("status").trim();

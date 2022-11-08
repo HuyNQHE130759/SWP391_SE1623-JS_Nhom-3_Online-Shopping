@@ -5,6 +5,7 @@
 package utility;
 
 import entity.Bill;
+import entity.Product;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,15 @@ public class Support {
         int lastIndex = Math.min(index * numberOfBill, list_bill.size());
         for (int i = (index - 1) * numberOfBill; i < lastIndex; i++) {
             list.add(list_bill.get(i));
+        }
+        return list;
+    }
+    
+          public static ArrayList<Product> pagingProduct(int index, int numberOfBill, ArrayList<Product> list_product) {
+        ArrayList<Product> list = new ArrayList<>();
+        int lastIndex = Math.min(index * numberOfBill, list_product.size());
+        for (int i = (index - 1) * numberOfBill; i < lastIndex; i++) {
+            list.add(list_product.get(i));
         }
         return list;
     }

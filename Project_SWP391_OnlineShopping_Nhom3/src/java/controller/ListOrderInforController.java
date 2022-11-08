@@ -1,21 +1,24 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
 
-import dao.DAO;
+import dao.OrderDAO;
+import entity.BillDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
-
-public class ProductbyCategory extends HttpServlet {
+/**
+ *
+ * @author Huynq
+ */
+public class ListOrderInforController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,17 +32,13 @@ public class ProductbyCategory extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProductbyCategory</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProductbyCategory at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+       try {
+            int bid = Integer.parseInt(request.getParameter("bid"));
+            OrderDAO dao = new OrderDAO();
+        ArrayList<BillDetail> bdetail = dao.getOrderListById(bid);
+        request.setAttribute("billDetail", bdetail);
+        request.getRequestDispatcher("OrderListInformation.jsp").forward(request, response);
+        } catch (Exception e) {
         }
     }
 
@@ -55,12 +54,7 @@ public class ProductbyCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String cid = request.getParameter("cid");
-        DAO dao = new DAO();
-        ArrayList<Product> pl = new ArrayList<>();
-        pl = dao.getProductbyCate(cid);
-        request.setAttribute("ProductList", pl);
-        request.getRequestDispatcher("ProductbyCate.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

@@ -1,5 +1,11 @@
+<%-- 
+    Document   : OrderHistory
+    Created on : Oct 24, 2022, 1:15:19 PM
+    Author     : ngoclong
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="dao.DAO"%>
+<%@page import="dao.OrderDAO"%>
 <%@page import="entity.BillDetail"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,7 +17,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Cart | E-Shopper</title>
-       <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
         <link href="css/price-range.css" rel="stylesheet">
@@ -23,61 +29,62 @@
 
     <body>
         <jsp:include page="header.jsp"></jsp:include>
-       <% ArrayList<BillDetail> bi = (ArrayList<BillDetail>) request.getAttribute("listBill"); %>
-
-        <section id="cart_items">
-            <div class="container">
-                <div class="breadcrumbs">
-                    <ol class="breadcrumb">
-                        <li><a href="#">Home</a></li>
-                        <li class="active">Order List</li>
-                    </ol>
+            <section id="cart_items">
+                <div class="container">
+                    <div class="breadcrumbs">
+                        <ol class="breadcrumb">
+                            <li><a href="#">Home</a></li>
+                            <li >Order History</li>
+                        </ol>
+                    </div>
+                    <div class="breadcrumbs" style="width: 300px;margin-bottom: 30px">                  
+                        <a href="${pageContext.request.contextPath}/OrderList?sort=1">Filter by Total Price ascend</a><br>
+                    <a href="${pageContext.request.contextPath}/OrderList?sort=2">Filter by Date ascend</a><br>                    
                 </div>
-                
-                <a href="${pageContext.request.contextPath}/OrderListFilterDateAsc?page=1">Filter by Date ascend</a><br><br><br>
-                
-                <div class="table-responsive cart_info">
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr class="cart_menu">
-                                <td>STT</td>
-                                <td class="user">UserName</td>
-                                <td class="quantity">Quantity</td>
-                                <td class="price">Total Price</td>
-                                <td class="date">Date</td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <%for (int i = 0; i < bi.size(); i++) {%>
+
+                <c:if test="${requestScope.list.size() != 0}">
+                    <div class="table-responsive cart_info">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr><th class="cart_menu">STT</th>
+                                    <th class="image">UserName</th>
+                                    <th class="image">Date Created</th>
+                                    <th class="image">Total</th>
+                                    <th class="description"></th>       
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${requestScope.list}" var="i" varStatus="loop">
                                     <tr>
-                                        <td> <%=bi.get(i).getRowNumber() %></td>
-                                <td class="cart_product">
-                                    <p> <%=bi.get(i).getUsername()%></p>
-                                </td>
-                                <td class="cart_description">
-                                    <p><%=bi.get(i).getQuantity()%></p>
-                                </td>
-                                <td class="cart_price">
-                                    <p>$<%=bi.get(i).getTotal() %></p>
-                                </td>
-                                <td >
-                                    <p><%= bi.get(i).getDateCreate() %></p>
-                                </td>
-                                <td class="view"><a href="${pageContext.request.contextPath}/OrderListInformationController?bid=<%=bi.get(i).getBid()%>">View</a></td>
-                            </tr>
-                                <% }%>   
-                        </tbody>
-                    </table>
-                </div>  
-                        
-                        <ul class="pagination">
-                            <c:forEach begin="1" end="${endPage}" var="i">
-                                <li ><a href="${pageContext.request.contextPath}/OrderList?page=${i}">${i}</a></li>
-                            </c:forEach>
-                            </ul>
-                        
-                            <br><br><br><br><br><br><br><br>
+                                        <td>${loop.index + 1}</td>
+                                        <td class="cart_price">
+                                            <p>${i.recName}</p>
+                                        </td>
+                                        <td class="cart_price">
+                                            <p>${i.dateCreate}</p>
+                                        </td>
+                                        <td class="cart_total">
+                                            <p class="cart_total_price">${i.total}</p>
+                                        </td>
+                                        <td class="view"><a href="${pageContext.request.contextPath}/ListOrderInforController?bid=${i.bid}">View</a></td>
+                                    </tr>
+
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </c:if>
+                <c:if test="${requestScope.list.size() == 0}">
+                    <div>No data</div>
+                </c:if>
+
+                <ul class="pagination">
+                    <c:forEach begin="1" end="${requestScope.numPage}" var="i">
+                        <li><a href="${pageContext.request.contextPath}/OrderList?page=${i}&&sort=${requestScope.sort}">${i}</a></li>
+                        </c:forEach>
+                </ul>
+
+                <br><br><br><br><br><br><br><br>
             </div>
         </section> <!--/#cart_items-->
 

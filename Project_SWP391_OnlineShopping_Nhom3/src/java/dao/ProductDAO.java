@@ -279,7 +279,7 @@ public class ProductDAO implements ProductDAOInterface {
                     + "  left join Category b on a.cateId = b.cateId"
                     + "  left join Provider c on a.provider_id = c.provider_id where pid = ?";
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, pid);
+            ps.setObject(1, pid);
             rs = ps.executeQuery();
             while (rs.next()) {
                 p.setPid(rs.getInt("pid"));

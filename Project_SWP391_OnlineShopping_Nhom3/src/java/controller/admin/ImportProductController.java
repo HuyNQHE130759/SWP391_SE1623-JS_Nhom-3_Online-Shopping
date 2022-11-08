@@ -77,7 +77,7 @@ public class ImportProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String raw_pid = request.getParameter("product").trim();
+        String raw_pid = request.getParameter("product");
         String raw_quantity = request.getParameter("quantity").trim();
         int quantity = Integer.parseInt(raw_quantity);
         Integer pid = (raw_pid != null && raw_pid.length() > 0) ? new Integer(raw_pid) : null;
