@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import entity.CheckOut;
 
-
 public class AdminConsole extends BasedRequiredAuthenticationController1 {
 
     /**
@@ -37,7 +36,7 @@ public class AdminConsole extends BasedRequiredAuthenticationController1 {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminConsole</title>");            
+            out.println("<title>Servlet AdminConsole</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AdminConsole at " + request.getContextPath() + "</h1>");
@@ -58,9 +57,25 @@ public class AdminConsole extends BasedRequiredAuthenticationController1 {
     DAO dao = new DAO();
     ArrayList<Product> pl = new ArrayList<>();
     ArrayList<CheckOut> cl = new ArrayList<>();
+
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //cheeck login
+        if (request.getSession().getAttribute("role") == null) {
+            request.getSession().setAttribute("mess", "please login");
+            response.sendRedirect("../Login");
+            return;
+        } else {
+            //check role
+            String role = request.getSession().getAttribute("role").toString();
+            if (!role.equals("admin")) {
+                request.getSession().setAttribute("mess", "you are not authorized");
+                response.sendRedirect("../Login");
+                return;
+            }
+        }
+
         pl = dao.getProduct();
         cl = dao.getCheckout();
         request.setAttribute("productList", pl);
