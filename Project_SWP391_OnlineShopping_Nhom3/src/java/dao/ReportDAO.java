@@ -47,13 +47,13 @@ public class ReportDAO extends DBContext {
         }
     }
     
-    public int getTotalBill() throws SQLException {
+    public double getTotalBill() throws SQLException {
         try {
             String query = "SELECT COUNT(*) as num FROM Bill b JOIN BillDetail bd on b.bid = bd.bid";
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rslt = ps.executeQuery();
             if (rslt.next()) {
-                return rslt.getInt("num");
+                return rslt.getDouble("num");
             }
         } catch (SQLException e) {
             throw e;
@@ -61,19 +61,19 @@ public class ReportDAO extends DBContext {
         return 0;
     }
     
-    public int getTotalBill(String status) throws SQLException {
+    public double getTotalBill(String status) throws SQLException {
         try {
             String query = "SELECT COUNT(*) as num FROM Bill b JOIN BillDetail bd on b.bid = bd.bid WHERE bd.status_shipping = ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, status);
             ResultSet rslt = ps.executeQuery();
             if (rslt.next()) {
-                return rslt.getInt("num");
+                return rslt.getDouble("num");
             }
         } catch (SQLException e) {
             throw e;
         } 
-        return 0;
+        return 0L;
     }
     
     public Long getSumOfTotalPrice() throws SQLException {

@@ -65,11 +65,11 @@ public class ReportList extends HttpServlet {
             String pageCurrent = request.getParameter("page");
             String roleName = (String) request.getSession().getAttribute("roleName");
             if (roleName != null && roleName.equals("Admin")) {
-                int totalBill = reportDAO.getTotalBill();
-                int totalBillDone = reportDAO.getTotalBill("done");
-                int totalBillCanceled = reportDAO.getTotalBill("canceled");
-                Long sumTotalPrice = reportDAO.getSumOfTotalPrice();
-                String doneRate = String.valueOf(totalBillDone / totalBill * 100).concat("%");
+                double totalBill = reportDAO.getTotalBill();
+                double totalBillDone = reportDAO.getTotalBill("done");
+                double totalBillCanceled = reportDAO.getTotalBill("canceled");
+                double sumTotalPrice = reportDAO.getSumOfTotalPrice();
+                double doneRate = totalBillDone / totalBill * 100;
                 
                 request.setAttribute("totalBill", totalBill);
                 request.setAttribute("totalBillDone", totalBillDone);

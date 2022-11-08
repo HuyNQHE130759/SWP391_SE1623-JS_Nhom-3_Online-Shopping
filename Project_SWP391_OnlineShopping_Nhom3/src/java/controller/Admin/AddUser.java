@@ -66,15 +66,15 @@ public class AddUser extends HttpServlet {
             String msg = "";
             boolean flag = true;
             //Get data from page
-            String username = request.getParameter("userName");
-            String password = request.getParameter("password");
-            String repeatPassword = request.getParameter("repeatPassword");
-            String fullName = request.getParameter("fullName");
-            String address = request.getParameter("address");
+            String username = request.getParameter("userName").trim();
+            String password = request.getParameter("password").trim();
+            String repeatPassword = request.getParameter("repeatPassword").trim();
+            String fullName = request.getParameter("fullName").trim();
+            String address = request.getParameter("address").trim();
             boolean isMale = request.getParameter("gender").equals("1");
-            String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
-            String rolename = request.getParameter("role");
+            String email = request.getParameter("email").trim();
+            String phone = request.getParameter("phone").trim();
+            String rolename = request.getParameter("role").trim();
             //Validate username trung
             if (userDAO.userNameIsExist(username)) {
                 msg += "<li style='color: red'>This username has already existed!!!</li>";

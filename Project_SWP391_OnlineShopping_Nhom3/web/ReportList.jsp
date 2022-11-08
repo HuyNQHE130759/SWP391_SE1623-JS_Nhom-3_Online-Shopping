@@ -81,7 +81,7 @@
                     <dd class="col-sm-9">${totalBillCanceled}</dd>
 
                     <dt class="col-sm-3">Tỉ lệ đơn giao thành công</dt>
-                    <dd class="col-sm-9">${doneRate}</dd>
+                    <dd class="col-sm-9">${doneRate}%</dd>
 
                     <dt class="col-sm-3">Tổng số tiền hàng</dt>
                     <dd class="col-sm-9">${sumTotalPrice}</dd>

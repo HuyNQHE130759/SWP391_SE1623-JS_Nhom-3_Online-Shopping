@@ -90,7 +90,7 @@ public class AddVoucher extends HttpServlet {
                 request.setAttribute("code", code);
             } while (voucherDAO.voucherCodeIsExist(code));
             int discount = Integer.parseInt(request.getParameter("discount"));
-            String description = request.getParameter("description");
+            String description = request.getParameter("description").trim();
             //Validate time end
             java.util.Date utilTimeEnd = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("timeEnd"));
             java.sql.Date sqlTimeEnd = new java.sql.Date(utilTimeEnd.getTime());

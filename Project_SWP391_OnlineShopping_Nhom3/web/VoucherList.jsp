@@ -33,9 +33,9 @@
                         <tbody>
                         <c:forEach var="i" items="${listVoucher}">
                             <tr>
-                                <td style="display: flex; flex-direction: row; justify-content: space-between;">
+                                <td style="display: flex; flex-direction: row; ">
                                     <span id="code">${i.code}</span>
-                                    <span id="${i.code}" style="cursor: pointer; color: blue;" onclick="copyToClipboard(this)">Copy</button>
+                                    <span id="${i.code}" style="cursor: pointer; color: blue; margin-left: 8px" onclick="copyToClipboard(this)">Copy</button>
                                 </td>
                                 <td>${i.description}</td>
                                 <td>${i.timeEnd}</td>
