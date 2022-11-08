@@ -27,6 +27,7 @@
         <link href="css/responsive.css" rel="stylesheet">
 
     </head>
+     
 
     <body>
      
@@ -174,7 +175,7 @@
             </div>
         </section>
 
-          <jsp:include page="FooterCustom.jsp"></jsp:include>
+         <jsp:include page="footer.jsp"></jsp:include>
 
 
 

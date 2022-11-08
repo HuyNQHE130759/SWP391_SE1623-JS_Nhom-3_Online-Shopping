@@ -30,6 +30,7 @@
         <link href="css/responsive.css" rel="stylesheet">
 
     </head>
+    
     <style>
         input[type=text] {
 
@@ -43,7 +44,7 @@
     </style>
 
     <body>
-                   <jsp:include page="HeaderCustom.jsp"></jsp:include>
+        <jsp:include page="header.jsp"></jsp:include>
 
         <!--<form action="" method="POST" class="form" id="form-1"><!--/#contact-page-->
         <%User us = (User) request.getSession().getAttribute("user");
@@ -108,7 +109,7 @@
         </div>	
     </div><!--/#contact-page-->
 
-     <jsp:include page="FooterCustom.jsp"></jsp:include>
+    <jsp:include page="footer.jsp"></jsp:include>
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
