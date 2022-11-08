@@ -33,7 +33,7 @@
                                 <a href="${pageContext.request.contextPath}/HomePage"><img src="https://webmedia.com.vn/images/2021/07/logo-gearvn.png"  alt="" /></a>
                             </div>
 
-                            <nav class="navbar">
+                            <nav class="">
                                 <ul class="navbar_menu">
                                     <li><a href="#">home</a></li>
                                     <li><a href="#">shop</a></li>
