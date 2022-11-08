@@ -46,7 +46,7 @@ public class ImportProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String raw_pid = request.getParameter("did").trim();
+        String raw_pid = request.getParameter("pid").trim();
         request.setAttribute("pid", raw_pid);
         request.setAttribute("products", productDAO.getAllProduct());
         request.getRequestDispatcher("../ImportProduct.jsp").forward(request, response);
