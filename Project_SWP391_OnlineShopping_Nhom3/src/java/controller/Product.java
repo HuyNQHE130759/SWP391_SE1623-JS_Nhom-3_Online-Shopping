@@ -58,7 +58,8 @@ public class Product extends HttpServlet {
             throws ServletException, IOException {
         DAO dao = new DAO();
         ArrayList<Product> pl = new ArrayList<>();
-        ArrayList<Product> allProduct = new ArrayList<>();
+        
+       ArrayList<Product> allProduct = new ArrayList<>();
         //phan trang
         int index = Integer.parseInt(request.getParameter("index"));
         allProduct = dao.getAllProduct();
@@ -68,7 +69,6 @@ public class Product extends HttpServlet {
          
         request.setAttribute("ProductListPaging", pl);
         request.setAttribute("listSizePaging", listSizePaging);
-       
         request.getRequestDispatcher("Shop.jsp").forward(request, response);
     }
 

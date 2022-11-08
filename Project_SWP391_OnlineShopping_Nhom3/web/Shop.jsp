@@ -21,8 +21,6 @@
     </head>
 
     <body>
-      
-
             <section id="advertisement">
                 
             </section>
