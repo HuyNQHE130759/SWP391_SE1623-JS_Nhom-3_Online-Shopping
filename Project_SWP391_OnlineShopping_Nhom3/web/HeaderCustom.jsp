@@ -40,6 +40,7 @@
                                     <c:if test="${sessionScope.user != null}">
                                         <li><a href="${pageContext.request.contextPath}/OrderList?page=1">order list</a></li>
                                         <li><a href="${pageContext.request.contextPath}/OrderHistory">order history</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/SliderList">slider List</a></li>
                                         </c:if>
                                     <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
                                     <li><a href="ListUser">list user</a></li>

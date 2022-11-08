@@ -66,7 +66,7 @@
                                         <td class="cart_total">
                                             <p class="cart_total_price">${i.total}</p>
                                         </td>
-                                        <td class="view"><a href="${pageContext.request.contextPath}/OrderHistoryInformation?bid=${i.bid}">View</a></td>
+                                        <td class="view"><a href="${pageContext.request.contextPath}/ListOrderInforController?bid=${i.bid}">View</a></td>
                                     </tr>
 
                                 </c:forEach>
