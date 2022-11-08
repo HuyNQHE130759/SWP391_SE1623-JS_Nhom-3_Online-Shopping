@@ -92,7 +92,7 @@
                                     <li><a href="${pageContext.request.contextPath}/HomePage" class="active">Home</a></li>
                                     <li class="dropdown"><a href="#">View Products<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="${pageContext.request.contextPath}/Product?index=1">List Our Products</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/Product">List Our Products</a></li>
                                              
                                             
                                             <li><a href="${pageContext.request.contextPath}/Cart">Cart</a></li> 

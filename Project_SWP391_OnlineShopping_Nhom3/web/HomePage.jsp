@@ -40,7 +40,6 @@
                                             <div class="favorite favorite_left"></div>
                                             <div class="product_info">
                                                 <h6 class="product_name"><a href="single.html">${i.pname}</a></h6>
-                                                
                                                 <div class="product_price">${i.price}đ</div>
                                             </div>
                                         </div>
