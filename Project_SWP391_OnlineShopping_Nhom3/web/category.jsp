@@ -14,14 +14,18 @@
         <link href="css/animate.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link href="css/responsive.css" rel="stylesheet">
+       
         <style>
+            
             h4:hover {
                 background-color: #d4d4d4;
             }
         </style>
-         <jsp:include page="header.jsp"></jsp:include>
+        
+         
     </head> 
     <body>
+        <jsp:include page="header.jsp"></jsp:include>
         <div class="col-sm-3">
             <div class="left-sidebar">
                 <h2>Category</h2>
