@@ -35,6 +35,21 @@ public class ListUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+          //check login
+        if (request.getSession().getAttribute("role") == null) {
+            request.getSession().setAttribute("mess", "please login");
+            response.sendRedirect("../Login");
+            return;
+        } else {
+            //check role
+            String role = request.getSession().getAttribute("role").toString();
+            if (!role.equals("admin")) {
+                request.getSession().setAttribute("mess", "you are not authorized");
+                response.sendRedirect("../Login");
+                return;
+            }
+        }
         DAO dao = new DAO();
         ArrayList<User> listUser;
         if (request.getParameter("selectRole") == null && request.getParameter("selectStatus") == null && request.getParameter("selectSort") == null) {

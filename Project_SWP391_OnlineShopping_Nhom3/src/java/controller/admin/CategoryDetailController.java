@@ -41,7 +41,22 @@ public class CategoryDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String raw_cid = request.getParameter("cid");
+          //check login
+        if (request.getSession().getAttribute("role") == null) {
+            request.getSession().setAttribute("mess", "please login");
+            response.sendRedirect("../Login");
+            return;
+        } else {
+            //check role
+            String role = request.getSession().getAttribute("role").toString();
+            if (!role.equals("admin")) {
+                request.getSession().setAttribute("mess", "you are not authorized");
+                response.sendRedirect("../Login");
+                return;
+            }
+        }
+        
+        String raw_cid = request.getParameter("cid").trim();
         Integer cid = (raw_cid !=null && raw_cid.length()>0)?new Integer(raw_cid):null;
         request.setAttribute("category", categoryDAO.getCategory(cid));
         request.setAttribute("cid", cid);

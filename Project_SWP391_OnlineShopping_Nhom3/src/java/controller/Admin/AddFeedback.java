@@ -56,12 +56,26 @@ public class AddFeedback extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //cheeck login
+        if (request.getSession().getAttribute("role") == null) {
+            request.getSession().setAttribute("mess", "please login");
+            response.sendRedirect("../Login");
+            return;
+        } else {
+            //check role
+            String role = request.getSession().getAttribute("role").toString();
+            if (!role.equals("admin")) {
+                request.getSession().setAttribute("mess", "you are not authorized");
+                response.sendRedirect("../Login");
+                return;
+            }
+        }
         request.getRequestDispatcher("AddFeedback.jsp").forward(request, response);
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
-     * Use for add new feed back
+     * Handles the HTTP <code>POST</code> method. Use for add new feed back
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -70,11 +84,11 @@ public class AddFeedback extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String cid= request.getParameter("cid");
-        String pid= request.getParameter("pid");
-        String comment= request.getParameter("comment");
-        String rating= request.getParameter("rating");
-        String img= request.getParameter("img");
+        String cid = request.getParameter("cid");
+        String pid = request.getParameter("pid");
+        String comment = request.getParameter("comment");
+        String rating = request.getParameter("rating");
+        String img = request.getParameter("img");
         FeedbackDAO fdao = new FeedbackDAO();
         fdao.insertFeedback(cid, pid, comment, rating, img);
         response.sendRedirect("./FeedbackList");

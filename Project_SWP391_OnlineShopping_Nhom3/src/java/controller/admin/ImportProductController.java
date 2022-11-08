@@ -46,7 +46,21 @@ public class ImportProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String raw_pid = request.getParameter("pid");
+          //check login
+        if (request.getSession().getAttribute("role") == null) {
+            request.getSession().setAttribute("mess", "please login");
+            response.sendRedirect("../Login");
+            return;
+        } else {
+            //check role
+            String role = request.getSession().getAttribute("role").toString();
+            if (!role.equals("admin")) {
+                request.getSession().setAttribute("mess", "you are not authorized");
+                response.sendRedirect("../Login");
+                return;
+            }
+        }
+        String raw_pid = request.getParameter("pid").trim();
         request.setAttribute("pid", raw_pid);
         request.setAttribute("products", productDAO.getAllProduct());
         request.getRequestDispatcher("../ImportProduct.jsp").forward(request, response);
@@ -70,7 +84,7 @@ public class ImportProductController extends HttpServlet {
         Product1 pd = productDAO.getProductById(pid);
         Date date = Date.valueOf(LocalDate.now());
         importDAO.insert(pd, pd.getProvider(), quantity, date);
-        response.sendRedirect(request.getContextPath() + "/Import/list");
+        response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
     }
 
     /**
