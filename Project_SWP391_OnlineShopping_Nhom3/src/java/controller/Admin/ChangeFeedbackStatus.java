@@ -32,7 +32,7 @@ public class ChangeFeedbackStatus extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //Use this to get the FeedbackList
-        String fid= request.getParameter("fid");
+        String fid = request.getParameter("fid");
         String status = request.getParameter("status");
         FeedbackDAO fdao = new FeedbackDAO();
         fdao.updatestatus(fid, status);
@@ -51,6 +51,21 @@ public class ChangeFeedbackStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //check login
+        if (request.getSession().getAttribute("role") == null) {
+            request.getSession().setAttribute("mess", "please login");
+            response.sendRedirect("../Login");
+            return;
+        } else {
+            //check role
+            String role = request.getSession().getAttribute("role").toString();
+            if (!role.equals("admin")) {
+                request.getSession().setAttribute("mess", "you are not authorized");
+                response.sendRedirect("../Login");
+                return;
+            }
+        }
+        
         processRequest(request, response);
     }
 

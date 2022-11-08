@@ -33,13 +33,14 @@
                                 <a href="${pageContext.request.contextPath}/HomePage"><img src="https://webmedia.com.vn/images/2021/07/logo-gearvn.png"  alt="" /></a>
                             </div>
 
-                            <nav class="navbar">
+                            <nav class="">
                                 <ul class="navbar_menu">
                                     <li><a href="${pageContext.request.contextPath}/HomePage">home</a></li>
                                     <li><a href="#">shop</a></li>
                                         <c:if test="${sessionScope.user != null && sessionScope.user.username != 'Huyy'}">
                                         <li><a href="${pageContext.request.contextPath}/OrderList?page=1">order list</a></li>
                                         <li><a href="${pageContext.request.contextPath}/OrderHistory">order history</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/SliderList">slider List</a></li>
                                         </c:if>
 
                                     <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>

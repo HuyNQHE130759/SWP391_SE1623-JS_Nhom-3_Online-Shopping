@@ -164,6 +164,22 @@
         <servlet-name>OrderListInformationController</servlet-name>
         <servlet-class>controller.Admin.OrderListInformationController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SliderListController</servlet-name>
+        <servlet-class>controllerSlider.SliderListController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SliderListInformationController</servlet-name>
+        <servlet-class>controllerSlider.SliderListInformationController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SliderHideController</servlet-name>
+        <servlet-class>controllerSlider.SliderHideController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListOrderInforController</servlet-name>
+        <servlet-class>controller.ListOrderInforController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -323,6 +339,22 @@
     <servlet-mapping>
         <servlet-name>OrderListInformationController</servlet-name>
         <url-pattern>/OrderListInformationController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SliderListController</servlet-name>
+        <url-pattern>/SliderList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SliderListInformationController</servlet-name>
+        <url-pattern>/SliderListInformation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SliderHideController</servlet-name>
+        <url-pattern>/hide-slider</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListOrderInforController</servlet-name>
+        <url-pattern>/ListOrderInforController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

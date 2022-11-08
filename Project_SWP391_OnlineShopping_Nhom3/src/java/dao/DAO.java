@@ -24,6 +24,9 @@ import entity.Provider;
 import entity.Review;
 import entity.User;
 import entity.Voucher;
+import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class DAO extends DBContext {
 
@@ -46,7 +49,7 @@ public class DAO extends DBContext {
     }
 
     public ArrayList checkLogin(String username, String pass) {
-        
+
         ArrayList<User> ul = new ArrayList<>();
         try {
             String strSelect = "select * from dbo.[User] where status = 1";
@@ -76,6 +79,28 @@ public class DAO extends DBContext {
         }
 
         return ul;
+    }
+
+    public String checkLoginAdmin(String username, String pass) {
+
+        String admin = null;
+        try {
+            String strSelect = "select * from [Admin] where username = '" + username + "' and password = '" + pass + "' ";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                admin = rs.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Close connection error " + e.getMessage());
+            }
+        }
+
+        return admin;
     }
 
     public int findIdByEmail(String email) {
@@ -394,12 +419,12 @@ public class DAO extends DBContext {
 
     }
 
-    public void insertCheckout(Cart cart, String name, String address, String phone,User user,String discountTotal) {
+    public void insertCheckout(Cart cart, String name, String address, String phone, User user, String discountTotal) {
 
         //System.out.println(p_pid);
         try {
             state.executeUpdate("  insert into Bill ([dateCreate] ,[total],[recName],[recAddress],[recPhone] ,[status],[cid])\n"
-                    + "  values (getdate(),'" + discountTotal + "',N'" + name + "',N'" + address + "','" + phone + "',1,"+user.getCid()+")");
+                    + "  values (getdate(),'" + discountTotal + "',N'" + name + "',N'" + address + "','" + phone + "',1," + user.getCid() + ")");
         } catch (Exception e) {
             System.out.println("Error insert bill " + e.getMessage());
         }

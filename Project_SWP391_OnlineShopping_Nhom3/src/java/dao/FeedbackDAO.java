@@ -8,6 +8,7 @@ import entity.Category1;
 import entity.Feedback;
 import entity.Product1;
 import entity.Provider;
+import entity.Review;
 import entity.Role;
 import entity.User;
 import java.sql.PreparedStatement;
@@ -24,7 +25,8 @@ import java.util.logging.Logger;
  * @author Huynq
  */
 public class FeedbackDAO extends DBContext {
-
+private PreparedStatement ps = null;
+    private ResultSet rs = null;
     /**
      * get list of feedback by parameter filter
      *
@@ -262,19 +264,125 @@ public class FeedbackDAO extends DBContext {
         }
         return list;
     }
+    
+    public ArrayList<Review> getReviewByID(String pid, String hide, String rate, String name) {
+
+        ArrayList<Review> list_review = new ArrayList<>();
+        try {
+            String sql = "select r.*, p.pname,p.image,u.fullName from Review as r\n"
+                    + "join Product as p on r.pid = p.pid\n"
+                    + "join [User] as u on r.cid = u.cid\n"
+                    + "where r.pid=?";
+
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, pid);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Review r = new Review();
+                r.setReviewid(rs.getInt("reviewid"));
+                r.setCid(rs.getInt("cid"));
+                r.setPid(rs.getString("pid"));
+                r.setUser_comment(rs.getString("user_comment"));
+                r.setRating(rs.getInt("user_rating"));
+                r.setUsertime_comment(rs.getDate("user_timecomment"));
+                r.setPname(rs.getString("pname"));
+                r.setImage(rs.getString("image"));
+                r.setFullname(rs.getString("fullName"));
+                r.setIsHide(rs.getBoolean("status"));
+
+                list_review.add(r);
+            }
+            if (hide != null && !hide.isEmpty()) {
+                boolean hideBool = Integer.parseInt(hide) == 1;
+                for (int i = 0; i < list_review.size(); i++) {
+                    if (list_review.get(i).getIsHide() != hideBool) {
+                        list_review.remove(i);
+                        i = -1;
+                    }
+                }
+
+            }
+            if (rate != null && !rate.isEmpty()) {
+                int rateInt = Integer.parseInt(rate);
+                for (int i = 0; i < list_review.size(); i++) {
+                    if (list_review.get(i).getRating() != rateInt) {
+                        list_review.remove(i);
+                        i = -1;
+                    }
+                }
+            }
+            if (name != null && !name.isEmpty()) {
+
+                for (int i = 0; i < list_review.size(); i++) {
+                    
+                    if (!list_review.get(i).getFullname().equalsIgnoreCase(name)) {
+                        list_review.remove(i);
+                        i = -1;
+                        
+                    }
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return list_review;
+    }
+
+    public int countCommentIsHide(int hide, String pid) {
+        connection = (new DBContext().connection);
+        try {
+            String sql = "select count(*) from Review as r\n"
+                    + "join Product as p on r.pid = p.pid\n"
+                    + "join [User] as u on r.cid = u.cid\n"
+                    + "where r.status=? and r.pid = ?";
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, hide);
+            ps.setString(2, pid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public void updateHide(boolean hide, int rid) {
+        String sql = "update Review set status = ? where reviewid = ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setBoolean(1, hide);
+            stm.setInt(2, rid);
+            stm.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     public static void main(String[] args) {
         FeedbackDAO ao = new FeedbackDAO();
 //        ao.insertFeedback("1010", "3", "comment abc123", "2", "img12332.png");
 //        ao.deleteFeedback("2");
 //        ao.updatestatus("3", "0");
-        ao.updateFeedback("update qweqwe commnet", "2", "update img", "0", "4");
-        ArrayList<Feedback> flist = ao.getAllFeedback("", "", "", 1, 3);
-        for (Feedback f : flist) {
-            System.out.println(f.getUser_comment() + " - " + f.getUser_rating() + " - " + f.getUser().getFullName() + " " + f.getProduct().getPname());
-        }
-        Feedback f = ao.getFeedback("1");
-        System.out.println(f.getUser_comment() + " - " + f.getUser_rating() + " - " + f.getUser().getEmail()+ " " + f.getProduct().getPname());
+//        ao.updateFeedback("update qweqwe commnet", "2", "update img", "0", "4");
+//        ArrayList<Feedback> flist = ao.getAllFeedback("", "", "", 1, 3);
+//        for (Feedback f : flist) {
+//            System.out.println(f.getUser_comment() + " - " + f.getUser_rating() + " - " + f.getUser().getFullName() + " " + f.getProduct().getPname());
+//        }
+//        Feedback f = ao.getFeedback("1");
+//        System.out.println(f.getUser_comment() + " - " + f.getUser_rating() + " - " + f.getUser().getEmail()+ " " + f.getProduct().getPname());
+            int number = ao.countCommentIsHide(0, "3");
+            System.out.println(number);
 
     }
 }

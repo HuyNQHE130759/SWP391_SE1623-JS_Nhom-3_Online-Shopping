@@ -48,6 +48,22 @@ public class EditFeedback extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        //check login
+        if (request.getSession().getAttribute("role") == null) {
+            request.getSession().setAttribute("mess", "please login");
+            response.sendRedirect("../Login");
+            return;
+        } else {
+            //check role
+            String role = request.getSession().getAttribute("role").toString();
+            if (!role.equals("admin")) {
+                request.getSession().setAttribute("mess", "you are not authorized");
+                response.sendRedirect("../Login");
+                return;
+            }
+        }
+
         String fid = request.getParameter("fid");
         FeedbackDAO fdao = new FeedbackDAO();
         //call method to get feedback detail
@@ -57,8 +73,9 @@ public class EditFeedback extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
-     * Post method use for edit feedback
+     * Handles the HTTP <code>POST</code> method. Post method use for edit
+     * feedback
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -75,7 +92,7 @@ public class EditFeedback extends HttpServlet {
         String status = request.getParameter("status");
         FeedbackDAO fdao = new FeedbackDAO();
         fdao.updateFeedback(comment, rating, img, status, fid);
-        
+
         response.sendRedirect("./FeedbackList");
     }
 
