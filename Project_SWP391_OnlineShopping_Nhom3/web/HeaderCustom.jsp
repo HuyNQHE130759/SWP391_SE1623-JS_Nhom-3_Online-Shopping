@@ -36,7 +36,7 @@
                             <nav class="navbar">
                                 <ul class="navbar_menu">
                                     <li><a href="#">home</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/Product?index=1">shop</a></li>
+                                    <li><a href="#">shop</a></li>
                                     <c:if test="${sessionScope.user != null}">
                                         <li><a href="${pageContext.request.contextPath}/OrderList?page=1">order list</a></li>
                                         <li><a href="${pageContext.request.contextPath}/OrderHistory">order history</a></li>
