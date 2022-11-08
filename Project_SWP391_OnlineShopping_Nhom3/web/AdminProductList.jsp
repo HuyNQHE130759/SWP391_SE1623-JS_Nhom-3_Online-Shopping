@@ -22,7 +22,7 @@
         <div class="super_container">
             <!-- Header -->
 
-            <jsp:include page="HeaderCustom.jsp"></jsp:include>
+            <jsp:include page="HeaderCustom_1.jsp"></jsp:include>
 
                 <div class="container">
                     <form method="POST" action="list">

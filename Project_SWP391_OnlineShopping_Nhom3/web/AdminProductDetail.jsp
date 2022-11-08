@@ -20,7 +20,7 @@
         <div class="super_container">
             <!-- Header -->
 
-            <jsp:include page="HeaderCustom.jsp"></jsp:include>
+            <jsp:include page="HeaderCustom_1.jsp"></jsp:include>
 
             <div class="container" style="margin-top: 16px;">
                 <form method="post" action="/AdminProduct/detail" style="margin: auto; width: 50%">
