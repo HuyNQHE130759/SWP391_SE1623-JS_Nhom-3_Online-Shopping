@@ -5,7 +5,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="entity.Cart"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<--<!-- Check Hehehe -->
+<!-- Check Hehehe -->
 <!DOCTYPE html>
 <html>
     <head>
