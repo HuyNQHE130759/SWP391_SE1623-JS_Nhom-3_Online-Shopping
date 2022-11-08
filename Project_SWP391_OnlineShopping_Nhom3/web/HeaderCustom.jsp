@@ -35,18 +35,13 @@
 
                             <nav class="navbar">
                                 <ul class="navbar_menu">
-                                    <li><a href="#">home</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/HomePage">home</a></li>
                                     <li><a href="#">shop</a></li>
-                                    <c:if test="${sessionScope.user != null && sessionScope.user.username != 'Huyy'}">
+                                        <c:if test="${sessionScope.user != null && sessionScope.user.username != 'Huyy'}">
                                         <li><a href="${pageContext.request.contextPath}/OrderList?page=1">order list</a></li>
                                         <li><a href="${pageContext.request.contextPath}/OrderHistory">order history</a></li>
                                         </c:if>
-                                        <c:if test="${sessionScope.user != null && sessionScope.user.username == 'Huyy'}">
-                                        <li><a href="${pageContext.request.contextPath}/AdminProduct/list">Product List</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/Category/list">Category List</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/Provider/list">Provider List</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/Import/list">Import History</a></li>
-                                        </c:if>
+
                                     <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
                                     <li><a href="ListUser">list user</a></li>
                                 </ul>
@@ -62,9 +57,21 @@
                                         </a>
                                     </li>
                                 </ul>
+
                                 <div class="hamburger_container">
                                     <i class="fa fa-bars" aria-hidden="true"></i>
                                 </div>
+
+                            </nav>
+                            <nav class="navbar">
+                                <ul class="navbar_menu">
+                                    <c:if test="${sessionScope.user != null && sessionScope.user.username == 'Huyy'}">
+                                        <li><a href="${pageContext.request.contextPath}/AdminProduct/list">Product List</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/Category/list">Category List</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/Provider/list">Provider List</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/Import/list">Import History</a></li>
+                                        </c:if>
+                                </ul>
                             </nav>
                         </div>
                     </div>
