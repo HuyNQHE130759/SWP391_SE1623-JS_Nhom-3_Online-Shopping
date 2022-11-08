@@ -56,7 +56,7 @@ public class ProviderDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String raw_pid = request.getParameter("pid").trim();
+        String raw_pid = request.getParameter("pid");
         String raw_pname = request.getParameter("pname").trim();
         String raw_email = request.getParameter("email").trim();
         String raw_address = request.getParameter("address").trim();
