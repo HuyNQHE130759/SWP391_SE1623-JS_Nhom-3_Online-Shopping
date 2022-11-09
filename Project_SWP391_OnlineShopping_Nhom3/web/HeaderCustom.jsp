@@ -44,13 +44,13 @@
 
                                     <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
                                     <li><a href="${pageContext.request.contextPath}/VoucherList?page=1">voucher list</a></li>
-                                    <c:if test="${sessionScope.roleName == 'Admin'}">
+                                    <c:if test="${sessionScope.role == 'admin'}">
                                         <li><a href="ListUser?page=1">list user</a></li>
                                     </c:if>
-                                    <c:if test="${sessionScope.roleName == 'Admin'}">
+                                    <c:if test="${sessionScope.role == 'admin'}">
                                         <li><a href="ReportList?page=1">report</a></li>
                                     </c:if>
-                                    <c:if test="${sessionScope.roleName == 'Shipper'}">
+                                    <c:if test="${sessionScope.role == 'shipper'}">
                                         <li><a href="ShippingList?page=1">shipping list</a></li>
                                     </c:if>
                                 </ul>

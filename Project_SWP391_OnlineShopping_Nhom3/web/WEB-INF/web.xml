@@ -162,7 +162,7 @@
     </servlet>
     <servlet>
         <servlet-name>OrderListInformationController</servlet-name>
-        <servlet-class>controller.Admin.OrderListInformationController</servlet-class>
+        <servlet-class>controller.admin.OrderListInformationController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SliderListController</servlet-name>

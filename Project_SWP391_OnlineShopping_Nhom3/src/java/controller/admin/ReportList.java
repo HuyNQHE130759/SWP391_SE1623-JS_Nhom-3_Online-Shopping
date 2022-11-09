@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Admin;
+package controller.admin;
 
 import dao.CommonDAO;
 import dao.ReportDAO;
@@ -63,8 +63,8 @@ public class ReportList extends HttpServlet {
             ArrayList<Report> listReport;
             int itemPerPage = 5;
             String pageCurrent = request.getParameter("page");
-            String roleName = (String) request.getSession().getAttribute("roleName");
-            if (roleName != null && roleName.equals("Admin")) {
+            String roleName = (String) request.getSession().getAttribute("role");
+            if (roleName != null && roleName.equals("admin")) {
                 double totalBill = reportDAO.getTotalBill();
                 double totalBillDone = reportDAO.getTotalBill("done");
                 double totalBillCanceled = reportDAO.getTotalBill("canceled");

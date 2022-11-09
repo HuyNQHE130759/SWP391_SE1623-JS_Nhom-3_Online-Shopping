@@ -104,7 +104,7 @@ public class LoginController extends HttpServlet {
 //                    out.println("location='" + request.getContextPath() + "/HomePage';");
 //                    out.println("</script>");
 //                }
-System.out.println(ul.get(i).getUsername());
+                System.out.println(ul.get(i).getUsername());
                 response.sendRedirect(request.getContextPath() + "/HomePage");
                 
                 //Set role for user

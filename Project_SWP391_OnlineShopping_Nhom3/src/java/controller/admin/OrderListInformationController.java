@@ -2,17 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.Admin;
+package controller.admin;
 
-import dao.CommonDAO;
-import dao.DAO;
-import dao.VoucherDAO;
-import entity.User;
-import entity.Voucher;
+import dao.OrderDAO;
+import entity.BillDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,10 +16,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author sango
+ * @author Huynq
  */
-@WebServlet(name = "VoucherList", urlPatterns = {"/VoucherList"})
-public class VoucherList extends HttpServlet {
+public class OrderListInformationController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,17 +32,13 @@ public class VoucherList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet VoucherList</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet VoucherList at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+       try {
+            int bid = Integer.parseInt(request.getParameter("bid"));
+            OrderDAO dao = new OrderDAO();
+        ArrayList<BillDetail> bdetail = dao.getOrderListById(bid);
+        request.setAttribute("billDetail", bdetail);
+        request.getRequestDispatcher("OrderListInformation.jsp").forward(request, response);
+        } catch (Exception e) {
         }
     }
 
@@ -78,23 +69,7 @@ public class VoucherList extends HttpServlet {
                 return;
             }
         }
-        DAO dao = new DAO();
-        VoucherDAO voucherDAO = new VoucherDAO();
-        CommonDAO commonDAO = new CommonDAO();
-        //Get List Voucher
-        int itemPerPage = 5;
-        String pageCurrent = request.getParameter("page");
-        if (pageCurrent != null && !pageCurrent.isEmpty()) {
-            int intPageCurrent = Integer.parseInt(pageCurrent);
-            ArrayList<Voucher> listVoucher = voucherDAO.getVoucherList(itemPerPage, intPageCurrent);
-            request.setAttribute("listVoucher", listVoucher);
-            // get number page to paging
-            int numberPage = commonDAO.getNumberPage(itemPerPage, "Voucher");
-            request.setAttribute("numberPage", numberPage);
-            // get page current
-            request.setAttribute("pageCurrent", intPageCurrent);
-        }
-        request.getRequestDispatcher("VoucherList.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -108,7 +83,7 @@ public class VoucherList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /**

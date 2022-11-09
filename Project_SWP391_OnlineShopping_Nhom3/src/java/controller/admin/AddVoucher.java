@@ -1,4 +1,4 @@
-package controller.Admin;
+package controller.admin;
 
 import dao.DAO;
 import dao.VoucherDAO;

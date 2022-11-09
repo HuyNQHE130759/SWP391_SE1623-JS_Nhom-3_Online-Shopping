@@ -67,10 +67,12 @@ public class HomePage extends HttpServlet {
             CategoryDAO categoryDAO = new CategoryDAO();
             //Get List Category
             ArrayList<Category> listCategory = categoryDAO.getAllCategoryy();
+            System.out.println(request.getSession().getAttribute("role"));
             //Get List All Product
             ArrayList<Product> listProduct = dao.getAllProduct();
             request.setAttribute("productList", listProduct);
             request.setAttribute("categoryList", listCategory);
+            
             request.getRequestDispatcher("HomePage.jsp").forward(request, response);
         } catch (ServletException | IOException | SQLException e) {
             e.printStackTrace();

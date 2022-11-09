@@ -289,7 +289,8 @@ public class CategoryDAO implements CategoryDAOInterface {
        try {
             ArrayList<Category> list = new ArrayList<>();
             String query = "SELECT * FROM CATEGORY WHERE [STATUS] = 1";
-            PreparedStatement ps = connection.prepareStatement(query);
+            connection = (new DBContext().connection);
+            ps = connection.prepareStatement(query);
             ResultSet rslt = ps.executeQuery();
             while (rslt.next()) {
                 Category c = new Category();

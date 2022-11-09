@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.Admin;
+package controller.admin;
 
 import dao.FeedbackDAO;
-import entity.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class EditFeedback extends HttpServlet {
+public class ChangeFeedbackStatus extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +31,12 @@ public class EditFeedback extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        //Use this to get the FeedbackList
+        String fid = request.getParameter("fid");
+        String status = request.getParameter("status");
+        FeedbackDAO fdao = new FeedbackDAO();
+        fdao.updatestatus(fid, status);
+        response.sendRedirect("./FeedbackList");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,8 +51,6 @@ public class EditFeedback extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
         //check login
         if (request.getSession().getAttribute("role") == null) {
             request.getSession().setAttribute("mess", "please login");
@@ -63,18 +65,12 @@ public class EditFeedback extends HttpServlet {
                 return;
             }
         }
-
-        String fid = request.getParameter("fid");
-        FeedbackDAO fdao = new FeedbackDAO();
-        //call method to get feedback detail
-        Feedback f = fdao.getFeedback(fid);
-        request.setAttribute("f", f);
-        request.getRequestDispatcher("EditFeedback.jsp").forward(request, response);
+        
+        processRequest(request, response);
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method. Post method use for edit
-     * feedback
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -84,16 +80,7 @@ public class EditFeedback extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String fid = request.getParameter("fid");
-        String comment = request.getParameter("comment");
-        String rating = request.getParameter("rating");
-        String img = request.getParameter("img");
-        String status = request.getParameter("status");
-        FeedbackDAO fdao = new FeedbackDAO();
-        fdao.updateFeedback(comment, rating, img, status, fid);
-
-        response.sendRedirect("./FeedbackList");
+        processRequest(request, response);
     }
 
     /**

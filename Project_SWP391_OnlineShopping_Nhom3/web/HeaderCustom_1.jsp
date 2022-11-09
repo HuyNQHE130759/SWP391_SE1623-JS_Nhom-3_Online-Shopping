@@ -64,7 +64,7 @@
                             </nav>
                             <nav class="navbar">
                                 <ul class="navbar_menu">
-                                    <c:if test="${sessionScope.user != null && sessionScope.user.username == 'Huyy'}">
+                                    <c:if test="${sessionScope.user != null && sessionScope.roleName == 'admin'}">
                                         <li><a href="${pageContext.request.contextPath}/AdminProduct/list">Product List</a></li>
                                         <li><a href="${pageContext.request.contextPath}/Category/list">Category List</a></li>
                                         <li><a href="${pageContext.request.contextPath}/Provider/list">Provider List</a></li>
