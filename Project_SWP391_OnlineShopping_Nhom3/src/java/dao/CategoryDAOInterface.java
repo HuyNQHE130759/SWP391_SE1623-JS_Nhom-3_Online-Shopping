@@ -4,7 +4,9 @@
  */
 package dao;
 
+import entity.Category;
 import entity.Category1;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -27,4 +29,8 @@ public interface CategoryDAOInterface {
     public Category1 getCategory(Integer cid);
     
     public boolean isExisted(String cname);
+    
+    public ArrayList<Category> getAllCategoryy() throws SQLException;
+    
+    public String getCategoryNameById(int categoryId) throws SQLException;
 }

@@ -66,7 +66,7 @@ public class HomePage extends HttpServlet {
             DAO dao = new DAO();
             CategoryDAO categoryDAO = new CategoryDAO();
             //Get List Category
-            ArrayList<Category> listCategory = categoryDAO.getAllCategory();
+            ArrayList<Category> listCategory = categoryDAO.getAllCategoryy();
             //Get List All Product
             ArrayList<Product> listProduct = dao.getAllProduct();
             request.setAttribute("productList", listProduct);

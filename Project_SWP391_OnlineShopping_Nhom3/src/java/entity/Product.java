@@ -50,7 +50,7 @@ public class Product {
     public void setCategory(Category1 category) {
         this.category = category;
     }
-    public Product(String pid, String pname, int quantity, double price, String image, String description, boolean status, String cateId, int categoryId, String categoryName) {
+    public Product(int pid, String pname, int quantity, double price, String image, String description, boolean status, String cateId, int categoryId, String categoryName) {
         this.pid = pid;
         this.pname = pname;
         this.quantity = quantity;

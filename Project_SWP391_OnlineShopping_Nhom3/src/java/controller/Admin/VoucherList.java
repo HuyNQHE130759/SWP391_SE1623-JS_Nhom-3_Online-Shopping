@@ -79,8 +79,6 @@ public class VoucherList extends HttpServlet {
             }
         }
         DAO dao = new DAO();
-        ArrayList<Voucher> listVoucher = dao.getVoucherList();
-        request.setAttribute("listVoucher", listVoucher);
         VoucherDAO voucherDAO = new VoucherDAO();
         CommonDAO commonDAO = new CommonDAO();
         //Get List Voucher

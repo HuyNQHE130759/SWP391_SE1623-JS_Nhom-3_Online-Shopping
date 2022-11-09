@@ -4,6 +4,7 @@
  */
 package dao;
 
+import entity.Category;
 import entity.Category1;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -281,5 +282,42 @@ public class CategoryDAO implements CategoryDAOInterface {
         } catch (SQLException e) {
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<Category> getAllCategoryy() throws SQLException {
+       try {
+            ArrayList<Category> list = new ArrayList<>();
+            String query = "SELECT * FROM CATEGORY WHERE [STATUS] = 1";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rslt = ps.executeQuery();
+            while (rslt.next()) {
+                Category c = new Category();
+                c.setCateId(rslt.getInt("cateId"));
+                c.setCateName(rslt.getString("cateName"));
+                c.setImage(rslt.getString("image"));
+                c.setStatus(rslt.getBoolean("status"));
+                list.add(c);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw e;
+        } 
+    }
+
+    @Override
+    public String getCategoryNameById(int categoryId) throws SQLException {
+        try {
+            String query = "SELECT cateName FROM CATEGORY WHERE cateId = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, categoryId);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return rslt.getString("cateName");
+            }
+        } catch (SQLException e) {
+            throw e;
+        } 
+        return null;
     }
 }
