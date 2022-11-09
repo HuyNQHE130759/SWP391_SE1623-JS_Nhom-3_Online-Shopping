@@ -118,7 +118,7 @@ System.out.println(ul.get(i).getUsername());
 //                out.println("</script>");
 //            }
 
-            response.sendRedirect(request.getContextPath() + "/Product");
+            response.sendRedirect(request.getContextPath() + "/Product?index=1");
             //request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
     }
