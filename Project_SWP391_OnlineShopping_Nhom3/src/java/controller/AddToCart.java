@@ -60,7 +60,7 @@ public class AddToCart extends HttpServlet {
 
             cart.addItem(item);
             session.setAttribute("cart", cart);
-            response.sendRedirect("./Product");
+            response.sendRedirect("./Product?index=1");
 
         } catch (Exception e) {
             response.getWriter().println(e);
