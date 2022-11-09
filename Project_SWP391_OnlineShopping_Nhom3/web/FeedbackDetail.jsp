@@ -14,8 +14,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css" integrity="sha512-CpIKUSyh9QX2+zSdfGP+eWLx23C8Dj9/XmHjZY2uDtfkdLGo0uY12jgcnkX9vXOgYajEKb/jiw67EYm+kBf+6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     </head>
+    <jsp:include page="HeaderCustom_1.jsp"></jsp:include>
     <body>
-        <h1>Feedback Detail</h1>
+        <h2>Feedback Detail</h2>
         <a href="EditFeedback?fid=${f.reviewid}" class="btn btn-primary">Edit</a>
         <div class="card">
             <div class="card-body">
@@ -72,4 +73,5 @@
             </div>
         </div>
     </body>
+    <jsp:include page="FooterCustom.jsp"></jsp:include>
 </html>

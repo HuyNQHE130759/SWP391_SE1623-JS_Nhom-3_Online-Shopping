@@ -180,14 +180,55 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product]";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getInt(1));
-                p.setPname(rs.getString(2));
-                p.setQuantity(rs.getInt(3));
-                p.setPrice(rs.getDouble(4));
-                p.setImage(rs.getString(5));
-                p.setDescription(rs.getString(6));
-                p.setStatus(rs.getBoolean(7));
-                p.setCateId(rs.getString(8));
+                p.setPid(rs.getInt("pid"));
+                p.setPname(rs.getString("pname"));
+                p.setQuantity(rs.getInt("quantity"));
+                p.setPrice(rs.getDouble("price"));
+                p.setImage(rs.getString("image"));
+                p.setDescription(rs.getString("description"));
+                p.setStatus(rs.getBoolean("status"));
+                p.setCateId(rs.getString("cateId"));
+
+                pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
+                        p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+
+        return pl;
+    }
+
+    public boolean IsUserCanReview(String pid, int cid) {
+        try {
+            String sql = "  select *\n"
+                    + "  from Bill b join BillDetail bd on b.bid = bd.bid where b.cid = " + cid + " and bd.pid = " + pid + " and b.status = 1";
+            rs = state.executeQuery(sql);
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+        return false;
+    }
+
+    //get du lieu phan trang
+    public ArrayList getAllProductPaging(int index) {
+        Product p = new Product();
+        ArrayList<Product> pl = new ArrayList<>();
+        try {
+            String strSelect = "select * from Product order by pid offset " + (index - 1) * 6 + " rows fetch next 6 rows only";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                p.setPid(rs.getInt("pid"));
+                p.setPname(rs.getString("pname"));
+                p.setQuantity(rs.getInt("quantity"));
+                p.setPrice(rs.getDouble("price"));
+                p.setImage(rs.getString("image"));
+                p.setDescription(rs.getString("description"));
+                p.setStatus(rs.getBoolean("status"));
+                p.setCateId(rs.getString("cateId"));
 
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
@@ -206,14 +247,40 @@ public class DAO extends DBContext {
             String strSelect = "select * from [dbo].[Product] where cateId= '" + cid + "'";
             rs = state.executeQuery(strSelect);
             while (rs.next()) {
-                p.setPid(rs.getInt(1));
-                p.setPname(rs.getString(2));
-                p.setQuantity(rs.getInt(3));
-                p.setPrice(rs.getDouble(4));
-                p.setImage(rs.getString(5));
-                p.setDescription(rs.getString(6));
-                p.setStatus(rs.getBoolean(7));
-                p.setCateId(rs.getString(8));
+                p.setPid(rs.getInt("pid"));
+                p.setPname(rs.getString("pname"));
+                p.setQuantity(rs.getInt("quantity"));
+                p.setPrice(rs.getDouble("price"));
+                p.setImage(rs.getString("image"));
+                p.setDescription(rs.getString("description"));
+                p.setStatus(rs.getBoolean("status"));
+                p.setCateId(rs.getString("cateId"));
+
+                pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
+                        p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
+            }
+        } catch (Exception e) {
+            System.out.println("Error user: " + e.getMessage());
+        }
+
+        return pl;
+    }
+
+    public ArrayList getProductbyCatePaging(String cid, int index) {
+        Product p = new Product();
+        ArrayList<Product> pl = new ArrayList<>();
+        try {
+            String strSelect = "select * from Product where cateId = '" + cid + "' order by pid offset " + (index - 1) * 6 + " rows fetch next 6 rows only";
+            rs = state.executeQuery(strSelect);
+            while (rs.next()) {
+                p.setPid(rs.getInt("pid"));
+                p.setPname(rs.getString("pname"));
+                p.setQuantity(rs.getInt("quantity"));
+                p.setPrice(rs.getDouble("price"));
+                p.setImage(rs.getString("image"));
+                p.setDescription(rs.getString("description"));
+                p.setStatus(rs.getBoolean("status"));
+                p.setCateId(rs.getString("cateId"));
 
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
@@ -268,12 +335,26 @@ public class DAO extends DBContext {
 
     }
 
-    public void addCommentOfficial(int cid, String pid, String user_comment, int user_rating, Date user_timecomment) {
+   public void addCommentOfficial(int cid, String pid, String user_comment, int user_rating, Date user_timecomment) {
+        int reviewid = 0;
         try {
-            String sql = "insert into [dbo].[Review] values('" + cid + "','" + pid + "','" + user_comment + "','" + user_rating + "','" + user_timecomment + "')";
-            state.execute(sql);
+           
+            String sql = "INSERT INTO [dbo].[Review]\n"
+                    + "          ( [cid]\n"
+                    + "           ,[pid]\n"
+                    + "           ,[user_comment]\n"
+                    + "           ,[user_rating]\n"
+                    + "           ,[user_timecomment])\n"
+                    + "     VALUES\n"
+                    + "           " + cid + ""
+                    + "           ," + pid + ""
+                    + "           ,'" + user_comment + "'"
+                    + "           ," + user_rating + ""
+                    + "           ,'" + user_timecomment + "')";
+            state.executeQuery(sql);
+            System.out.println(sql);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -282,11 +363,11 @@ public class DAO extends DBContext {
         try {
             rs = state.executeQuery("Select * from Review where pid = '" + pid + "'");
             while (rs.next()) {
-                int us_id = rs.getInt(1);
-                String g_id = rs.getString(2);
-                String u_comment = rs.getString(3);
-                int u_rating = rs.getInt(4);
-                Date u_timecomment = rs.getDate(5);
+                int us_id = rs.getInt("cid");
+                int g_id = rs.getInt("pid");
+                String u_comment = rs.getString("user_comment");
+                int u_rating = rs.getInt("user_rating");
+                Date u_timecomment = rs.getDate("user_timecomment");
                 rl.add(new Review(us_id, g_id, u_comment, u_rating, u_timecomment));
             }
         } catch (Exception e) {

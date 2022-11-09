@@ -82,6 +82,7 @@ public class LoginController extends HttpServlet {
                  return;
             }else{
                 request.getSession().setAttribute("role", "admin");
+                request.getSession().setAttribute("rolename", "admin");
                 response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
                 return;
             }

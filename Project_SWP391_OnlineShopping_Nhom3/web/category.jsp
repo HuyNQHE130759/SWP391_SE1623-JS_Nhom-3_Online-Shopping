@@ -18,7 +18,10 @@
             h4:hover {
                 background-color: #d4d4d4;
             }
+            
         </style>
+         <jsp:include page="header.jsp"></jsp:include>
+      
     </head> 
     <body>
         <div class="col-sm-3">
@@ -33,7 +36,7 @@
                     <% for (int i = 0; i < cl.size(); i++) {%>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title"><a href="${pageContext.request.contextPath}/Category?cid=<%=cl.get(i).getCateId()%>"><%=cl.get(i).getCateName()%></a></h4>
+                            <h4 class="panel-title"><a href="${pageContext.request.contextPath}/Category?cid=<%=cl.get(i).getCateId()%>&index=1"><%=cl.get(i).getCateName()%></a></h4>
                         </div>
                     </div>         
                     <% }

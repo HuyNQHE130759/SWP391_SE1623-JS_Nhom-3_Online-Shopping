@@ -60,7 +60,7 @@ public class ImportProductController extends HttpServlet {
                 return;
             }
         }
-        String raw_pid = request.getParameter("pid").trim();
+        String raw_pid = request.getParameter("pid");
         request.setAttribute("pid", raw_pid);
         request.setAttribute("products", productDAO.getAllProduct());
         request.getRequestDispatcher("../ImportProduct.jsp").forward(request, response);
@@ -84,7 +84,7 @@ public class ImportProductController extends HttpServlet {
         Product1 pd = productDAO.getProductById(pid);
         Date date = Date.valueOf(LocalDate.now());
         importDAO.insert(pd, pd.getProvider(), quantity, date);
-        response.sendRedirect(request.getContextPath() + "/AdminProduct/list");
+        response.sendRedirect(request.getContextPath() + "/Import/list");
     }
 
     /**

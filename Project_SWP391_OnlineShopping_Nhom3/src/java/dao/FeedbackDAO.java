@@ -282,7 +282,7 @@ private PreparedStatement ps = null;
                 Review r = new Review();
                 r.setReviewid(rs.getInt("reviewid"));
                 r.setCid(rs.getInt("cid"));
-                r.setPid(rs.getString("pid"));
+                r.setPid(rs.getInt("pid"));
                 r.setUser_comment(rs.getString("user_comment"));
                 r.setRating(rs.getInt("user_rating"));
                 r.setUsertime_comment(rs.getDate("user_timecomment"));

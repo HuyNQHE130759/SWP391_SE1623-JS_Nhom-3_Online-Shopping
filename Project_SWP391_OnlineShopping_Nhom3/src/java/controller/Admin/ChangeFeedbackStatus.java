@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.Admin;
+package controller.admin;
 
 import dao.FeedbackDAO;
 import java.io.IOException;

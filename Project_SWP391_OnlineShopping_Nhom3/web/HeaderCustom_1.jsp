@@ -35,7 +35,7 @@
                             <ul class="navbar_menu">
                                 <li><a href="${pageContext.request.contextPath}/HomePage">home</a></li>
                                 <li><a href="#">shop</a></li>
-                                    <c:if test="${sessionScope.user != null && sessionScope.user.username != 'Huyy'}">
+                                    <c:if test="${sessionScope.user != null}">
                                     <li><a href="${pageContext.request.contextPath}/OrderList?page=1">order list</a></li>
                                     <li><a href="${pageContext.request.contextPath}/OrderHistory">order history</a></li>
                                     </c:if>
@@ -46,16 +46,10 @@
                             <nav class="navbar">
 
                                 <ul class="navbar_user">
-                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                                     <li><a href="${pageContext.request.contextPath}/Login"><i class="fa fa-lock"></i></a></li>
 
                                     <li><a href="${pageContext.request.contextPath}/AccountInfo"><i class="fa fa-user"></i></a></li>
 
-                                    <li class="checkout">
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
                                 </ul>
                                 <div class="hamburger_container">
                                     <i class="fa fa-bars" aria-hidden="true"></i>
@@ -64,11 +58,12 @@
                             </nav>
                             <nav class="navbar">
                                 <ul class="navbar_menu">
-                                    <c:if test="${sessionScope.user != null && sessionScope.user.username == 'Huyy'}">
+                                    <c:if test="${sessionScope.rolename == 'admin'}">
                                         <li><a href="${pageContext.request.contextPath}/AdminProduct/list">Product List</a></li>
                                         <li><a href="${pageContext.request.contextPath}/Category/list">Category List</a></li>
                                         <li><a href="${pageContext.request.contextPath}/Provider/list">Provider List</a></li>
                                         <li><a href="${pageContext.request.contextPath}/Import/list">Import History</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/FeedbackList">Feedback List</a></li>
                                         </c:if>
                                 </ul>
                             </nav>

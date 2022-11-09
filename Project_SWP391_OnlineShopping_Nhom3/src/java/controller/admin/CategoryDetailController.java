@@ -56,7 +56,7 @@ public class CategoryDetailController extends HttpServlet {
             }
         }
         
-        String raw_cid = request.getParameter("cid").trim();
+        String raw_cid = request.getParameter("cid");
         Integer cid = (raw_cid !=null && raw_cid.length()>0)?new Integer(raw_cid):null;
         request.setAttribute("category", categoryDAO.getCategory(cid));
         request.setAttribute("cid", cid);

@@ -11,7 +11,7 @@ import java.sql.Date;
 public class Review {
     private int reviewid;
     private int cid;
-    private String pid;
+    private int pid;
     private String user_comment;
     private int rating;
     private Date usertime_comment;
@@ -22,7 +22,7 @@ public class Review {
     public Review() {
     }
 
-    public Review(int cid, String pid, String user_comment, int rating, Date usertime_comment) {
+    public Review(int cid, int pid, String user_comment, int rating, Date usertime_comment) {
         this.cid = cid;
         this.pid = pid;
         this.user_comment = user_comment;
@@ -30,7 +30,7 @@ public class Review {
         this.usertime_comment = usertime_comment;
     }
 
-    public Review(int reviewid, int cid, String pid, String user_comment, int rating, Date usertime_comment, String pname, String image, String fullname, Boolean status) {
+    public Review(int reviewid, int cid, int pid, String user_comment, int rating, Date usertime_comment, String pname, String image, String fullname, Boolean status) {
         this.reviewid = reviewid;
         this.cid = cid;
         this.pid = pid;
@@ -70,11 +70,11 @@ public class Review {
         this.cid = cid;
     }
 
-    public String getPid() {
+    public int getPid() {
         return pid;
     }
 
-    public void setPid(String pid) {
+    public void setPid(int pid) {
         this.pid = pid;
     }
 
