@@ -1,5 +1,4 @@
-
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="entity.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -44,19 +43,20 @@
                                         </c:if>
 
                                     <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
-                                    <li><a href="ListUser">list user</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/VoucherList?page=1">voucher list</a></li>
+                                    <c:if test="${sessionScope.roleName == 'Admin'}">
+                                        <li><a href="ListUser?page=1">list user</a></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.roleName == 'Admin'}">
+                                        <li><a href="ReportList?page=1">report</a></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.roleName == 'Shipper'}">
+                                        <li><a href="ShippingList?page=1">shipping list</a></li>
+                                    </c:if>
                                 </ul>
                                 <ul class="navbar_user">
-                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                                     <li><a href="${pageContext.request.contextPath}/Login"><i class="fa fa-lock"></i></a></li>
-
                                     <li><a href="${pageContext.request.contextPath}/AccountInfo"><i class="fa fa-user"></i></a></li>
-
-                                    <li class="checkout">
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
                                 </ul>
 
                                 <div class="hamburger_container">

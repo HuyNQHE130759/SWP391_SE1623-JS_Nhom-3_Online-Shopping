@@ -178,10 +178,7 @@ h6::selection
 	font-weight: 500;
 	color: #777777 !important;
 }
-.form-control
-{
-	color: #db5246;
-}
+
 section
 {
 	display: block;

@@ -18,16 +18,6 @@
         <link rel="stylesheet" type="text/css" href="styles/responsive.css">
     </head>
     <body>
-        <script>
-            function copyToClipboard($event: Event) {
-                // Copy text to clipboard
-                console.log($event);
-                navigator.clipboard.writeText(code);
-                // Alert the copied text
-                alert("Copied the text: " + code);
-            }
-        </script>
-
         <div class="super_container">
             <!-- Header -->
             <jsp:include page="HeaderCustom.jsp"></jsp:include>
@@ -43,9 +33,9 @@
                         <tbody>
                         <c:forEach var="i" items="${listVoucher}">
                             <tr>
-                                <td style="display: flex; flex-direction: row; justify-content: space-between;">
-                                    <span id="code-${i.code}">${i.code}</span>
-                                    <span style="cursor: pointer; color: blue;" onclick="copyToClipboard($event)">Copy</span>
+                                <td style="display: flex; flex-direction: row; ">
+                                    <span id="code">${i.code}</span>
+                                    <span id="${i.code}" style="cursor: pointer; color: blue; margin-left: 8px" onclick="copyToClipboard(this)">Copy</button>
                                 </td>
                                 <td>${i.description}</td>
                                 <td>${i.timeEnd}</td>
@@ -53,7 +43,21 @@
                         </c:forEach>
                     </tbody>
                 </table>
-                <a style="color: white;" class="btn btn-primary" href="/AddVoucher">Add Voucher</a>
+                <div class="flex text-center">
+                    <c:if test="${numberPage != 1}">
+                        <c:forEach var="page" begin="1" end="${numberPage}">
+                            <c:if test="${pageCurrent == page}">
+                                <a href="VoucherList?page=${page}" class="mx-2" style="font-weight: bold">${page}</a>
+                            </c:if>
+                            <c:if test="${pageCurrent != page}">
+                                <a href="VoucherList?page=${page}" class="mx-2" style="color: black">${page}</a>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                </div>
+                <c:if test="${roleName == 'Admin'}">
+                    <a style="color: white;" class="btn btn-primary" href="/AddVoucher">Add Voucher</a>
+                </c:if>
             </div>
 
 

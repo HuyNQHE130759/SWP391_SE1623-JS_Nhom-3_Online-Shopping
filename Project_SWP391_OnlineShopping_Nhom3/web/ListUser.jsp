@@ -21,77 +21,90 @@
         <div class="super_container">
             <!-- Header -->
 
-           <jsp:include page="HeaderCustom.jsp"></jsp:include>
+            <jsp:include page="HeaderCustom.jsp"></jsp:include>
 
-            <div class="container">
-                <form method="get" action="ListUser">
-                    <div class="row" style="margin: 16px 0;">
-                        <div style="display: flex; flex-direction: row; align-items: center">
-                            <div style="margin-right: 8px">Sort</div>
-                            <select class="form-select" name="selectSort">
-                                <option value="cid" selected>Id</option>
-                                <option value="fullName">Full Name</option>
+                <div class="container">
+                    <form method="post" action="ListUser">
+                        <div class="row" style="margin: 16px 0;">
+                            <div style="display: flex; flex-direction: row; align-items: center">
+                                <div style="margin-right: 8px">Sort</div>
+                                <select class="form-select" name="selectSort">
+                                    <option value="cid" ${selectedSort == "cid" ? 'selected' : ''}>Id</option>
+                                <option value="fullName" ${selectedSort == "fullName" ? 'selected' : ''}>Full Name</option>
                             </select>
                         </div>
 
                         <div style="display: flex; flex-direction: row; align-items: center; margin-left: 20%;">
                             <div style="margin-right: 8px">Filter</div>
                             <select class="form-select" name="selectStatus">
-                                <option value="" selected >---Status---</option>
-                                <option value="1">Enable</option>
-                                <option value="0">Disable</option>
+                                <option value="" ${selectedStatus == "" ? 'selected' : ''}>---Status---</option>
+                                <option value="1" ${selectedStatus == "1" ? 'selected' : ''}>Enable</option>
+                                <option value="0" ${selectedStatus == "0" ? 'selected' : ''}>Disable</option>
                             </select>
                             <select class="form-select" name="selectRole">
-                                <option value="" selected>---Role---</option>
-                                <option value="User">User</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Provider">Provider</option>
-                                <option value="Manager">Manager</option>
+                                <option value="" ${selectedRole == "" ? 'selected' : ''}>---Role---</option>
+                                <option value="User" ${selectedRole == "User" ? 'selected' : ''}>User</option>
+                                <option value="Admin" ${selectedRole == "Admin" ? 'selected' : ''}>Admin</option>
+                                <option value="Provider" ${selectedRole == "Provider" ? 'selected' : ''}>Provider</option>
+                                <option value="Manager" ${selectedRole == "Manager" ? 'selected' : ''}>Manager</option>
                             </select>
                         </div>
-                        
+
                         <button style="margin-left: 10%;" type="submit" class="btn btn-primary">Search</button>
 
                     </div>
-                </form>
-                <div class="row">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Gender</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Status</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach var="i" items="${listUser}">
+
+                    <div class="row">
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <th scope="row">${i.cid}</td>
-                                    <td>${i.fullName}</td>
-                                    <td>${i.username}</td> 
-                                    <td>${i.genderr}</td>
-                                    <td>${i.address}</td>
-                                    <td>${i.email}</td> 
-                                    <td>${i.phone}</td>
-                                    <td>${i.role}</td>
-                                    <td>${i.stringStatus}</td> 
-                                    <td style="display: flex; flex-direction: row;">
-                                        <a style="margin-right: 5px" href="/EditUser?cid=${i.cid}">Edit</a>
-                                        <a href="#">Delete</a>
-                                    </td>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="i" items="${listUser}">
+                                    <tr>
+                                        <th scope="row">${i.cid}</td>
+                                        <td>${i.fullName}</td>
+                                        <td>${i.username}</td> 
+                                        <td>${i.genderr}</td>
+                                        <td>${i.address}</td>
+                                        <td>${i.email}</td> 
+                                        <td>${i.phone}</td>
+                                        <td>${i.role}</td>
+                                        <td>${i.stringStatus}</td> 
+                                        <td style="display: flex; flex-direction: row;">
+                                            <a style="margin-right: 5px" href="/EditUser?cid=${i.cid}">Edit</a>
+                                            <a href="#">Delete</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                            
+                    <div class="flex text-center">
+                        <c:if test="${numberPage != 1}">
+                            <c:forEach var="page" begin="1" end="${numberPage}">
+                                <c:if test="${pageCurrent == page}">
+                                    <a href="ListUser?page=${page}" class="mx-2" style="font-weight: bold">${page}</a>
+                                </c:if>
+                                <c:if test="${pageCurrent != page}">
+                                    <a href="ListUser?page=${page}" class="mx-2" style="color: black">${page}</a>
+                                </c:if>
                             </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-                
+                        </c:if>
+                    </div>
+                </form>
                 <a style="color: white;" class="btn btn-primary" href="/AddUser">Add new</a>
             </div>
 

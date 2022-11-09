@@ -25,6 +25,7 @@ public class BillDetail {
     private String username;
     private String pname;
     
+    private String status;
 
     public BillDetail() {
     }
@@ -163,4 +164,12 @@ public class BillDetail {
         return "BillDetail{" + "rowNumber=" + rowNumber + ", bid=" + bid + ", dateCreate=" + dateCreate + ", total=" + total + ", quantity=" + quantity + ", cid=" + cid + ", fullName=" + fullName + ", address=" + address + ", phone=" + phone + ", email=" + email + ", username=" + username + ", pname=" + pname + ", price=" + price + ", image=" + image + '}';
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
 }

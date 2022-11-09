@@ -6,6 +6,7 @@
 package controller;
 
 import dao.DAO;
+import dao.RoleDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -88,6 +89,7 @@ public class LoginController extends HttpServlet {
 
         }
 
+        RoleDAO roleDAO = new RoleDAO();
         ArrayList<User> ul = new ArrayList<>();
         ul = dao.checkLogin(username, pass);
         for (int i = 0; i < ul.size(); i++) {
@@ -105,6 +107,19 @@ public class LoginController extends HttpServlet {
 System.out.println(ul.get(i).getUsername());
                 response.sendRedirect(request.getContextPath() + "/HomePage");
                 
+                //Set role for user
+                if (ul.get(i) != null) {
+                    String roleName = roleDAO.getRoleNameByUser(ul.get(i).getUsername());
+                    request.getSession().setAttribute("roleName", roleName);
+                }
+                //request.getSession().setAttribute("error", "Login successful!");
+                try ( PrintWriter out = response.getWriter()) {
+                    out.println("<script type=\"text/javascript\">");
+                    out.println("alert('Login successful!');");
+                    out.println("location='" + request.getContextPath() + "/HomePage';");
+                    out.println("</script>");
+                }
+                //response.sendRedirect(request.getContextPath() + "/Status");
             }
         }
         if (ul.size() <= 0) {
@@ -118,6 +133,13 @@ System.out.println(ul.get(i).getUsername());
 //            }
 
             response.sendRedirect(request.getContextPath() + "/Product");
+            try ( PrintWriter out = response.getWriter()) {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Username or password is invalid!');");
+                out.println("location='" + request.getContextPath() + "/Login';");
+                out.println("</script>");
+            }
+            //response.sendRedirect(request.getContextPath() + "/Status");
             //request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
     }

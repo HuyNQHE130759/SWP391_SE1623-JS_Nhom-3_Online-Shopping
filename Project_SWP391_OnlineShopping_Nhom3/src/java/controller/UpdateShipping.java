@@ -1,28 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
-import dao.CategoryDAO;
-import dao.DAO;
-import entity.Category;
-import entity.Product;
+import dao.ShippingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
-/**
- *
- * @author BVLT
- */
-public class HomePage extends HttpServlet {
+@WebServlet(name = "UpdateShipping", urlPatterns = {"/UpdateShipping"})
+public class UpdateShipping extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +23,19 @@ public class HomePage extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet HomePage</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet HomePage at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        try {
+            String billId = request.getParameter("billId");
+            String value = request.getParameter("selectStatusShipping");
+            ShippingDAO shippingDAO = new ShippingDAO();
+            if(billId != null) {
+                shippingDAO.updateShippingStatus(Integer.parseInt(billId), value);
+            }
+            request.getRequestDispatcher("ShippingList.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("message", e.getMessage());
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,20 +50,8 @@ public class HomePage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            DAO dao = new DAO();
-            CategoryDAO categoryDAO = new CategoryDAO();
-            //Get List Category
-            ArrayList<Category> listCategory = categoryDAO.getAllCategory();
-            //Get List All Product
-            ArrayList<Product> listProduct = dao.getAllProduct();
-            request.setAttribute("productList", listProduct);
-            request.setAttribute("categoryList", listCategory);
-            request.getRequestDispatcher("HomePage.jsp").forward(request, response);
-        } catch (ServletException | IOException | SQLException e) {
-            e.printStackTrace();
-        }
-
+        request.setAttribute("id", request.getParameter("id"));
+        request.getRequestDispatcher("UpdateShipping.jsp").forward(request, response);
     }
 
     /**
@@ -89,7 +65,21 @@ public class HomePage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            String billId = request.getParameter("id");
+            String value = request.getParameter("selectStatusShipping");
+            ShippingDAO shippingDAO = new ShippingDAO();
+            if(billId != null) {
+                int result = shippingDAO.updateShippingStatus(Integer.parseInt(billId), value);
+                if(result == 1 && value.equals("done")) {
+                    shippingDAO.updateQuantity(shippingDAO.getProductIdByBillId(Integer.parseInt(billId)), Integer.parseInt(billId));
+                }
+            }
+            response.sendRedirect("ShippingList?page=1");
+        } catch (Exception e) {
+            request.setAttribute("message", e.getMessage());
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
+        }
     }
 
     /**

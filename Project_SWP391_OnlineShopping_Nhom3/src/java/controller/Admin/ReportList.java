@@ -5,10 +5,8 @@
 package controller.Admin;
 
 import dao.CommonDAO;
-import dao.DAO;
-import dao.VoucherDAO;
-import entity.User;
-import entity.Voucher;
+import dao.ReportDAO;
+import entity.Report;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,12 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-/**
- *
- * @author sango
- */
-@WebServlet(name = "VoucherList", urlPatterns = {"/VoucherList"})
-public class VoucherList extends HttpServlet {
+@WebServlet(name = "Report", urlPatterns = {"/ReportList"})
+public class ReportList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +36,10 @@ public class VoucherList extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VoucherList</title>");
+            out.println("<title>Servlet Report</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet VoucherList at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Report at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,40 +57,45 @@ public class VoucherList extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-          //check login
-        if (request.getSession().getAttribute("role") == null) {
-            request.getSession().setAttribute("mess", "please login");
-            response.sendRedirect("../Login");
-            return;
-        } else {
-            //check role
-            String role = request.getSession().getAttribute("role").toString();
-            if (!role.equals("admin")) {
-                request.getSession().setAttribute("mess", "you are not authorized");
-                response.sendRedirect("../Login");
-                return;
+        try {
+            ReportDAO reportDAO = new ReportDAO();
+            CommonDAO commonDAO = new CommonDAO();
+            ArrayList<Report> listReport;
+            int itemPerPage = 5;
+            String pageCurrent = request.getParameter("page");
+            String roleName = (String) request.getSession().getAttribute("roleName");
+            if (roleName != null && roleName.equals("Admin")) {
+                double totalBill = reportDAO.getTotalBill();
+                double totalBillDone = reportDAO.getTotalBill("done");
+                double totalBillCanceled = reportDAO.getTotalBill("canceled");
+                double sumTotalPrice = reportDAO.getSumOfTotalPrice();
+                double doneRate = totalBillDone / totalBill * 100;
+                
+                request.setAttribute("totalBill", totalBill);
+                request.setAttribute("totalBillDone", totalBillDone);
+                request.setAttribute("totalBillCanceled", totalBillCanceled);
+                request.setAttribute("sumTotalPrice", sumTotalPrice);
+                request.setAttribute("doneRate", doneRate);
+                
+                if (pageCurrent != null && !pageCurrent.isEmpty()) {
+                    int intPageCurrent = Integer.parseInt(pageCurrent);
+                    listReport = reportDAO.getListReport(itemPerPage, intPageCurrent);
+                    request.setAttribute("listReport", listReport);
+                    int numberPage = commonDAO.getNumberPageReport(itemPerPage);
+                    request.setAttribute("numberPage", numberPage);
+                    request.setAttribute("pageCurrent", intPageCurrent);
+                    request.getRequestDispatcher("ReportList.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("ReportList?page=1");
+                }
+            } else {
+                request.setAttribute("message", "You don't have permission to access this page");
+                request.getRequestDispatcher("Error.jsp").forward(request, response);
             }
+        } catch (Exception e) {
+            request.setAttribute("message", e.getMessage());
+            request.getRequestDispatcher("Error.jsp").forward(request, response);
         }
-        DAO dao = new DAO();
-        ArrayList<Voucher> listVoucher = dao.getVoucherList();
-        request.setAttribute("listVoucher", listVoucher);
-        VoucherDAO voucherDAO = new VoucherDAO();
-        CommonDAO commonDAO = new CommonDAO();
-        //Get List Voucher
-        int itemPerPage = 5;
-        String pageCurrent = request.getParameter("page");
-        if (pageCurrent != null && !pageCurrent.isEmpty()) {
-            int intPageCurrent = Integer.parseInt(pageCurrent);
-            ArrayList<Voucher> listVoucher = voucherDAO.getVoucherList(itemPerPage, intPageCurrent);
-            request.setAttribute("listVoucher", listVoucher);
-            // get number page to paging
-            int numberPage = commonDAO.getNumberPage(itemPerPage, "Voucher");
-            request.setAttribute("numberPage", numberPage);
-            // get page current
-            request.setAttribute("pageCurrent", intPageCurrent);
-        }
-        request.getRequestDispatcher("VoucherList.jsp").forward(request, response);
     }
 
     /**
@@ -110,7 +109,7 @@ public class VoucherList extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /**

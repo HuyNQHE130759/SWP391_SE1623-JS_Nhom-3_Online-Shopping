@@ -36,4 +36,48 @@ public class RoleDAO extends DBContext {
         }
         return list;
     }
+    
+    public int getRoleId(String rolename) {
+        try {
+            String query = "select roleid from [Role] where rolename = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, rolename);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return rslt.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 1;
+    }
+
+    public String getRoleName(int roleid) {
+        try {
+            String query = "select rolename from [Role] where roleid = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, roleid);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return rslt.getString(1);
+            }
+        } catch (SQLException e) {
+        }
+        return "";
+    }
+    
+    public String getRoleNameByUser(String username) {
+        try {
+            String query = "select r.rolename from [Role] r "
+                    + "join [User] u on r.roleid = u.roleid "
+                    + "where u.username = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return rslt.getString("rolename");
+            }
+        } catch (SQLException e) {
+        }
+        return "";
+    }
 }

@@ -4,10 +4,9 @@
  */
 package controller.admin;
 
-import dao.DAO;
+import dao.UserDAO;
 import entity.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -78,31 +77,31 @@ public class AddUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            DAO dao = new DAO();
+            UserDAO userDAO = new UserDAO();
             String msg = "";
             boolean flag = true;
             //Get data from page
-            String username = request.getParameter("userName");
-            String password = request.getParameter("password");
-            String repeatPassword = request.getParameter("repeatPassword");
-            String fullName = request.getParameter("fullName");
-            String address = request.getParameter("address");
+            String username = request.getParameter("userName").trim();
+            String password = request.getParameter("password").trim();
+            String repeatPassword = request.getParameter("repeatPassword").trim();
+            String fullName = request.getParameter("fullName").trim();
+            String address = request.getParameter("address").trim();
             boolean isMale = request.getParameter("gender").equals("1");
-            String email = request.getParameter("email");
-            String phone = request.getParameter("phone");
-            String rolename = request.getParameter("role");
+            String email = request.getParameter("email").trim();
+            String phone = request.getParameter("phone").trim();
+            String rolename = request.getParameter("role").trim();
             //Validate username trung
-            if (dao.userNameIsExist(username)) {
-                msg = "This username has already existed!!!";
+            if (userDAO.userNameIsExist(username)) {
+                msg += "<li style='color: red'>This username has already existed!!!</li>";
                 flag = false;
             }
             // validate password
             if (!password.equals(repeatPassword)) {
-                msg = "Repeat password is not correct";
+                msg += "<li style='color: red'>Repeat password is not correct</li>";
                 flag = false;
             }
-            if (dao.emailIsExist(email)) {
-                msg = "This email has already existed!!!";
+            if (userDAO.emailIsExist(email)) {
+                msg += "<li style='color: red'>This email has already existed!!!</li>";
                 flag = false;
             }
             //Add user to DB
@@ -117,14 +116,20 @@ public class AddUser extends HttpServlet {
                 u.setPhone(phone);
                 u.setMale(isMale);
                 u.setEmail(email);
-                dao.addUser(u);
-                //msg = "Add user successfully!!!"; 
-                response.sendRedirect("ListUser");
+                userDAO.addUser(u);
+                response.sendRedirect("ListUser?page=1");
             }
             else {
                 //If flag = false, send msg to page
                 request.setAttribute("msg", msg);
-                response.sendRedirect("AddUser");
+                request.setAttribute("username", username);
+                request.setAttribute("rolename", rolename);
+                request.setAttribute("fullName", fullName);
+                request.setAttribute("address", address);
+                request.setAttribute("phone", phone);
+                request.setAttribute("isMale", isMale);
+                request.setAttribute("email", email);
+                request.getRequestDispatcher("/AddUser.jsp").forward(request, response);
             }
             
         } catch (SQLException e) {

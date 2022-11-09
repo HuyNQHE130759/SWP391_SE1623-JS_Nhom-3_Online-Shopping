@@ -5,6 +5,7 @@
 package controller.admin;
 
 import dao.DAO;
+import dao.UserDAO;
 import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -94,7 +95,7 @@ public class EditUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            DAO dao = new DAO();
+            UserDAO userDAO = new UserDAO();
             String msg = "";
             //dat bien de check validate
             boolean flag = true;
@@ -107,7 +108,7 @@ public class EditUser extends HttpServlet {
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
             String rolename = request.getParameter("role");
-            if (dao.userNameIsExist(username)) {
+            if (userDAO.userNameIsExist(username)) {
                 msg = "This username has already existed!!!";
                 flag = false;
             }
@@ -115,7 +116,7 @@ public class EditUser extends HttpServlet {
                 msg = "Repeat password is not correct";
                 flag = false;
             }
-            if (dao.emailIsExist(email)) {
+            if (userDAO.emailIsExist(email)) {
                 msg = "This email has already existed!!!";
                 flag = false;
             }
@@ -131,14 +132,12 @@ public class EditUser extends HttpServlet {
                 u.setPhone(phone);
                 u.setMale(isMale);
                 u.setEmail(email);
-                dao.updateUser(u);
-                //msg = "Add user successfully!!!";
+                userDAO.updateUser(u);
                 response.sendRedirect("ListUser");
             }
             else {
                 request.setAttribute("flag", flag);
                 request.setAttribute("msg", msg);
-                //response.sendRedirect("EditUser?cid="+ request.getParameter("cid"));
                 request.getRequestDispatcher("EditUser.jsp?cid="+request.getParameter("cid")).forward(request, response);
             }
             

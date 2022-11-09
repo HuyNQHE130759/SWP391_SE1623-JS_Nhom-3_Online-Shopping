@@ -429,3 +429,10 @@ jQuery(document).ready(function ($)
 
 });
 
+function copyToClipboard(e) {
+    // Copy text to clipboard
+    var code = $(e).attr('id');
+    navigator.clipboard.writeText(code);
+    // Alert the copied text
+    alert("Copied the text: " + code);
+}

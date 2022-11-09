@@ -21,6 +21,8 @@ import java.util.logging.Logger;
  */
 public class UserDAO extends DBContext {
 
+    private RoleDAO roleDAO = new RoleDAO();
+
     public void insert(User u) {
         String sql = "INSERT INTO [User]\n"
                 + "           ([roleid]\n"
@@ -135,7 +137,7 @@ public class UserDAO extends DBContext {
                 u.setPassword(password);
             }
             connection.close();
-        } catch (SQLException ex) { 
+        } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return u;
@@ -188,7 +190,7 @@ public class UserDAO extends DBContext {
             }
             rs.close();
             stm.close();
-        } catch (SQLException ex) { 
+        } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
@@ -226,7 +228,7 @@ public class UserDAO extends DBContext {
             params.put(index, search);
         }
         if (1 == 1) {
-            sql += " ORDER BY "+sort+" \n"
+            sql += " ORDER BY " + sort + " \n"
                     + "OFFSET (?-1) * ? ROWS \n"
                     + "FETCH NEXT ? ROWS ONLY";
             index++;
@@ -289,7 +291,7 @@ public class UserDAO extends DBContext {
             if (rs.next()) {
                 return rs.getInt("total");
             }
-        } catch (SQLException ex) { 
+        } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
@@ -348,4 +350,162 @@ public class UserDAO extends DBContext {
     }
     
 
+    public ArrayList<User> getListUser(String role, String status, String sort, int itemPerPage, int pageCurrent) {
+
+        ArrayList<User> list = new ArrayList<>();
+        try {
+            // query to get all User from DB
+            String query = "SELECT * "
+                    + "FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY cid) AS lineNumb "
+                    + "FROM (SELECT u.*, r.rolename "
+                    + "FROM [User] u "
+                    + "JOIN [Role] r ON u.roleid = r.roleid) as sub "
+                    + ") as sub2 "
+                    + "WHERE lineNumb BETWEEN ? AND ? ";
+            // check cac truong hop 
+            // role va status blank
+            if (role.isEmpty() && !status.isEmpty()) {
+                query += "AND status = " + "'" + status + "' ";
+            }
+            // role co gia tri va status = blank
+            if (!role.isEmpty() && status.isEmpty()) {
+                query += "AND rolename = " + "'" + role + "' ";
+            }
+            // ca role va status deu co gia tri
+            if (!role.isEmpty() && !status.isEmpty()) {
+                query += "AND rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
+            }
+            //order by
+            query += "order by " + "'" + sort + "' ";
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            int from = itemPerPage * (pageCurrent - 1) + 1;
+            int to = from + itemPerPage - 1;
+            ps.setInt(1, from);
+            ps.setInt(2, to);
+            ResultSet rslt = ps.executeQuery();
+            while (rslt.next()) {
+                User u = new User();
+                u.setCid(rslt.getInt("cid"));
+                u.setFullName(rslt.getString("fullName"));
+                u.setUsername(rslt.getString("username"));
+                u.setMale(rslt.getBoolean("gender"));
+                u.setAddress(rslt.getString("address"));
+                u.setEmail(rslt.getString("email"));
+                u.setPhone(rslt.getString("phone"));
+                u.setRole(rslt.getString("rolename"));
+                u.setStatus(rslt.getBoolean("status"));
+                list.add(u);
+            }
+            return list;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public void addUser(User u) throws SQLException {
+        try {
+            String query = "Insert into [User] values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, roleDAO.getRoleId(u.getRole()));
+            ps.setString(2, u.getFullName());
+            ps.setString(3, u.getAddress());
+            ps.setString(4, u.getPhone());
+            ps.setString(5, u.getEmail());
+            ps.setString(6, u.getUsername());
+            ps.setString(7, u.getPassword());
+            ps.setBoolean(8, true);
+            ps.setBoolean(9, u.isMale());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    public int getLastUserId() {
+        try {
+            String query = "select top 1 cid from [User] order by cid desc";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return rslt.getInt(1);
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+
+    public boolean userNameIsExist(String username) {
+        try {
+            String query = "select count(*) as num from [User] where username = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    public boolean emailIsExist(String email) {
+        try {
+            String query = "select count(*) as num from [User] where email = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                return Integer.parseInt(rslt.getString(1)) > 0;
+            }
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    public User getUserById(int cid) {
+        try {
+            User u = new User();
+            String query = "select * from [User] WHERE cid = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, cid);
+            ResultSet rslt = ps.executeQuery();
+            if (rslt.next()) {
+                u.setCid(rslt.getInt("cid"));
+                u.setFullName(rslt.getString("fullName"));
+                u.setUsername(rslt.getString("username"));
+                u.setMale(rslt.getBoolean("gender"));
+                u.setAddress(rslt.getString("address"));
+                u.setEmail(rslt.getString("email"));
+                u.setPhone(rslt.getString("phone"));
+                u.setRole(roleDAO.getRoleName(rslt.getInt("roleid")));
+                u.setStatus(rslt.getBoolean("status"));
+            }
+            return u;
+        } catch (SQLException e) {
+
+        }
+        return null;
+    }
+
+    public void updateUser(User u) throws SQLException {
+        try {
+            String query = "UPDATE [User]\n"
+                    + "SET roleid = ?, fullName = ?, address = ?, phone = ?, email = ?, username = ?, password = ?, gender = ?\n"
+                    + "WHERE cid = ?;";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, roleDAO.getRoleId(u.getRole()));
+            ps.setString(2, u.getFullName());
+            ps.setString(3, u.getAddress());
+            ps.setString(4, u.getPhone());
+            ps.setString(5, u.getEmail());
+            ps.setString(6, u.getUsername());
+            ps.setString(7, u.getPassword());
+            ps.setBoolean(8, u.isMale());
+            ps.setInt(9, u.getCid());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
 }

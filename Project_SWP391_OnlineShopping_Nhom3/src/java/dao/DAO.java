@@ -188,7 +188,6 @@ public class DAO extends DBContext {
                 p.setDescription(rs.getString(6));
                 p.setStatus(rs.getBoolean(7));
                 p.setCateId(rs.getString(8));
-
                 pl.add(new Product(p.getPid(), p.getPname(), p.getQuantity(), p.getPrice(),
                         p.getImage(), p.getDescription(), p.isStatus(), p.getCateId()));
             }
@@ -198,6 +197,8 @@ public class DAO extends DBContext {
 
         return pl;
     }
+    
+    
 
     public ArrayList getProductbyCate(String cid) {
         Product p = new Product();
@@ -601,55 +602,7 @@ public class DAO extends DBContext {
         } catch (Exception e) {
         }
         return uid != -1;
-    }
-
-    public ArrayList<User> getListUser(String role, String status, String sort) {
-
-        ArrayList<User> list = new ArrayList<>();
-        try {
-            // query to get all User from DB
-            String query = "select * "
-                    + "from [User] u "
-                    + "left join [Role] r on u.roleid = r.roleid ";
-            // check cac truong hop 
-            // role va status blank
-            if (role.isEmpty() && !status.isEmpty()) {
-                query += "where status = " + "'" + status + "' ";
-            }
-            // role co gia tri va status = blank
-            if (!role.isEmpty() && status.isEmpty()) {
-                query += "where rolename = " + "'" + role + "' ";
-            }
-            // ca role va status deu co gia tri
-            if (!role.isEmpty() && !status.isEmpty()) {
-                query += "where rolename = " + "'" + role + "' and status = " + "'" + status + "' ";
-            }
-            //order by
-            query += "order by " + "'" + sort + "' ";
-
-            PreparedStatement ps = con.prepareStatement(query);
-            ResultSet rslt = ps.executeQuery();
-            while (rslt.next()) {
-                User u = new User();
-                u.setCid(rslt.getInt("cid"));
-                u.setFullName(rslt.getString("fullName"));
-                u.setUsername(rslt.getString("username"));
-                u.setMale(rslt.getBoolean("gender"));
-                u.setAddress(rslt.getString("address"));
-                u.setEmail(rslt.getString("email"));
-                u.setPhone(rslt.getString("phone"));
-                u.setRole(rslt.getString("rolename"));
-                u.setStatus(rslt.getBoolean("status"));
-                list.add(u);
-
-            }
-            return list;
-        } catch (SQLException e) {
-        }
-        return null;
-    }
-
-    ; 
+    }     
     
     public ArrayList getBillList() {
         Bill bill = new Bill();

@@ -71,8 +71,8 @@
                             <option value="Manager">Manager</option>
                         </select>
                     </div>
-                    <c:if test="${requestScope.flag == false}">
-                        <small id="error" class="form-text" style="color: red">${requestScope.msg}</small>
+                    <c:if test="${not empty msg}">
+                        <small id="error" class="form-text" style="color: red">${msg}</small>
                     </c:if>
                     
                     <button type="submit" class="btn btn-primary" style="margin: 0 auto">Save</button>

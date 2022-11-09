@@ -17,6 +17,9 @@ public class Product {
     private String cateId;
     private Category1 category;
     private Provider provider;
+    private int categoryId;
+    private String categoryName;
+
     
     public Product() {
     }
@@ -47,6 +50,20 @@ public class Product {
     public void setCategory(Category1 category) {
         this.category = category;
     }
+    public Product(String pid, String pname, int quantity, double price, String image, String description, boolean status, String cateId, int categoryId, String categoryName) {
+        this.pid = pid;
+        this.pname = pname;
+        this.quantity = quantity;
+        this.price = price;
+        this.image = image;
+        this.description = description;
+        this.status = status;
+        this.cateId = cateId;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+    }
+
+    
 
 
 
@@ -113,5 +130,22 @@ public class Product {
     public void setCateId(String cateId) {
         this.cateId = cateId;
     }
-    
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+  
 }
