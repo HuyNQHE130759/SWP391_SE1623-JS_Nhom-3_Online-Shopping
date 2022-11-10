@@ -20,7 +20,6 @@ import entity.Product;
 import entity.Provider;
 import entity.Review;
 import entity.User;
-import entity.Voucher;
 
 public class DAO extends DBContext {
 

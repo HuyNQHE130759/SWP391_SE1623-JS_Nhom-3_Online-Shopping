@@ -34,14 +34,15 @@
                                 <ul class="navbar_menu">
                                     <li><a href="#">home</a></li>
                                     <li><a href="#">shop</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/OrderList">order list</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/About-Us">about us</a></li>
                                     <li><a href="${pageContext.request.contextPath}/VoucherList?page=1">voucher list</a></li>
                                     <c:if test="${sessionScope.roleName == 'Admin'}">
                                         <li><a href="ListUser?page=1">list user</a></li>
                                     </c:if>
                                     <c:if test="${sessionScope.roleName == 'Admin'}">
                                         <li><a href="ReportList?page=1">report</a></li>
+                                    </c:if>
+                                        <c:if test="${sessionScope.roleName == 'Admin' || sessionScope.roleName == 'User'}">
+                                        <li><a href="ListGuarantee?page=1">Guarantee</a></li>
                                     </c:if>
                                     <c:if test="${sessionScope.roleName == 'Shipper'}">
                                         <li><a href="ShippingList?page=1">shipping list</a></li>
