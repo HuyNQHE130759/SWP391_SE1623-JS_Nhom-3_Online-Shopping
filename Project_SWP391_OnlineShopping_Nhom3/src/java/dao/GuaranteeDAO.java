@@ -62,11 +62,11 @@ public class GuaranteeDAO extends DBContext {
             String query = "SELECT * FROM ( "
                     + "SELECT ROW_NUMBER() "
                     + "OVER(ORDER BY id) as Number, "
-                    + "* FROM Guaranteee "
-                    + ") as Data where Number between ? and ? ";
+                    + "* FROM Guaranteee ";
             if (owner != null) {
-                query += " AND [owner] = '" + owner + "' ";
+                query += " WHERE [owner] = '" + owner + "' ";
             }
+            query += ") as Data where Number between ? and ? ";
             query += "ORDER BY status ";
             PreparedStatement ps = connection.prepareStatement(query);
             int from = itemPerPage * (pageCurrent - 1) + 1;
