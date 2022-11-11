@@ -56,15 +56,21 @@ public class GuaranteeDAO extends DBContext {
         }
     }
 
-    public ArrayList<Guarantee> getListGuarantee(int itemPerPage, int pageCurrent, String owner) throws SQLException {
+    public ArrayList<Guarantee> getListGuarantee(int itemPerPage, int pageCurrent, String owner, String status) throws SQLException {
         try {
             ArrayList<Guarantee> list = new ArrayList<>();
             String query = "SELECT * FROM ( "
                     + "SELECT ROW_NUMBER() "
                     + "OVER(ORDER BY id) as Number, "
                     + "* FROM Guaranteee ";
-            if (owner != null) {
+            if (owner != null && status == null) {
                 query += " WHERE [owner] = '" + owner + "' ";
+            }
+            if (owner == null && status != null) {
+                query += " WHERE [status] = '" + status + "' ";
+            }
+            if (owner != null && status != null) {
+                query += " WHERE [owner] = '" + owner + "' AND [status] = '" + status + "' ";
             }
             query += ") as Data where Number between ? and ? ";
             query += "ORDER BY status ";

@@ -66,9 +66,9 @@ public class ListGuarantee extends HttpServlet {
                 if (pageCurrent != null && !pageCurrent.isEmpty()) {
                     int intPageCurrent = Integer.parseInt(pageCurrent);
                     if (roleName.equalsIgnoreCase("admin")) {
-                        list = guaranteeDAO.getListGuarantee(itemPerPage, intPageCurrent, null);
+                        list = guaranteeDAO.getListGuarantee(itemPerPage, intPageCurrent, null, (String) request.getSession().getAttribute("status"));
                     } else {
-                        list = guaranteeDAO.getListGuarantee(itemPerPage, intPageCurrent, user.getUsername());
+                        list = guaranteeDAO.getListGuarantee(itemPerPage, intPageCurrent, user.getUsername(), (String)request.getSession().getAttribute("status"));
                     }
                     request.setAttribute("listGuarantee", list);
                     int numberPage = commonDAO.getNumberPage(itemPerPage, "Guaranteee");
@@ -99,7 +99,9 @@ public class ListGuarantee extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String status = request.getParameter("status");
+        request.getSession().setAttribute("status", status);
+        response.sendRedirect("ListGuarantee?page=1");
     }
 
     /**
